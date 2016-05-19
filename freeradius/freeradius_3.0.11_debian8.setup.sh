@@ -67,6 +67,7 @@ sed -i  -e 's|^.*group = radius|       group = radius|g' $RAD_CONF/radiusd.conf
 
 
 # configure mysql db connection
+sed -i 's/.*driver = "rlm_sql_null"/driver = "rlm_sql_mysql"/' $RAD_CONF/mods-available/sql
 sed -i 's/dialect = "sqlite"/dialect = "mysql"/' $RAD_CONF/mods-available/sql
 sed -i 's/#.*server = "localhost"/       server = "localhost"/' $RAD_CONF/mods-available/sql
 sed -i 's/#.*port = 3306/       port = 3306/' $RAD_CONF/mods-available/sql
