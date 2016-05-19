@@ -3,7 +3,7 @@
 export RAD_VER="v3.0.x"
 export INST_PREFIX="/usr/local"
 export RAD_CONF=$INST_PREFIX"/etc/raddb"
-export RAD_SRC_PRE=$HOME"/Progs/freeradius"
+export RAD_SRC_PRE=$HOME"/Progs"
 export RAD_SRC=$RAD_SRC_PRE"/freeradius-server_$RAD_VER"
 
 # CHANGE IT !
@@ -18,7 +18,7 @@ aptitude install libtalloc-dev libtalloc2 libcollectdclient-dev libcollectdclien
 # get freeradius sources
 git clone -b $RAD_VER https://github.com/FreeRADIUS/freeradius-server.git
 mkdir -p $RAD_SRC_PRE
-cp -Rp freeradius-server $RAD_SRC
+mv freeradius-server $RAD_SRC
 
 cd $RAD_SRC
 
