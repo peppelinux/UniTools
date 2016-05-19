@@ -1,10 +1,10 @@
 #!/bin/bash
 
 export RAD_VER="v3.0.x"
-export RAD_CONF=$INST_PREFIX"/etc/raddb"
-export RAD_SRC_PRE=$HOME"/Progs/freeradius/"
-export RAD_SRC=$RAD_SRC_PRE"freeradius-server_$RAD_VER"
 export INST_PREFIX="/usr/local"
+export RAD_CONF=$INST_PREFIX"/etc/raddb"
+export RAD_SRC_PRE=$HOME"/Progs/freeradius"
+export RAD_SRC=$RAD_SRC_PRE"/freeradius-server_$RAD_VER"
 
 # CHANGE IT !
 export RADIUS_PWD="radius_pwd"
@@ -13,19 +13,16 @@ set -x
 
 # get dependencies
 aptitude update
-aptitude install libtalloc-dev libtalloc2 libcollectdclient-dev libcollectdclient1 libpcap-dev libpcap0.8 snmp libcap2-dev libcap-dev libmemcached-dev libyubikey-dev libyubikey0 libunbound2 libunbound-dev libmysqlclient-dev libmysqlclient18 ruby libcurlpp-dev libcurlpp0  libpython-dev python-dev libperl-dev libidn2-0 libidn2-0-dev libjson0-dev libwbclient-dev libwbclient0 libldap-dev libldap2-dev libpam-dev libkrb5-dev libcurl4-openssl-dev samba-dev libhiredis-dev 
+aptitude install libtalloc-dev libtalloc2 libcollectdclient-dev libcollectdclient1 libpcap-dev libpcap0.8 snmp libcap2-dev libcap-dev libmemcached-dev libyubikey-dev libyubikey0 libunbound2 libunbound-dev libmysqlclient-dev libmysqlclient18 ruby libcurlpp-dev libcurlpp0  libpython-dev python-dev libperl-dev libidn2-0 libidn2-0-dev libjson0-dev libwbclient-dev libwbclient0 libldap-dev libldap2-dev libpam-dev libkrb5-dev libcurl4-openssl-dev samba-dev libhiredis-dev  libssl-dev libgdbm-dev
 
 # get freeradius sources
-mkdir -p $RAD_SRC
-
-
 git clone -b $RAD_VER https://github.com/FreeRADIUS/freeradius-server.git
 mkdir -p $RAD_SRC_PRE
-mv freeradius-server $RAD_SRC
+cp -Rp freeradius-server $RAD_SRC
 
 cd $RAD_SRC
 
-./configure --prefix=$INST_PREFIX --without-experimental-modules #  | grep WARNING
+./configure --prefix=$INST_PREFIX --without-experimental-modules --disable-developer #  | grep WARNING
 make -j 4
 
 # Change cert attributes as you prefer before install it
@@ -77,10 +74,11 @@ sed -i 's/#.*login = "radius"/        login = "radius"/' $RAD_CONF/mods-availabl
 sed -i 's/#.*password = "radpass"/        password = "'$RADIUS_PWD'"/' $RAD_CONF/mods-available/sql
 
 # enable sql
-cd $RAD_CONF
+pushd $RAD_CONF
 ln -s $RAD_CONF/mods-available/sql        $RAD_CONF/mods-enabled/
 #ln -s $RAD_CONF/mods-available/sql_mysql  $RAD_CONF/mods-enabled/ # funziona senza
 ln -s $RAD_CONF/mods-available/sqlcounter $RAD_CONF/mods-enabled/
+popd
 
 # sqlcounter patch
 sed -i 's|dialect = ${modules.sql.dialect}|dialect = mysql|g' $RAD_CONF/mods-available/sqlcounter
