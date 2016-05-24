@@ -81,6 +81,9 @@ ln -s $RAD_CONF/mods-available/sql        $RAD_CONF/mods-enabled/
 ln -s $RAD_CONF/mods-available/sqlcounter $RAD_CONF/mods-enabled/
 popd
 
+# read client from database instead of clients.conf
+#sed -i 's|#.*read_clients = yes|read_clients = yes|g' $RAD_CONF/mods-available/sql
+
 # sqlcounter patch
 sed -i 's|dialect = ${modules.sql.dialect}|dialect = mysql|g' $RAD_CONF/mods-available/sqlcounter
 
