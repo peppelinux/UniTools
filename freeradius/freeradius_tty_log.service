@@ -1,0 +1,8 @@
+[Unit]
+Description=radius log on tty5
+[Service]
+Type=simple
+ExecStart=/usr/bin/tail -f /var/log/radius/radius.log
+StandardInput=tty
+StandardOutput=tty
+TTYPath=/dev/tty5
