@@ -100,6 +100,10 @@ sed -i 's|auth_badpass = no|auth_badpass = yes|g' $RAD_CONF/radiusd.conf
 sed -i 's|auth_goodpass = no|auth_goodpass = yes|g' $RAD_CONF/radiusd.conf
 sed -i 's|auth = no|auth = yes|g' $RAD_CONF/radiusd.conf
 
+# accounting logs, readable in $logdir/acct/*
+sed -i 's|#.*auth_log|auth_log|' $RAD_CONF/sites-enabled/default
+sed -i 's|#.*reply_log|reply_log|' $RAD_CONF/sites-enabled/default
+
 
 # configure mysql
 mysql -u root -p -e \
