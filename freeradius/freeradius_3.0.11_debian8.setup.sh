@@ -152,3 +152,6 @@ systemctl start freeradius
 
 # password storage
 # https://www.packtpub.com/books/content/storing-passwords-using-freeradius-authentication
+
+# freeradius + openVPN
+# https://www.roessner-network-solutions.com/favoriten/openvpn-radius-mysqlldap-howto/
