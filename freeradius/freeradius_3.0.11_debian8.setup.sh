@@ -96,6 +96,9 @@ sed -i 's|-sql|sql|' $RAD_CONF/sites-enabled/default # authorize section
 sed -i 's|session {|session {\nsql|' $RAD_CONF/sites-enabled/default
 sed -i 's|accounting {|accounting {\nsql|' $RAD_CONF/sites-enabled/default
 
+# disable unused eap methods
+sed -i 's|default_eap_type = md5|default_eap_type = peap|' $RAD_CONF/mods-available/eap
+
 
 # logging
 # it could be done also with this:
