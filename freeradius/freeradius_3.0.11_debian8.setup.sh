@@ -26,12 +26,34 @@ cd $RAD_SRC
 make -j 4
 
 # Change cert attributes as you prefer before install it
-sed -i 's/countryName             = FR/countryName = IT/' $RAD_SRC/raddb/certs/server.cnf
-sed -i 's/stateOrProvinceName     = Radius/stateOrProvinceName = Cosenza/' $RAD_SRC/raddb/certs/server.cnf
-sed -i 's/organizationName        = Example Inc/organizationName = myOwn/' $RAD_SRC/raddb/certs/server.cnf
-sed -i 's/emailAddress            = admin@example.org/emailAddress = admin@example.org/' $RAD_SRC/raddb/certs/server.cnf
-sed -i 's/commonName              = "Example Server Certificate"/commonName = "SSL Certificate/' $RAD_SRC/raddb/certs/server.cnf
-sed -i 's/subjectAltName          = radius.example.org/subjectAltName = Radius/' $RAD_SRC/raddb/certs/server.cnf
+export SSL_countryName="IT"
+export SSL_stateOrProvinceName="Cosenza"
+export SSL_organizationName="OrgName"
+export SSL_emailAddress="some@where.eu"
+export SSL_commonName="OrgName"
+export SSL_subjectAltName="AltOrgName"
+
+# server.cnf
+sed -i 's/countryName             = FR/countryName = $SSL_countryName/' $RAD_SRC/raddb/certs/server.cnf
+sed -i 's/stateOrProvinceName     = Radius/stateOrProvinceName = $SSL_stateOrProvinceName/' $RAD_SRC/raddb/certs/server.cnf
+sed -i 's/organizationName        = Example Inc/organizationName = $SSL_organizationName/' $RAD_SRC/raddb/certs/server.cnf
+sed -i 's/emailAddress            = admin@example.org/emailAddress = $SSL_emailAddress/' $RAD_SRC/raddb/certs/server.cnf
+sed -i 's/commonName              = "Example Server Certificate"/commonName = $SSL_commonName/' $RAD_SRC/raddb/certs/server.cnf
+sed -i 's/subjectAltName          = radius.example.org/subjectAltName = $SSL_subjectAltName/' $RAD_SRC/raddb/certs/server.cnf
+# ca.cnf
+sed -i 's/countryName             = FR/countryName = $SSL_countryName/' $RAD_SRC/raddb/certs/server.cnf
+sed -i 's/stateOrProvinceName     = Radius/stateOrProvinceName = $SSL_stateOrProvinceName/' $RAD_SRC/raddb/certs/ca.cnf
+sed -i 's/organizationName        = Example Inc/organizationName = $SSL_organizationName/' $RAD_SRC/raddb/certs/ca.cnf
+sed -i 's/emailAddress            = admin@example.org/emailAddress = $SSL_emailAddress/' $RAD_SRC/raddb/certs/ca.cnf
+sed -i 's/commonName              = "Example Server Certificate"/commonName = $SSL_commonName/' $RAD_SRC/raddb/certs/ca.cnf
+sed -i 's/subjectAltName          = radius.example.org/subjectAltName = $SSL_subjectAltName/' $RAD_SRC/raddb/certs/ca.cnf
+# client.cnf
+sed -i 's/countryName             = FR/countryName = $SSL_countryName/' $RAD_SRC/raddb/certs/client.cnf
+sed -i 's/stateOrProvinceName     = Radius/stateOrProvinceName = $SSL_stateOrProvinceName/' $RAD_SRC/raddb/certs/client.cnf
+sed -i 's/organizationName        = Example Inc/organizationName = $SSL_organizationName/' $RAD_SRC/raddb/certs/client.cnf
+sed -i 's/emailAddress            = admin@example.org/emailAddress = $SSL_emailAddress/' $RAD_SRC/raddb/certs/client.cnf
+sed -i 's/commonName              = "Example Server Certificate"/commonName = $SSL_commonName/' $RAD_SRC/raddb/certs/client.cnf
+sed -i 's/subjectAltName          = radius.example.org/subjectAltName = $SSL_subjectAltName/' $RAD_SRC/raddb/certs/client.cnf
 
 # create optional startup options
 echo 'FREERADIUS_OPTIONS=""' > /etc/default/freeradius
