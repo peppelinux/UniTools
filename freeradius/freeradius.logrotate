@@ -1,0 +1,11 @@
+/var/log/radius/*.log {
+        weekly
+        rotate 52
+        compress
+        delaycompress
+        notifempty
+        missingok
+        postrotate
+                /bin/systemctl reload freeradius > /dev/null
+        endscript
+}
