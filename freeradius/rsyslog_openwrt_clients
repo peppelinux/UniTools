@@ -1,0 +1,9 @@
+$ModLoad imudp
+$UDPServerRun 514
+
+:fromhost-ip, isequal, "10.0.17.254" /var/log/openwrt/17a.log
+
+#:msg, startswith, "cla17a_p2.lan " /var/log/openwrt/17a.log
+
+:fromhost-ip, isequal, "160.97.49.20" /var/log/openwrt/25c.log
+& stop
