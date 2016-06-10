@@ -138,7 +138,7 @@ sed -i 's|#.*reply_log|reply_log|' $RAD_CONF/sites-enabled/default
 
 # configure mysql
 mysql -u root -p -e \
-"CREATE DATABASE radius; GRANT ALL ON radius.* TO radius@localhost IDENTIFIED BY '$RADIUS_PWD'; \
+"CREATE DATABASE IF NOT EXISTS radius; GRANT ALL ON radius.* TO radius@localhost IDENTIFIED BY '$RADIUS_PWD'; \
 flush privileges;"
 
 mysql -u radius --password=$RADIUS_PWD radius  < $RAD_SRC/mods-config/sql/main/mysql/schema.sql
