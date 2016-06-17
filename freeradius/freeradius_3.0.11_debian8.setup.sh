@@ -13,7 +13,7 @@ set -x
 
 # get dependencies
 aptitude update
-aptitude install libtalloc-dev libtalloc2 libcollectdclient-dev libcollectdclient1 libpcap-dev libpcap0.8 snmp libcap2-dev libcap-dev libmemcached-dev libyubikey-dev libyubikey0 libunbound2 libunbound-dev libmysqlclient-dev libmysqlclient18 ruby libcurlpp-dev libcurlpp0  libpython-dev python-dev libperl-dev libidn2-0 libidn2-0-dev libjson0-dev libwbclient-dev libwbclient0 libldap-dev libldap2-dev libpam-dev libkrb5-dev libcurl4-openssl-dev samba-dev libhiredis-dev  libssl-dev libgdbm-dev build-essential git
+aptitude install mysql-server mysql-client libtalloc-dev libtalloc2 libcollectdclient-dev libcollectdclient1 libpcap-dev libpcap0.8 snmp libcap2-dev libcap-dev libmemcached-dev libyubikey-dev libyubikey0 libunbound2 libunbound-dev libmysqlclient-dev libmysqlclient18 ruby libcurlpp-dev libcurlpp0  libpython-dev python-dev libperl-dev libidn2-0 libidn2-0-dev libjson0-dev libwbclient-dev libwbclient0 libldap-dev libldap2-dev libpam-dev libkrb5-dev libcurl4-openssl-dev samba-dev libhiredis-dev  libssl-dev libgdbm-dev build-essential git
 
 # get freeradius sources
 git clone -b $RAD_VER https://github.com/FreeRADIUS/freeradius-server.git
