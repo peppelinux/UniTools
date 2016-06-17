@@ -145,7 +145,7 @@ mysql -u radius --password=$RADIUS_PWD radius  < $RAD_SRC/raddb/mods-config/sql/
 
 # cp freeradius.service in systemd services folder
 cp $RAD_SRC/debian/freeradius.service  /lib/systemd/system/
-
+sed -i 's|/usr|'"$INST_PREFIX"'|' /lib/systemd/system/freeradius.service 
 
 # reload and restart 
 systemctl daemon-reload 
