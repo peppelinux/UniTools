@@ -66,6 +66,9 @@ sed -i 's|After=syslog.target network.target|After=syslog.target network.target 
 # install freeradius in standard path (/usr/local/)
 make install
 
+# git init for setup developing
+git init $RAD_CONF/
+
 # configure daemon
 export R1=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-32};echo;)
 export R2=$(date +%s | sha256sum | base64 | head -c 32 ; echo)
