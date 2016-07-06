@@ -1,0 +1,46 @@
+#!/bin/bash
+# This file should not be modified -- make local changes to /etc/ppp/ip-up.local instead !
+
+# This script is called with the following arguments:
+# Arg Name
+# $1 Interface name
+# $2 The tty
+# $3 The link speed
+# $4 Local IP number
+# $5 Peer IP number
+# $6 Optional ``ipparam'' value foo
+
+PATH=/sbin:/usr/sbin:/bin:/usr/bin
+export PATH
+
+#LOGDEVICE=$6
+#REALDEVICE=$1
+
+[ -f /etc/sysconfig/network-scripts/ifcfg-${LOGDEVICE} ] && /etc/sysconfig/network-scripts/ifup-post --realdevi$
+
+/etc/ppp/ip-up.ipv6to4 ${LOGDEVICE}
+
+[ -x /etc/ppp/ip-up.local ] && /etc/ppp/ip-up.local "$@"
+# routing automatico quando le stazioni si collegano
+case "$5" in
+       100.102.0.100)
+                ip link set $1 down
+                ip link set $1 name pptp_smc0
+                ip link set pptp_smc0 up
+                sysctl net.ipv4.ip_forward = 1
+                ip route add 192.168.21.0/24 via 100.102.0.1 dev pptp_smc0
+                iptables -t nat -I POSTROUTING 1 -s 100.102.0.100 -d 192.168.21.0/24 -o pptp_smc0 -j MASQUERADE
+                ;;
+       100.102.0.99)
+                ip link set $1 down
+                ip link set $1 name pptp_altro0
+                ip link set pptp_cesmma0 up
+                sysctl net.ipv4.ip_forward = 1
+                iptables -t nat -I POSTROUTING 1 -s 100.102.0.99 -o pptp_altro0 -j MASQUERADE
+                ;;
+        *)
+esac
+
+exit 0
+
+
