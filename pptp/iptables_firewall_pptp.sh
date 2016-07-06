@@ -289,9 +289,9 @@ echo "Forward rules"
 $IPT -A FORWARD -d 255.255.255.255 -j DROP
 $IPT -A FORWARD -m state --state ESTABLISHED,RELATED -j ACCEPT
 
-for i in $TRUSTED_IF; 
+for i in $(echo $TRUSTED_IF | sed "s/,/ /g"); 
 do 
-    for e in $TRUSTED_NODES; 
+    for e in $(echo $TRUSTED_NODES | sed "s/,/ /g"); 
     do 
     $IPT -A FORWARD -s $e -o $i -j ACCEPT; 
     done;    
