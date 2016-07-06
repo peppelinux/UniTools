@@ -148,12 +148,12 @@ $IPT  -A INPUT -i ${PUB_IF} -p tcp --tcp-flags FIN,ACK FIN -j DROP # FIN packet 
 $IPT  -A INPUT -i ${PUB_IF} -p tcp --tcp-flags ALL SYN,RST,ACK,FIN,URG -j DROP
 
 # e ancora
-iptables -A INPUT -i ${PUB_IF} -p tcp -m tcp --tcp-flags FIN,SYN,RST,PSH,ACK,URG NONE -j DROP
-iptables -A INPUT -i ${PUB_IF} -p tcp -m tcp --tcp-flags FIN,SYN FIN,SYN -j DROP
-iptables -A INPUT -i ${PUB_IF} -p tcp -m tcp --tcp-flags SYN,RST SYN,RST -j DROP
-iptables -A INPUT -i ${PUB_IF} -p tcp -m tcp --tcp-flags FIN,RST FIN,RST -j DROP
-iptables -A INPUT -i ${PUB_IF} -p tcp -m tcp --tcp-flags FIN,ACK FIN -j DROP
-iptables -A INPUT -i ${PUB_IF} -p tcp -m tcp --tcp-flags ACK,URG URG -j DROP
+$IPT -A INPUT -i ${PUB_IF} -p tcp -m tcp --tcp-flags FIN,SYN,RST,PSH,ACK,URG NONE -j DROP
+$IPT -A INPUT -i ${PUB_IF} -p tcp -m tcp --tcp-flags FIN,SYN FIN,SYN -j DROP
+$IPT -A INPUT -i ${PUB_IF} -p tcp -m tcp --tcp-flags SYN,RST SYN,RST -j DROP
+$IPT -A INPUT -i ${PUB_IF} -p tcp -m tcp --tcp-flags FIN,RST FIN,RST -j DROP
+$IPT -A INPUT -i ${PUB_IF} -p tcp -m tcp --tcp-flags FIN,ACK FIN -j DROP
+$IPT -A INPUT -i ${PUB_IF} -p tcp -m tcp --tcp-flags ACK,URG URG -j DROP
 
 ##############################
 # evitiamo gli attacchi smurf che disconnettono tutto da tutti
@@ -219,30 +219,32 @@ $IPT -A TCP_SERVICES -p tcp --dport 1723 -m state --state NEW -m recent --set --
 $IPT -A TCP_SERVICES  -i $PUB_IF -m state --state ESTABLISHED,RELATED -j ACCEPT
 
 # Accept GRE packets per PPTP
-iptables --insert OUTPUT 1 \
+$IPT --insert OUTPUT 1 \
 --source 0.0.0.0/0.0.0.0 \
 --destination 0.0.0.0/0.0.0.0 \
 --jump ACCEPT --protocol gre \
 --out-interface $PUB_IF
 
-iptables --insert INPUT 29 \
+$IPT --insert INPUT 29 \
 --source 0.0.0.0/0.0.0.0 \
 --destination 0.0.0.0/0.0.0.0 \
 --jump ACCEPT --protocol gre \
 --in-interface $PUB_IF
 
-
+echo "SSH limit"
 # in ssh accettiamo max 10 connessioni ogni 2 minuti
 #$IPT -A TCP_SERVICES -p tcp --dport $SSH_PORT -m state --state NEW -m recent --name sshguys  --update --seconds 120 --hitcount 11 -j DROP
 #$IPT -A TCP_SERVICES -p tcp -s 0/0  --dport $SSH_PORT -m state --state NEW,ESTABLISHED -m recent --name sshguys --set -j ACCEPT
 
-echo "SSH limit"
 # max 10 connections in 5 minutes
 #$IPT -A TCP_SERVICES -p tcp --dport 22 -m state --state NEW,ESTABLISHED -m recent --set --rsource -j ACCEPT
 #$IPT -A TCP_SERVICES -m recent --update --seconds 300 --hitcount 11 --name sshguys --rsource -j LOG --log-prefix "Anti SSH-Bruteforce: " --log-level 6 
 #$IPT -A TCP_SERVICES -p tcp --dport 22 -m state --state NEW -m recent --name sshguys --update --seconds 300 --hitcount 11 -j DROP
 #$IPT -A OUTPUT -p tcp -s $MYNODE1 -d 0/0 --sport 22  -m state --state ESTABLISHED -j ACCEPT
 
+# - Abilitare limite di 7 secondi tra un'autorizzazione e l'altra da una stessa sorgente
+#$$IPT -A INPUT -p tcp -m state --state NEW --dport 22 -m recent --update --seconds 7 -j DROP
+#$$IPT -A INPUT -p tcp -m state --state NEW --dport 22 -m recent --set -j ACCEPT
 
 #Line 1 of the script checks if the source IP has already marked as 'Bad Guy' and logs the packet, if so. 
 #The second line drops the packet if it comes from a marked IP address and marks the source again. 
@@ -318,10 +320,6 @@ $IPT -t nat -X
 #$IPT -t nat -A POSTROUTING -s 10.12.12.222  -d 192.168.21.0/24 -o ppp0 -j MASQUERADE
 #$IPT -t nat -A POSTROUTING -s 10.12.12.222 -d 100.102.0.1/32  -o ppp0 -j MASQUERADE
 
-
-# - Abilitare limite di 7 secondi tra un'autorizzazione e l'altra da una stessa sorgente
-#$$IPT -A INPUT -p tcp -m state --state NEW --dport 22 -m recent --update --seconds 7 -j DROP
-#$$IPT -A INPUT -p tcp -m state --state NEW --dport 22 -m recent --set -j ACCEPT
 
 #STUFFS 
 SYSCTL=/sbin/sysctl
