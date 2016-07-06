@@ -22,21 +22,25 @@ export PATH
 
 [ -x /etc/ppp/ip-up.local ] && /etc/ppp/ip-up.local "$@"
 # routing automatico quando le stazioni si collegano
+# routing automatico quando le stazioni si collegano
 case "$5" in
-       100.102.0.100)
+       100.102.0.1)
                 ip link set $1 down
-                ip link set $1 name pptp_smc0
-                ip link set pptp_smc0 up
+                ip link set $1 name pptp_lao0
+                ip link set pptp_lao0 up
                 sysctl net.ipv4.ip_forward = 1
-                ip route add 192.168.21.0/24 via 100.102.0.1 dev pptp_smc0
-                iptables -t nat -I POSTROUTING 1 -s 100.102.0.100 -d 192.168.21.0/24 -o pptp_smc0 -j MASQUERADE
-                ;;
-       100.102.0.99)
-                ip link set $1 down
-                ip link set $1 name pptp_altro0
-                ip link set pptp_cesmma0 up
-                sysctl net.ipv4.ip_forward = 1
-                iptables -t nat -I POSTROUTING 1 -s 100.102.0.99 -o pptp_altro0 -j MASQUERADE
+                sysctl net.ipv4.conf.pptp_lao0.forwarding=1
+                ip route add 192.168.21.0/24 via 100.102.0.1 dev pptp_lao0
+                
+                if iptables -C FORWARD -s 160.97.12.222 -j ACCEPT;\
+                then echo 'pptp_lao0 FORWARD rules already present.';\
+                else iptables -I FORWARD 3 -s 160.97.12.222 -j ACCEPT;\
+                fi
+                
+                iptables -t nat -I POSTROUTING 1 -s 160.97.12.222 -d 192.168.21.0/24 -o pptp_lao0 -j MASQUERADE
+                iptables -t nat -I POSTROUTING 1 -s 160.97.12.222 -d 100.102.0.1 -o pptp_lao0 -j MASQUERADE
+
+
                 ;;
         *)
 esac
