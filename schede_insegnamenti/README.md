@@ -1,3 +1,3 @@
 Usage:
 
-python 
+python download_json_insegnamenti.py nomefile_output.json
