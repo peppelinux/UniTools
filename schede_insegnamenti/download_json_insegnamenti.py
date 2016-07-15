@@ -16,6 +16,7 @@ def get_page(url):
     response = urllib2.urlopen(url)
     print response.info()
     html = response.read()
+    response.close()
     return html
 
 def process_html(html, debug=False):
