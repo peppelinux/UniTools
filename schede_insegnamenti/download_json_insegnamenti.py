@@ -20,9 +20,6 @@ def get_page(url):
 
 def process_html(html, debug=False):
     soup = BeautifulSoup.BeautifulSoup(html)
-    #script dove risiedono le informazioni utili
-    #script = soup.findAll('script')[8]     #for s in soup.findAll('script'):
-    #script = soup.find('script', text=re.compile(_regexp))
     script = soup.find('script', text=re.compile(_regexp_grouped, re.I))
     _lista_data = []
     _falliti = []
