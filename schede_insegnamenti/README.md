@@ -3,7 +3,7 @@ About
 Utility used to get the full json objects from website:
 http://www.unical.it/portale/portaltemplates/view/view_scheda_insegnamento.cfm
 
-from the downloaded json file/object it could be possibile to integrate in your own coded procedure the http request call needed to fetch other kinds of information.
+from the downloaded json file/object it could be possibile to integrate in your own coded procedure the http request call needed to fetch other kinds of informations.
 
 Requirements (pip install):
 =============================
