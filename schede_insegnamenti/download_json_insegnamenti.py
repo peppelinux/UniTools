@@ -11,7 +11,7 @@ _regexp_grouped = r'([\t\s]+)?(?P<nome>(%s)+)\[(?P<codice>[0-9]+)\]( ?= ?)(?P<va
 _regexp         = r'([a-z]*)([\[0-9\]]*)( ?= ?)({.*});'
 _url            = 'http://www.unical.it/portale/portaltemplates/view/view_scheda_insegnamento.cfm'
 
-_file_to_save   = sys.argv[1]+'%s'%datetime.datetime.strftime('%Y-%m-%d')
+_file_to_save   = sys.argv[1]+'%s'%datetime.datetime.now().strftime('%Y-%m-%d')
 
 def get_page(url):
     response = urllib2.urlopen(url)
