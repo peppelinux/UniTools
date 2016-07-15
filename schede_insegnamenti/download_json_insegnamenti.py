@@ -60,8 +60,9 @@ def insegnamenti_dict(dati):
     return d
 
 if __name__ == '__main__':
-	_file_to_save   = sys.argv[1]+'.%s'%datetime.datetime.now().strftime('%Y-%m-%d')	
-	
+    try: _file_to_save   = sys.argv[1]+'.%s'%datetime.datetime.now().strftime('%Y-%m-%d')	
+    except: _file_to_save = 'schede_insegnamenti.json'
+		
     html = get_page(_url)
     dati = process_html(html, debug=False)
     #test(dati)
