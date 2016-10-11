@@ -1,0 +1,15 @@
+# eduroam proxy fixture
+
+DEFAULT
+    Reply-Message =* ANY,
+    Proxy-State =* ANY,
+    EAP-Message =* ANY,
+    Message-Authenticator =* ANY,
+    MS-MPPE-Recv-Key =* ANY,
+    MS-MPPE-Send-Key =* ANY,
+    State =* ANY,
+    Calling-Station-Id =* ANY,
+    Operator-Name =* ANY,
+    User-Name =* ANY,
+    Class =* ANY,
+    Chargeable-User-Identity =* ANY
