@@ -1,0 +1,13 @@
+DEFAULT
+    User-Name =* ANY,
+    EAP-Message =* ANY,
+    Message-Authenticator =* ANY,
+    NAS-IP-Address =* ANY,
+    NAS-Identifier =* ANY,
+    State =* ANY,
+    Proxy-State =* ANY,
+    Operator-Name =* ANY,
+    Class =* ANY,
+    Calling-Station-Id =* ANY,
+    Called-Station-Id =* ANY,
+    Chargeable-User-Identity =* ANY
