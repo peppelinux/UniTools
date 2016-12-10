@@ -33,6 +33,7 @@ export SSL_emailAddress="some@where.eu"
 export SSL_commonName="OrgName"
 export SSL_subjectAltName="AltOrgName"
 export SSL_localityName="Arcavacata"
+export SSL_default_days="3650"
 
 # server.cnf
 sed -i 's/countryName\t*\s*= .*/countryName = '"$SSL_countryName"'/' $RAD_SRC/raddb/certs/server.cnf
@@ -42,6 +43,7 @@ sed -i 's/emailAddress\t*\s*= .*/emailAddress = '"$SSL_emailAddress"'/' $RAD_SRC
 sed -i 's/commonName\t*\s*= .*/commonName = '"$SSL_commonName"'/' $RAD_SRC/raddb/certs/server.cnf
 sed -i 's/subjectAltName\t*\s*= .*/subjectAltName = '"$SSL_subjectAltName"'/' $RAD_SRC/raddb/certs/server.cnf
 sed -i 's/localityName\t*\s*= .*/localityName = '"$SSL_localityName"'/' $RAD_SRC/raddb/certs/server.cnf
+sed -i 's/default_days\t*\s*= .*/default_days = '"$SSL_default_days"'/' $RAD_SRC/raddb/certs/server.cnf
 
 # ca.cnf
 sed -i 's/countryName\t*\s*=.*/countryName = '"$SSL_countryName"'/' $RAD_SRC/raddb/certs/ca.cnf
@@ -51,6 +53,7 @@ sed -i 's/emailAddress\t*\s*= .*/emailAddress = '"$SSL_emailAddress"'/' $RAD_SRC
 sed -i 's/commonName\t*\s*= .*/commonName = '"$SSL_commonName"'/' $RAD_SRC/raddb/certs/ca.cnf
 sed -i 's/subjectAltName\t*\s*= .*/subjectAltName = '"$SSL_subjectAltName"'/' $RAD_SRC/raddb/certs/ca.cnf
 sed -i 's/localityName\t*\s*= .*/localityName = '"$SSL_localityName"'/' $RAD_SRC/raddb/certs/ca.cnf
+sed -i 's/default_days\t*\s*= .*/default_days = '"$SSL_default_days"'/' $RAD_SRC/raddb/certs/ca.cnf
 # client.cnf
 sed -i 's/countryName\t*\s*=.*/countryName = '"$SSL_countryName"'/' $RAD_SRC/raddb/certs/client.cnf
 sed -i 's/stateOrProvinceName\t*\s*=.*/stateOrProvinceName = '"$SSL_stateOrProvinceName"'/' $RAD_SRC/raddb/certs/client.cnf
@@ -58,7 +61,8 @@ sed -i 's/organizationName\t*\s*=.*/organizationName = '"$SSL_organizationName"'
 sed -i 's/emailAddress\t*\s*=.*/emailAddress = '"$SSL_emailAddress"'/' $RAD_SRC/raddb/certs/client.cnf
 sed -i 's/commonName\t*\s*=.*/commonName = '"$SSL_commonName"'/' $RAD_SRC/raddb/certs/client.cnf
 sed -i 's/subjectAltName\t*\s*=.*/subjectAltName = '"$SSL_subjectAltName"'/' $RAD_SRC/raddb/certs/client.cnf
-sed -i 's/localityName\t*\s*= .*/localityName = '"$SSL_localityName"'/' $RAD_SRC/raddb/certs/ca.cnf
+sed -i 's/localityName\t*\s*= .*/localityName = '"$SSL_localityName"'/' $RAD_SRC/raddb/certs/client.cnf
+sed -i 's/default_days\t*\s*= .*/default_days = '"$SSL_default_days"'/' $RAD_SRC/raddb/certs/client.cnf
 
 
 # create optional startup options
