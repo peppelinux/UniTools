@@ -188,6 +188,12 @@ systemctl start freeradius
 # custom certs
 # https://www.ossramblings.com/RADIUS-3.X-Server-on-Ubuntu-14.04-for-WIFI-Auth
 
+# popular openssl commands
+# cd /usr/local/etc/raddb/certs/
+# openssl req -text -noout -verify -in server.csr 
+# openssl x509 -in server.crt -text -noout
+# 
+
 # password storage
 # https://www.packtpub.com/books/content/storing-passwords-using-freeradius-authentication
 
