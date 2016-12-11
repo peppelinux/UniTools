@@ -1,0 +1,10 @@
+# For a test cluster with 2 nodes. One of them is offline. So, following this, I checked
+
+pvecm status 
+### this showed that expected was 2 for 2 nodes. 
+
+pvecm expected 1 
+pvecm status 
+### this now shows expected as 1. 
+### this lets me run with only 1 of the 2 working. 
+# This is not recommended for production nor HA, but I don't need to power them both on all the time.
