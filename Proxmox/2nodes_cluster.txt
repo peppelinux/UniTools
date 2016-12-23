@@ -8,3 +8,9 @@ pvecm status
 ### this now shows expected as 1. 
 ### this lets me run with only 1 of the 2 working. 
 # This is not recommended for production nor HA, but I don't need to power them both on all the time.
+
+# se salta l'hardware e non è possibile ricalcolare il quorum oppure se bisogna rimuovere un nodo offline 
+# e c'è il problema "cluster not ready - no quorum?" settare il quorum a 1 così eppoi rimuovere il nodo
+
+pvecm e 1
+pvecm del 10.97.x.y
