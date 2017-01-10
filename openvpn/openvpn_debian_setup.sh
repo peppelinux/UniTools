@@ -4,7 +4,9 @@ set -x
 
 aptitude install openvpn
 cd /etc/openvpn/
-cp -R /usr/share/doc/openvpn/examples/easy-rsa/2.0/* easy-rsa/
+# se debian inferiore a stretch 9.0
+# cp -R /usr/share/doc/openvpn/examples/easy-rsa/2.0/* easy-rsa/
+cp -R /usr/share/easy-rsa/ easy-rsa/
 
 cd easy-rsa
 
