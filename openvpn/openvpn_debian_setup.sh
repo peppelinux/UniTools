@@ -28,4 +28,4 @@ touch keys/index.txt
 # o equivalente:
 echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.d/99-sysctl.conf
 
-echo AUTOSTART="all" >> /etc/default/openvpn 
+echo AUTOSTART="server" >> /etc/default/openvpn 
