@@ -24,3 +24,8 @@ touch keys/index.txt
 ./build-key-server server
 ./build-dh
 ./build-key username-preferito
+
+# o equivalente:
+echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.d/99-sysctl.conf
+
+echo AUTOSTART="all" >> /etc/default/openvpn 
