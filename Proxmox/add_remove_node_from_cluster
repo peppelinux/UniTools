@@ -51,3 +51,13 @@ And the repeat the pvecm delnode command.
 Now switch back to the separated node, here delete all remaining files left from the old cluster. This ensures that the node can be added to another cluster again without problems.
 
 rm /var/lib/corosync/*
+
+=========================
+
+if got error:
+
+unable to copy ssh ID: exit code 1
+
+then
+ssh-keygen -f "/etc/ssh/ssh_known_hosts" -R IP_OF_NODE
+
