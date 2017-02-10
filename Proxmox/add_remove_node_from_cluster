@@ -61,3 +61,14 @@ unable to copy ssh ID: exit code 1
 then
 ssh-keygen -f "/etc/ssh/ssh_known_hosts" -R IP_OF_NODE
 
+if got
+
+pvecm status
+Corosync config '/etc/pve/corosync.conf' does not exist - is this node part of a cluster?
+
+do
+
+pvecm create CLUSTER_NAME
+
+
+
