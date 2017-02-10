@@ -70,5 +70,7 @@ do
 
 pvecm create CLUSTER_NAME
 
+try a force command if “authentication key already exists” persists:
+pvecm add IP_NODE -force
 
 
