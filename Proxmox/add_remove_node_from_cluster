@@ -1,0 +1,18 @@
+# CREATE CLUSTER
+pvecm create YOUR-CLUSTER-NAME
+pvecm status
+
+# ADD NODE
+pvecm add IP-ADDRESS
+
+# REMOVE NODE
+# It is very important to power off the node before removal, and make sure that it will not power on again (in the network) as it is. 
+# Move all virtual machines from the node, just use the Central Web-based Management to migrate or delete all VM´s. Make sure you have no local backups you want to keep, or save them accordingly.
+#Log in to one remaining node via ssh. Issue a pvecm nodes command to identify the nodeID: 
+
+pvecm status
+# power down the node 
+pvecm nodes
+
+# then delete it
+pvecm delnode IP-ADDRESS
