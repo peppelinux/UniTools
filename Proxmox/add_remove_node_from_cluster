@@ -16,3 +16,38 @@ pvecm nodes
 
 # then delete it
 pvecm delnode IP-ADDRESS
+
+# If something missed (you do not have turned off the node) and got “authentication key already exists”
+
+First stop the corosync and the pve-cluster services on the node:
+
+systemctl stop pve-cluster
+systemctl stop corosync
+
+Start the cluster filesystem again in local mode:
+
+pmxcfs -l
+
+Delete the corosync configuration files:
+
+rm /etc/pve/corosync.conf
+rm /etc/corosync/*
+
+You can now start the filesystem again as normal service:
+
+killall pmxcfs
+systemctl start pve-cluster
+
+The node is now separated from the cluster. You can deleted it from a remaining node of the cluster with:
+
+pvecm delnode oldnode
+
+If the command failed, because the remaining node in the cluster lost quorum when the now separate node exited, you may set the expected votes to 1 as a workaround:
+
+pvecm expected 1
+
+And the repeat the pvecm delnode command.
+
+Now switch back to the separated node, here delete all remaining files left from the old cluster. This ensures that the node can be added to another cluster again without problems.
+
+rm /var/lib/corosync/*
