@@ -73,4 +73,13 @@ pvecm create CLUSTER_NAME
 try a force command if “authentication key already exists” persists:
 pvecm add IP_NODE -force
 
+# if cluster breaks and http web server doesn't works anymore:
+
+service pveproxy status
+/etc/pve/local/pve-ssl.pem: failed to use local certificate chain (cert_file or cert) at /usr/share/perl5/PVE/APIServer/AnyEvent.pm line 1618.
+
+then run
+pvecm updatecerts -f
+service pveproxy restart
+
 
