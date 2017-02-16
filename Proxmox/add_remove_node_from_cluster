@@ -70,7 +70,8 @@ do
 
 pvecm create CLUSTER_NAME
 
-try a force command if “authentication key already exists” persists:
+try a force command if “authentication key already exists” persists.
+THIS COMMAND WILL DESTROY YOUR CLUSTER CONFIGURATION, do not do it if not necessary !!!!:
 pvecm add IP_NODE -force
 
 # if cluster breaks and http web server doesn't works anymore:
