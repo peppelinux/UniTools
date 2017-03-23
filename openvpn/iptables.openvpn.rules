@@ -14,3 +14,6 @@ iptables -t nat -A POSTROUTING -s 10.38.60.0/24 -o $WANNAME -j MASQUERADE
 # if output policy is different from ACCEPT:
 iptables -A OUTPUT -o $TUNNAME -j ACCEPT
 
+# makes rules persistent
+# Created symlink /etc/systemd/system/multi-user.target.wants/netfilter-persistent.service → /lib/systemd/system/netfilter-persistent.service
+aptitude install iptables-persistent
