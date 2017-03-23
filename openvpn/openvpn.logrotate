@@ -1,0 +1,11 @@
+/var/log/openvpn.log {
+        weekly
+        rotate 52
+        compress
+        delaycompress
+        notifempty
+        missingok
+        postrotate
+                /bin/systemctl reload openvpn > /dev/null
+        endscript
+}
