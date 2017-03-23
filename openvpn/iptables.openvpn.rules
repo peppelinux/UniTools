@@ -1,0 +1,16 @@
+
+TUNNAME='openvpn+'
+WANNAME='ens18'
+
+iptables -A INPUT -i $WANNAME -m state --state NEW -p udp --dport 1194 -j ACCEPT
+iptables -A INPUT -i $TUNNAME -j ACCEPT
+
+iptables -A FORWARD -i $TUNNAME -j ACCEPT
+iptables -A FORWARD -i $TUNNAME -o $WANNAME -m state --state RELATED,ESTABLISHED -j ACCEPT
+iptables -A FORWARD -i $WANNAME -o $TUNNAME -m state --state RELATED,ESTABLISHED -j ACCEPT
+
+iptables -t nat -A POSTROUTING -s 10.38.60.0/24 -o $WANNAME -j MASQUERADE
+
+# if output policy is different from ACCEPT:
+iptables -A OUTPUT -o $TUNNAME -j ACCEPT
+
