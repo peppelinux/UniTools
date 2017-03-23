@@ -17,3 +17,5 @@ iptables -A OUTPUT -o $TUNNAME -j ACCEPT
 # makes rules persistent
 # Created symlink /etc/systemd/system/multi-user.target.wants/netfilter-persistent.service → /lib/systemd/system/netfilter-persistent.service
 aptitude install iptables-persistent
+
+iptables-save > /etc/iptables/rules.v4
