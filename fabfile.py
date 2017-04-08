@@ -6,7 +6,13 @@ import cuisine
 # system dependencies
 # aptitude  install build-essential
 # aptitude  install python-pip python-dev libffi-dev libssl-dev libxml2-dev libxslt1-dev libjpeg8-dev zlib1g-dev
-# pip install cryptography --force-reinstall
+
+# if cryptography module raise exception during setup:
+# aptitude install python-pyparsing python-appdirs
+# pip install appdirs --upgrade
+# pip install pyparsing --upgrade
+# pip uninstall cryptography
+# pip install cryptography
 # pip install fabric cuisine --upgrade
 
 #il server A e il client B.
