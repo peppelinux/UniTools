@@ -1,0 +1,4 @@
+# il server A e il client B.
+# Se voglio collegarmi senza password da B ad A faccio su B:
+# ssh-keygen -t rsa
+# ssh-copy-id -i ~/.ssh/id_rsa.pub AHOSTNAME
