@@ -115,8 +115,7 @@ def install_tomcat7_idp():
     ]
     
     _run_safe_commands(commands)
-    with settings(warn_only=True): 
-        run('ln -sf /usr/share/java/mysql.jar /usr/share/tomcat7/lib/mysql.jar')
+    run('ln -sf /usr/share/java/mysql.jar /usr/share/tomcat7/lib/mysql.jar')
     
 @roles('shibboleth-idp')
 def install_shibboleth_idp():
@@ -124,6 +123,8 @@ def install_shibboleth_idp():
     'chown -R tomcat7 {0}/conf/ {0}/logs/ {0}/metadata/ {0}/credentials/'.format(
             IDP_INSTALL_PATH),
             ]
+    
+    
     
 @roles('shibboleth-idp')
 def configure_idp():
