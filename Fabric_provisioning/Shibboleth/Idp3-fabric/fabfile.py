@@ -4,7 +4,7 @@ from fabric.contrib.files import sed, exists
 from fabric.state import env
 import cuisine
 
-from jinja2 import Template, Environment, FileSystemLoader
+import jinja2 # import Template, Environment, FileSystemLoader
 from StringIO import StringIO
 import sys
 import datetime
@@ -12,7 +12,7 @@ import datetime
 from config import *
 
 # template engine
-_j2_env    = Environment(loader=FileSystemLoader(TEMPLATE_DIR),
+_j2_env    = jinja2.Environment(loader=jinja2.FileSystemLoader(TEMPLATE_DIR),
                             trim_blocks=True)
 
 # roles
@@ -75,9 +75,27 @@ def setup_idp():
                 ])
 
 @roles('shibboleth-idp')
+def install_ldap():
+    pass
+
+@roles('shibboleth-idp')
+def add_tomcat7_idp():
+    """
+    Add shibboleth idp to an existing tomcat7 running instance
+    """
+    pass
+
+@roles('shibboleth-idp')
+def create_selfsigned_certificates(name):
+    """
+    Creates certificates in local dir certs
+    """
+    pass
+    
+@roles('shibboleth-idp')
 def install_tomcat7_idp():
     """
-      Do not use this if you have an already running instance of tomcat
+    Do not use this if you have an already running instance of tomcat
     """
     print(sys._getframe().f_code.co_name)
     _install_packages([
@@ -124,28 +142,18 @@ def install_shibboleth_idp():
             IDP_INSTALL_PATH),
             ]
     
-    
-    
 @roles('shibboleth-idp')
-def configure_idp():
+def configure_shibboleth_idp():
     # http://docs.fabfile.org/en/1.13/api/contrib/files.html
     # fabric.contrib.files.upload_template
     # fabric sed
-
-    
     _ldap_properties_file = _idp_path + '/conf/ldap.properties'
     print('modify %s' % _ldap_properties_file)
     sed(_ldap_properties_file, 
         '#idp.authn.LDAP.authenticator\t*\s*= bindSearchAuthenticator', 
         'idp.authn.LDAP.authenticator = bindSearchAuthenticator')
-    
-    
-    
-    
+
 @roles('shibboleth-idp')
-def install_mysql():
-    run('apt-get install mysql-server', with_sudo=True)
- 
-def deploy():
-    execute(install_apache)
-    execute(install_mysql)
+def install_apache():
+    pass
+
