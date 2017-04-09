@@ -21,4 +21,4 @@ openssl x509 -req -days 3650 -in server.csr -signkey server.key -out server.crt
 
 # Step 4: Installing the Private Key and Certificate
 cp server.crt $CERTS_DIR/ssl.crt
-cp server.key $CERTS_DIR/apache/conf/ssl.key
+cp server.key $CERTS_DIR/ssl.key
