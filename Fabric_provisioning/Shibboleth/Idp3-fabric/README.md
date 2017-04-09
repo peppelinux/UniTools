@@ -14,10 +14,10 @@
 
 # Ssh connections
 
-Server A, client B
+Server A, client B.
 Connecting from B to A, run on B:
  
  ````
- ssh-keygen -t rsa		  ssh-keygen -t rsa
+ ssh-keygen -t rsa
  ssh-copy-id -i ~/.ssh/id_rsa.pub $A_HOSTNAME
  ````		
