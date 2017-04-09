@@ -1,4 +1,4 @@
-from fabric.api import hosts,run,execute,shell_env,roles
+from fabric.api import hosts,run,execute,shell_env,roles,warn_only
 from fabric.operations import get, settings, put, sudo, local
 from fabric.contrib.files import sed, exists
 from fabric.state import env
@@ -22,7 +22,7 @@ env.roledefs['all']            = IDPS_HOSTNAMES + SPS_HOSTNAMES
 
 def _run_safe_commands(commands):
     for command in commands:
-        print('run: %s' % command)
+        #~ print('run: %s' % command)
         r = run(command)
         if r.failed:
             raise Exception('%s execution failed' % command)
@@ -36,7 +36,7 @@ def _safe_put(localfile, remotefile):
     _suffix = '.%s.bak' % datetime.datetime.now().strftime('%Y-%m-%d_%H%M')
     if exists(remotefile):
         run('mv %s %s' % (remotefile, remotefile+_suffix))
-    print('put %s. Backup: %s' % (remotefile, remotefile+_suffix))
+    #~ print('put %s. Backup: %s' % (remotefile, remotefile+_suffix))
     put(localfile, remotefile)
 
 def _download_file(furl, fpath):
@@ -87,7 +87,7 @@ def install_tomcat7_idp():
                     ])
     
     # RENDER AND PUT idp.xml template into Catalina
-    idpxml =  j2_env.get_template('tomcat7/idp.xml').render(
+    idpxml =  _j2_env.get_template('tomcat7/idp.xml').render(
                                             idp_path = IDP_INSTALL_PATH,
                                             )
     _safe_put(    
@@ -106,17 +106,24 @@ def install_tomcat7_idp():
         )
     
     # installs addictional JARS
-    _download_file( TOMCAT_JAR_PATH, JSTL_DL_URL )
+    _download_file( JSTL_DL_URL, TOMCAT_JAR_PATH,  )
     
     commands = [
-                'chown -R tomcat7 conf/ logs/ metadata/ credentials/',
-                'ln -s /usr/share/java/mysql.jar /usr/share/tomcat7/lib/mysql.jar',
-                'service tomcat7 enable',
-                'service tomcat7 restart'
-                ]
+    #~ 'systemctl tomcat7 enable',
+    'update-rc.d tomcat7 enable',
+    'service tomcat7 restart'
+    ]
     
-    _run_safe_commands(commands)    
-
+    _run_safe_commands(commands)
+    with settings(warn_only=True): 
+        run('ln -sf /usr/share/java/mysql.jar /usr/share/tomcat7/lib/mysql.jar')
+    
+@roles('shibboleth-idp')
+def install_shibboleth_idp():
+    commands = [
+    'chown -R tomcat7 {0}/conf/ {0}/logs/ {0}/metadata/ {0}/credentials/'.format(
+            IDP_INSTALL_PATH),
+            ]
     
 @roles('shibboleth-idp')
 def configure_idp():
