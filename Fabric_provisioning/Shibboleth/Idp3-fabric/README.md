@@ -7,7 +7,7 @@ System dependencies
   aptitude  install python-pip python-dev libffi-dev libssl-dev libxml2-dev libxslt1-dev libjpeg8-dev zlib1g-dev		  aptitude  install python-pip python-dev libffi-dev libssl-dev libxml2-dev libxslt1-dev libjpeg8-dev zlib1g-dev
  ````
 
-Create a virtual environment
+# Create a virtual environment
  ````
  pip install virtualenv		
  virtualenv fabric_provisioning
@@ -15,11 +15,11 @@ Create a virtual environment
  pip install -r requirements.txt
  ````		
 
-Ssh connections		
+# Ssh connections
+
  Server A, client B
  Connecting from B to A, run on B:
- ````		 
- # Server A, client B
- # Connecting from B to A, run on B:
+ ````
  ssh-keygen -t rsa		  ssh-keygen -t rsa
  ssh-copy-id -i ~/.ssh/id_rsa.pub $A_HOSTNAME
+ ````		
