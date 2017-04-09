@@ -21,3 +21,8 @@ Connecting from B to A, run on B:
  ssh-keygen -t rsa
  ssh-copy-id -i ~/.ssh/id_rsa.pub $A_HOSTNAME
  ````		
+
+If password could be still necessary you can always pass it as argument. This installs Tomcat7
+````
+fab install_tomcat7_idp -u root -p vagrant
+````
