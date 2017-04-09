@@ -1,7 +1,7 @@
 # SETUP
 
   		  
-system dependencies
+System dependencies
  ````
   aptitude  install build-essential		  aptitude  install build-essential
   aptitude  install python-pip python-dev libffi-dev libssl-dev libxml2-dev libxslt1-dev libjpeg8-dev zlib1g-dev		  aptitude  install python-pip python-dev libffi-dev libssl-dev libxml2-dev libxslt1-dev libjpeg8-dev zlib1g-dev
@@ -16,9 +16,8 @@ Create a virtual environment
  ````		
 
 Ssh connections		
-  		  
- Server A, client B		 +SSH CONNECTION
- Connecting from B to A, run on B:		 +=======================
+ Server A, client B
+ Connecting from B to A, run on B:
  ````		 
  # Server A, client B
  # Connecting from B to A, run on B:
