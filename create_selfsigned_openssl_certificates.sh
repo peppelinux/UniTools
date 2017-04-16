@@ -23,6 +23,9 @@ openssl x509 -req -days 3650 -in server.csr -signkey server.key -out server.crt
 cp server.crt $CERTS_DIR/ssl.crt
 cp server.key $CERTS_DIR/ssl.key
 
+# using openssl's CA.sh 
+# http://www.octaldream.com/scottm/talks/ssl/opensslca.html
+
 # using easy-rsa
 
 aptitude install easy-rsa
