@@ -26,19 +26,30 @@ cp server.key $CERTS_DIR/ssl.key
 # using openssl's CA.sh 
 # http://www.octaldream.com/scottm/talks/ssl/opensslca.html
 
-# using easy-rsa
+# ANOTHER APPROACH using easy-rsa
 
 aptitude install easy-rsa
 cp -Rp /usr/share/easy-rsa/ .
 cd easy-rsa
+
+# customize dh lenght, keys attributes and keys output path
 nano vars
+
+# activate environment
 source vars
+
+# purge all the previous keys/dh/crts
 ./clean-all
+
+# creates: ca.crt	ca.key	index.txt serial
 ./build-ca
+
+# creates diffie hellman's 
 ./build-dh
+
+# then creates client certificates
 ./build-key idp.example.org
 ./build-key sp.example.org
-ls keys/
 
 # https://serverfault.com/questions/9708/what-is-a-pem-file-and-how-does-it-differ-from-other-openssl-generated-key-file
 
