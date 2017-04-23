@@ -38,6 +38,6 @@
     - { role: slapd, tags: ["slapd"] }
     - { role: shib3idp, tags: ["shib3idp"] }
     - { role: apache2, tags: ["apache2"] }
-    - { role: mod-shib2, tags: ["apache2", "shib2"] }  
+    - { role: mod-shib2, tags: ["shib2"] }  
     - { role: mysql, tags: ["mysql"] }      
 
