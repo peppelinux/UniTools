@@ -29,7 +29,8 @@ Todo
 - schema migrations per DB e LDAP
 
 Per utilizzare questo playbook basta installare ansible rigorosamente in ambiente python2
-pip2 install ansible
+
+    pip2 install ansible
 
 
 Comandi di deployment e cleanup
