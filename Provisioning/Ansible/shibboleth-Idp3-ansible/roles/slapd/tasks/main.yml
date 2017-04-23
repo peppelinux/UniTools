@@ -43,7 +43,7 @@
 
 - name: Render template directory-config.ldif
   template: 
-    src: roles/slapd/files/directory-config.ldif
+    src: roles/slapd/templates/directory-config.ldif
     dest: /tmp/directory-config.ldif
 
 - name: Apply Directory config ldif
@@ -59,7 +59,7 @@
   register: memberof_overlay
 
 - name: Render template memberof-overlay.ldif
-  template: 
+  copy: 
     src: roles/slapd/files/memberof-overlay.ldif
     dest: /tmp/memberof-overlay.ldif
 
@@ -77,7 +77,7 @@
   register: eduperson_schema
 
 - name: Render template eduperson-201602 schema ldif
-  template: 
+  copy: 
     src: roles/slapd/files/eduperson-201602.ldif
     dest: /tmp/eduperson-201602.ldif
 
@@ -107,7 +107,7 @@
 
 - name: Render template directory-content.ldif
   template: 
-    src: roles/slapd/files/directory-content.ldif
+    src: roles/slapd/templates/directory-content.ldif
     dest: /tmp/directory-content.ldif
 
 - name: Add Directory content ldif

@@ -14,12 +14,12 @@
 
 - name: Install IdP Virtualhost configuration
   template:
-    src: roles/apache2/files/idp.conf
+    src: roles/apache2/templates/idp.conf
     dest: /etc/apache2/sites-available/{{ idp_fqdn }}.conf
 
 - name: Install SP Virtualhost configuration
   template:
-    src: roles/apache2/files/sp.conf
+    src: roles/apache2/templates/sp.conf
     dest: /etc/apache2/sites-available/{{ sp_fqdn }}.conf
 
 
@@ -35,13 +35,18 @@
 
 - name: Install IdP Index file 
   template:
-    src: roles/apache2/files/idp-index.html
+    src: roles/apache2/templates/idp-index.html
     dest: /var/www/html/{{ idp_fqdn }}/index.html
 
 - name: Site content for {{ sp_fqdn }}
   copy:
     src: roles/apache2/files/sp.example.org/
     dest: /var/www/html/{{ sp_fqdn }}/
+
+- name: Parse {{ sp_fqdn }} in index.html
+  template:
+    src: roles/apache2/files/sp.example.org/index.html
+    dest: /var/www/html/{{ sp_fqdn }}/index.html
 
 - name: Remove old secure {{ sp_fqdn }} index file
   file:

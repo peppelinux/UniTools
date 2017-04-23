@@ -23,13 +23,13 @@
     dest: /tmp/shibboleth.sql
 
 - name: Create Shibboleth Database
-  shell: mysql -u root --password=password < /tmp/shibboleth.sql
+  shell: mysql -u root --password={{ mysql_pw }} < /tmp/shibboleth.sql
 
 - name: Remove temporary SQL dump
   file: path=/tmp/shibboleth.sql state=absent
 
 - name: Check table RuoliOrganizzativi
-  shell: echo 'SELECT * FROM RuoliOrganizzativi' | mysql -u root --password=password shibboleth
+  shell: echo 'SELECT * FROM RuoliOrganizzativi' | mysql -u root --password={{ mysql_pw }} shibboleth
   register: ruoli_org
 
 - name: Load table RuoliOrganizzativi

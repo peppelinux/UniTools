@@ -56,7 +56,7 @@
 
 - name: Copy template configuration for ldap.properties
   template: 
-    src: roles/shib3idp/files/ldap.properties
+    src: roles/shib3idp/templates/ldap.properties
     dest: "{{ idp_path }}/conf/ldap.properties"
 
 - name: Generate salt for persistentId generator
@@ -89,7 +89,7 @@
   
 - name: Configure LDAP Auth
   template: 
-    src: roles/shib3idp/files/ldap.properties 
+    src: roles/shib3idp/templates/ldap.properties 
     dest: "{{ idp_path }}/conf/ldap.properties" 
     
 - name: Configure Enhanced Logging
@@ -109,7 +109,7 @@
 
 - name: Configure relying-party.xml (persistentId)
   template:
-    src: roles/shib3idp/files/relying-party.xml
+    src: roles/shib3idp/templates/relying-party.xml
     dest:  "{{ idp_path }}/conf/relying-party.xml"
 
 - name: Configure global.xml (dataStore and persistentId)
@@ -119,7 +119,7 @@
 
 - name: Configure IdP attribute-filter.xml 
   template: 
-    src: roles/shib3idp/files/attribute-filter.xml
+    src: roles/shib3idp/templates/attribute-filter.xml
     dest: "{{ idp_path }}/conf/attribute-filter.xml"
 
 - name: Copy configured attribute-resolver-full.xml in attribute-resolver.xml
@@ -134,7 +134,7 @@
 
 - name: Add metadata providers
   template: 
-    src: roles/shib3idp/files/metadata-providers.xml-1
+    src: roles/shib3idp/templates/metadata-providers.xml-1
     dest: "{{ idp_path }}/conf/metadata-providers.xml"
   
 - name: Restart Tomcat7

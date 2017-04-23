@@ -8,7 +8,7 @@
 
 - name: Configure Shibboleth SP
   template:
-    src: roles/mod-shib2/files/shibboleth2.xml
+    src: roles/mod-shib2/templates/shibboleth2.xml
     dest: /etc/shibboleth/shibboleth2.xml
     
 - name: Configure Shibboleth SP Attribute Map
@@ -37,7 +37,7 @@
 
 - name: Configure SP Metadata in Shibboleth IdP
   template:
-    src: roles/shib3idp/files/metadata-providers.xml
+    src: roles/shib3idp/templates/metadata-providers.xml
     dest: /opt/shibboleth-idp/conf/metadata-providers.xml
   #~ when: pre_t is defined and pre_t > 2 
   
