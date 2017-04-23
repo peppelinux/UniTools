@@ -10,7 +10,7 @@
   apt: name={{ item }} state=present
   with_items:
     - html2text
-    - emacs23-nox
+    - emacs24-nox
     - vim
     - ntp
     - apache2
