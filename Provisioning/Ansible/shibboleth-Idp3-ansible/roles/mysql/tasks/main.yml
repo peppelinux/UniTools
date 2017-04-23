@@ -32,6 +32,17 @@
   shell: echo 'SELECT * FROM RuoliOrganizzativi' | mysql -u root --password={{ mysql_pw }} shibboleth
   register: ruoli_org
 
+- name: Copy temporary insert-ruoliorganizzativi.sql
+  copy:
+    src: roles/mysql/files/insert-ruoliorganizzativi.sql
+    dest: "/tmp/insert-ruoliorganizzativi.sql"
+
+
 - name: Load table RuoliOrganizzativi
-  shell: mysql -u root --password=password shibboleth < roles/mysql/files/insert-ruoliorganizzativi.sql
+  shell: mysql -u root --password=password shibboleth < /tmp/insert-ruoliorganizzativi.sql
   when: ruoli_org.stdout == ""
+
+- name: Clean temporary insert-ruoliorganizzativi.sql
+  file:
+    state: absent
+    path: "/tmp/insert-ruoliorganizzativi.sql"
