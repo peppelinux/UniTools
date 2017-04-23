@@ -51,3 +51,9 @@ Setup di Shibboleth Idp3
 Setup di apache2 e mod_shib per configurazione Idp3 e Service Provider generico
     
     ansible-playbook playbook.yml -i hosts -v --tag apache2
+
+Esegui tutto, equivalente a pre_t:3 di Davide:
+    
+    ansible-playbook playbook.yml -i hosts -v --limit idp -e '{ cleanup: true }'
+
+
