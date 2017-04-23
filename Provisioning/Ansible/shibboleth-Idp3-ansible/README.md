@@ -27,6 +27,7 @@ Todo
 - Scelta tra Apache e Nginx/FastCGI come webserver (per sp)
 - Scelta tra Tomcat7 e Jetty come contenitore servlet (per idp)
 - schema migrations per DB e LDAP
+- logrotate setup per le directory di logging
 
 Per utilizzare questo playbook basta installare ansible rigorosamente in ambiente python2
 
