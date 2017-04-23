@@ -21,6 +21,13 @@ Funzionalità:
 - Possibilità di configurare il dominio (non più soltanto example.org)
 - Variabili personalizzabili, template, configurazione dinamizzata
 
+Todo
+
+- Possibilità di generare le CA e chiavi on-the-fly sulla base degli attributi del playbook
+- Scelta tra Apache e Nginx/FastCGI come webserver (per sp)
+- Scelta tra Tomcat7 e Jetty come contenitore servlet (per idp)
+- schema migrations per DB e LDAP
+
 Per utilizzare questo playbook basta installare ansible rigorosamente in ambiente python2
 pip2 install ansible
 
