@@ -35,6 +35,45 @@ pip2 install ansible
 Comandi di deployment e cleanup
 ===============================
 
+Creazione delle chiavi firmate:
+    
+    # installa easy-rsa
+    aptitude install easy-rsa
+    cp -Rp /usr/share/easy-rsa/ .
+    cd easy-rsa
+
+    # personalizziamo attributi, lunghezza DH, percorso di salvataggio delle chiavi
+    nano vars
+
+    # activate environment
+    source vars
+
+    # purge all the previous keys/dh/crts
+    ./clean-all
+
+    # creates: ca.crt	ca.key	index.txt serial
+    ./build-ca
+
+    # creates diffie hellman's 
+    # il tempo di creazione varia dalla lunghezza del dh, 4096bit prende qualche minuto in più
+    ./build-dh
+
+    # then creates client certificates
+    ./build-key idp.example.org
+    ./build-key sp.example.org
+
+    # adesso nella directory "keys" troviamo le chiavi
+    # da spostare in $shibboleth-Idp3-ansible/roles/common/files/$nome_dominio
+    # rinominando
+    cp keys/ca.crt $shibboleth-Idp3-ansible/roles/common/files/$nome_dominio/cacert.pem
+    cp keys/ca.key $shibboleth-Idp3-ansible/roles/common/files/$nome_dominio/cakey.pem
+    cp keys/idp.$nome_dominio.crt $shibboleth-Idp3-ansible/roles/common/files/$nome_dominio/$nome_dominio-cert.pem
+    cp keys/idp.$nome_dominio.key $shibboleth-Idp3-ansible/roles/common/files/$nome_dominio/$nome_dominio-key.pem    
+    cp keys/sp.$nome_dominio.key $shibboleth-Idp3-ansible/roles/common/files/$nome_dominio/$nome_dominio-key.pem
+    cp keys/sp.$nome_dominio.crt $shibboleth-Idp3-ansible/roles/common/files/$nome_dominio/$nome_dominio-cert.pem
+
+
+
 Esecuzione del setup comune a tutti
     
     ansible-playbook playbook.yml -i hosts --tag common
