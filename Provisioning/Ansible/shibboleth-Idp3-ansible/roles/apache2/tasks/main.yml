@@ -48,6 +48,11 @@
     src: roles/apache2/files/sp.example.org/index.html
     dest: /var/www/html/{{ sp_fqdn }}/index.html
 
+- name: Parse {{ domain }} in attributes_map.php
+  template:
+    src: roles/apache2/files/sp.example.org/secure/attributes_map.php
+    dest: /var/www/html/{{ sp_fqdn }}/secure/attributes_map.php
+
 - name: Remove old secure {{ sp_fqdn }} index file
   file:
     path: /var/www/html/{{ sp_fqdn }}/secure/index.html

@@ -110,3 +110,7 @@ Note
 Gli utenti creati in slapd sono definiti in
     
     roles/slapd/templates/direcory-content.ldif
+
+E' necessario configurare gli hostname in /etc/hosts o utilizzare un nameserver dedicato per accedere al servizio HTTPS
+    
+    https://sp.testunical.it
