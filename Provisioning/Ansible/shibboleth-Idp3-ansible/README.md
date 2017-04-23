@@ -103,4 +103,9 @@ Esegui tutto, equivalente a pre_t:3 di Davide:
     
     ansible-playbook playbook.yml -i hosts -v --limit idp -e '{ cleanup: true }'
 
+Note
+========================
 
+Gli utenti creati in slapd sono definiti in
+    
+    roles/slapd/templates/direcory-content.ldif
