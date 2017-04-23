@@ -1,0 +1,32 @@
+dn: cn=config
+replace: olcTLSCACertificateFile
+olcTLSCACertificateFile: /etc/ssl/certs/cacert.pem
+-
+replace: olcTLSCertificateFile
+olcTLSCertificateFile: /etc/ssl/certs/{{ idp_fqdn }}-cert.pem
+-
+replace: olcTLSCertificateKeyFile
+olcTLSCertificateKeyFile: /etc/ssl/private/{{ sp_fqdn }}-key.pem
+-
+replace: olcLogLevel
+olcLogLevel: 256
+
+dn: olcDatabase={1}hdb,cn=config
+changeType: modify
+replace: olcAccess
+olcAccess: {0}to * by dn.exact=gidNumber=0+uidNumber=0,cn=peercred
+ ,cn=external,cn=auth manage by * break
+olcAccess: {1}to dn.base="" by * read
+olcAccess: {2}to dn.base="cn=Subschema" by * read
+olcAccess: {3}to * by dn.exact="cn=search,ou=system,{{ ldap_basedc }}" read by anonymous auth by self read
+-
+replace: olcDbIndex
+olcDbIndex: objectClass eq
+olcDbIndex: member eq
+olcDbIndex: cn pres,eq,sub
+olcDbIndex: ou pres,eq,sub
+olcDbIndex: uid pres,eq
+olcDbIndex: entryUUID eq
+olcDbIndex: sn pres,eq,sub
+olcDbIndex: mail pres,eq,sub
+
