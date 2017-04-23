@@ -1,3 +1,11 @@
+
+- name: Enable proxy_ajp, ssl modules, shib2
+  apache2_module: name={{ item }} state=present
+  with_items:
+    - proxy_ajp
+    - ssl
+    - shib2
+
 - name: Add apache2 user to ssl-cert group
   user: name=apache2 groups=ssl-cert
 
@@ -62,12 +70,6 @@
   copy:
     src: roles/apache2/files/bootstrap.min.css
     dest: /var/www/css/bootstrap.min.css
-
-- name: Enable proxy_ajp and ssl modules
-  apache2_module: name={{ item }} state=present
-  with_items:
-    - proxy_ajp
-    - ssl
 
 - name: Enable IdP Virtualhost
   command: a2ensite {{ idp_fqdn }}.conf

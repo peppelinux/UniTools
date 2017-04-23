@@ -10,7 +10,7 @@
 # ssh-copy-id -i ~/.ssh/id_rsa_sp.pub sp_ip
 
 [idp]
-10.0.3.12
+10.0.3.22
 
 [sp]
-10.0.4.12
+10.0.4.22

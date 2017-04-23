@@ -21,6 +21,8 @@
     idp_path: /opt/shibboleth-idp
     # generate with: openssl rand -base64 36
     # ansible-playbook playbook.yml -i hosts --extra-vars "persId_salt=xlbB06G6P6Omt7f5RCopfBvF8Sx1+frf99kSHdb8EEfSB4yt user=starbuck"
+    # lascia commentato per la generazione in automatico
+    # decommenta se serve compatibilità con il pregresso
     # persId_salt: xlbB06G6P6Omt7f5RCopfBvF8Sx1+frf99kSHdb8EEfSB4yt
     sp_fqdn: "sp.{{ domain }}"
     idp_pw: password
@@ -37,6 +39,5 @@
     - { role: shib3idp, tags: ["shib3idp"] }
     - { role: apache2, tags: ["apache2"] }
     - { role: mod-shib2, tags: ["apache2", "shib2"] }  
-    #- { role: unified, tags: ["unified"] } 
     - { role: mysql, tags: ["mysql"] }      
 

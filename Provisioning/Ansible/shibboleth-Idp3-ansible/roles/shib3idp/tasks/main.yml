@@ -3,8 +3,6 @@
   file: path=/opt/shibboleth-idp state=absent
   when: cleanup is defined
 
-
-
 # END CLEANUPS
 
 - name: Stat Shibboleth IdP tarball in /opt 

@@ -1,27 +1,16 @@
-
-
 #~ - name: Add GARR apt sources
   #~ template: src=roles/common/templates/sources.list dest=/etc/apt/sources.list
 #~ 
-#~ - name: Update apt cache
-#~ #  apt: update_cache=yes
-  #~ apt: update_cache=yes cache_valid_time=86400
-  #~ tags: online
-
-# CLEANUPS
-- name: Uninstall libapache2-mod-shib2
-  apt: name=libapache2-mod-shib2 state=absent purge=yes
-  when: cleanup is defined
-
-- name: Remove /etc/shibboleth dir
-  file: path=/etc/shibboleth state=absent
-  when: cleanup is defined
+- name: Update apt cache
+  apt: update_cache=yes
+  # apt: update_cache=yes cache_valid_time=86400
+  tags: online
 
 - name: Install apt packages
   apt: name={{ item }} state=present
   with_items:
     - html2text
-    - emacs24-nox
+    - emacs23-nox
     - vim
     - ntp
     - apache2
