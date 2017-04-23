@@ -1,24 +1,5 @@
- ____  _     _ _     _           _      _   _     
-/ ___|| |__ (_) |__ | |__   ___ | | ___| |_| |__  
-\___ \| '_ \| | '_ \| '_ \ / _ \| |/ _ \ __| '_ \ 
- ___) | | | | | |_) | |_) | (_) | |  __/ |_| | | |
-|____/|_| |_|_|_.__/|_.__/ \___/|_|\___|\__|_| |_|
-                                                  
-    _              _ _     _      
-   / \   _ __  ___(_) |__ | | ___ 
-  / _ \ | '_ \/ __| | '_ \| |/ _ \
- / ___ \| | | \__ \ | |_) | |  __/
-/_/   \_\_| |_|___/_|_.__/|_|\___|
-                                  
-                      _     _             _             
- _ __  _ __ _____   _(_)___(_) ___  _ __ (_)_ __   __ _ 
-| '_ \| '__/ _ \ \ / / / __| |/ _ \| '_ \| | '_ \ / _` |
-| |_) | | | (_) \ V /| \__ \ | (_) | | | | | | | | (_| |
-| .__/|_|  \___/ \_/ |_|___/_|\___/|_| |_|_|_| |_|\__, |
-|_|                                               |___/ 
-
-
-# figlet -w 62  "Shibboleth Ansible provisioning"
+Shibboleth Ansible provisioning
+===============================
 
 
 Playbok Ansible per installare e configurare un setup classico di 
@@ -31,14 +12,14 @@ Playbok Ansible per installare e configurare un setup classico di
 - ShibbolethIdp
 - ShibbolethSP
 
-Ispirato da Garr Netvolution 2017 (http://eventi.garr.it/it/ws17) e 
-ampiamente basato sul lavoro di Davide Vaghetti:
+Ispirato da Garr Netvolution 2017 (http://eventi.garr.it/it/ws17) e basato sul lavoro di Davide Vaghetti:
 
 https://github.com/daserzw/IdP3-ansible
 
 Funzionalità:
 
 - Possibilità di configurare il dominio (non più soltanto example.org)
+- Variabili personalizzabili, template, configurazione dinamizzata
 
 Per utilizzare questo playbook basta installare ansible rigorosamente in ambiente python2
 pip2 install ansible
