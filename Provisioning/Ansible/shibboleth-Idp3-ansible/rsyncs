@@ -1,0 +1,10 @@
+rsync -av --delete --recursive --force sp.example.org:/opt/shibboleth-idp example.org/shibboleth-idp
+rsync -av --delete --recursive --force sp.example.org:/etc/apache2 example.org/apache2
+rsync -av --delete --recursive --force sp.example.org:/etc/tomcat7 example.org/tomcat7
+rsync -av --delete --recursive --force sp.example.org:/var/lib/tomcat7 example.org/varlib_tomcat7
+
+rsync -av --delete --recursive --force sp.testunical.it:/opt/shibboleth-idp testunical.it/shibboleth-idp
+rsync -av --delete --recursive --force sp.testunical.it:/etc/apache2 testunical.it/apache2
+rsync -av --delete --recursive --force sp.testunical.it:/etc/tomcat7 testunical.it/tomcat7
+rsync -av --delete --recursive --force sp.testunical.it:/var/lib/tomcat7 testunical.it/varlib_tomcat7
+

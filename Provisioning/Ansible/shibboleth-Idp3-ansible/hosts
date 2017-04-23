@@ -1,0 +1,16 @@
+#localhost ansible_connection=local
+# http://docs.ansible.com/ansible/intro_patterns.html#patterns
+# http://docs.ansible.com/ansible/playbooks_best_practices.html
+
+# remember to do ssh-copy-id to connect password-less to the peers
+# ssh-keygen -t rsa
+# ssh-copy-id -i ~/.ssh/id_rsa_idp.pub idp_ip
+
+# ssh-keygen -t rsa
+# ssh-copy-id -i ~/.ssh/id_rsa_sp.pub sp_ip
+
+[idp]
+10.0.3.12
+
+[sp]
+10.0.4.12

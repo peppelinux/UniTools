@@ -1,0 +1,123 @@
+# CLEANUPS
+
+- name: Stop slapd
+  service: name=slapd state=stopped enabled=false
+  when: cleanup is defined
+  ignore_errors: yes
+  
+- name: Uninstall slapd
+  apt: name=slapd state=absent purge=yes
+  when: cleanup is defined
+
+- name: Remove /var/lib/ldap
+  file: path=/var/lib/ldap state=absent
+  when: cleanup is defined
+  
+  # END CLEANUPS
+
+- name: Check debconf for slapd entries
+  shell: (debconf-get-selections | grep -q -s slapd); echo $?
+  register: debconf
+  ignore_errors: yes
+
+- name: Set debconf slapd password1
+  debconf: name=slapd question="slapd/password1" value="{{ ldap_pw }}" vtype="password"
+  when: debconf.stdout == "1"
+    
+- name: Set debconf slapd password2
+  debconf: name=slapd question="slapd/password2" value="{{ ldap_pw }}" vtype="password"
+  when: debconf.stdout == "1"
+
+- name: Set debconf slapd domain
+  debconf: name=slapd question="slapd/domain" value="{{ domain }}" vtype="string"
+  when: debconf.stdout == "1"
+  
+- name: Install slapd
+  apt: name=slapd state=present
+
+- name: Add slapd user to ssl-cert group
+  user: name=openldap groups=ssl-cert
+
+- name: Install ldap-utils
+  apt: name=ldap-utils state=present
+
+- name: Render template directory-config.ldif
+  template: 
+    src: roles/slapd/files/directory-config.ldif
+    dest: /tmp/directory-config.ldif
+
+- name: Apply Directory config ldif
+  command: "ldapmodify -Y EXTERNAL -H ldapi:/// -f /tmp/directory-config.ldif"
+
+- name: Clean temporary config ldif
+  file:
+    state: absent
+    path: "tmp/directory-config.ldif"
+
+- name: Search Directory for memberof overlay
+  shell: "ldapsearch -QLLLY EXTERNAL -H ldapi:/// -b cn=config  olcOverlay=memberof"
+  register: memberof_overlay
+
+- name: Render template memberof-overlay.ldif
+  template: 
+    src: roles/slapd/files/memberof-overlay.ldif
+    dest: /tmp/memberof-overlay.ldif
+
+- name: Add memberOf overlay to openldap
+  command: "ldapadd -Y EXTERNAL -H ldapi:/// -f /tmp/memberof-overlay.ldif"
+  when: memberof_overlay.stdout == ""
+
+- name: Clean temporary memberof-overlay
+  file:
+    state: absent
+    path: "tmp/memberof-overlay.ldif"
+
+- name: Search Directory for eduperson schema
+  shell: "ldapsearch -QLLLY EXTERNAL -H ldapi:/// -b cn=schema,cn=config  cn=*eduperson dn"
+  register: eduperson_schema
+
+- name: Render template eduperson-201602 schema ldif
+  template: 
+    src: roles/slapd/files/eduperson-201602.ldif
+    dest: /tmp/eduperson-201602.ldif
+
+- name: Add eduperson-201602 schema ldif
+  command: "ldapadd -Y EXTERNAL -H ldapi:/// -f /tmp/eduperson-201602.ldif"
+  when: eduperson_schema.stdout == ""
+
+- name: Clean temporary eduperson-201602 schema ldif
+  file:
+    state: absent
+    path: "/tmp/eduperson-201602.ldif"
+
+# next task should return output like:
+# dn: cn=search,ou=system,dc=example,dc=org
+# dn: uid=mario,ou=people,dc=example,dc=org
+# ...
+- name: Search Directory for users
+  shell: "ldapsearch -QLLLY EXTERNAL -H ldapi:/// -b {{ ldap_basedc }} objectClass=inetOrgPerson dn"
+  register: users_in_people_ou
+
+# slapd print all, standard password encoding is SSHA printed in base64 encoding
+# ldapsearch -QLLLY EXTERNAL -H ldapi:/// -b "dc=unical,dc=it" -W "(objectclass=*)"
+
+# fare render template roles/slapd/files/directory-content.ldif PRIMA !
+# fare render template roles/slapd/files/directory-config.ldif PRIMA !
+# con annessi certificati !
+
+- name: Render template directory-content.ldif
+  template: 
+    src: roles/slapd/files/directory-content.ldif
+    dest: /tmp/directory-content.ldif
+
+- name: Add Directory content ldif
+  command: "ldapadd -Y EXTERNAL -H ldapi:/// -f /tmp/directory-content.ldif"
+  when: users_in_people_ou.stdout == ""
+  
+- name: Clean temporary content ldif
+  file:
+    state: absent
+    path: "/tmp/directory-content.ldif"
+
+- name: Restart slapd
+  service: name=slapd state=restarted enabled=yes

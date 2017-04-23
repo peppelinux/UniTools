@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resolver:AttributeResolver
+        xmlns:resolver="urn:mace:shibboleth:2.0:resolver"
+        xmlns:pc="urn:mace:shibboleth:2.0:resolver:pc"
+        xmlns:ad="urn:mace:shibboleth:2.0:resolver:ad"
+        xmlns:dc="urn:mace:shibboleth:2.0:resolver:dc"
+        xmlns:enc="urn:mace:shibboleth:2.0:attribute:encoder"
+        xmlns:sec="urn:mace:shibboleth:2.0:security"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="urn:mace:shibboleth:2.0:resolver http://shibboleth.net/schema/idp/shibboleth-attribute-resolver.xsd
+                            urn:mace:shibboleth:2.0:resolver:pc http://shibboleth.net/schema/idp/shibboleth-attribute-resolver-pc.xsd
+                            urn:mace:shibboleth:2.0:resolver:ad http://shibboleth.net/schema/idp/shibboleth-attribute-resolver-ad.xsd
+                            urn:mace:shibboleth:2.0:resolver:dc http://shibboleth.net/schema/idp/shibboleth-attribute-resolver-dc.xsd
+                            urn:mace:shibboleth:2.0:attribute:encoder http://shibboleth.net/schema/idp/shibboleth-attribute-encoder.xsd
+                            urn:mace:shibboleth:2.0:security http://shibboleth.net/schema/idp/shibboleth-security.xsd">
+
+  <resolver:AttributeDefinition xsi:type="ad:Simple" id="myRuolo" sourceAttributeID="myRuolo">
+        <resolver:Dependency ref="VEDI resolver:DataConnector->id" />
+        <resolver:AttributeEncoder xsi:type="enc:SAML1String" name="urn:x-corsoidp:dir:attribute-def:myRuolo" encodeType="false" />
+        <resolver:AttributeEncoder xsi:type="enc:SAML2String" name="urn:oid:1.3.6.1.4.1.99999999.1.1.1.1" friendlyName="myRuolo" encodeType="false" />
+    </resolver:AttributeDefinition>
+
+
+  <resolver:DataConnector id="myRdbms" xsi:type="dc:RelationalDatabase">
+        <dc:BeanManagedConnection>VEDI global.xml o saml-nameid.properties:idp.persistentId.dataSource</dc:BeanManagedConnection>
+        <dc:QueryTemplate>
+            <![CDATA[
+                SELECT * FROM shibboleth.RuoliOrganizzativi WHERE uid = '$resolutionContext.principal'
+            ]]>
+        </dc:QueryTemplate>
+
+        <dc:Column columnName="ruolo" attributeID="myRuolo" />
+    </resolver:DataConnector>
+
+</resolver:AttributeResolver>

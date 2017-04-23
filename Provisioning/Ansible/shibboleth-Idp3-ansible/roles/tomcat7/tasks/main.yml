@@ -1,0 +1,38 @@
+# CLEANUPS
+- name: Stop Tomcat7
+  service: name=tomcat7 state=stopped enabled=false
+  when: cleanup is defined
+
+- name: Uninstall tomcat7
+  apt: name=slapd state=absent purge=yes
+  when: cleanup is defined
+  # END CLEANUP
+  
+# to improve security watch this: https://www.owasp.org/index.php/Securing_tomcat
+
+- name: Install tomcat7
+  apt: name=tomcat7 state=present
+
+- name: /etc/tomcat7/server.xml with AJP, NO 8080, and no autoDeploy
+  template:
+    src: roles/tomcat7/templates/server.xml
+    dest: /etc/tomcat7/server.xml
+
+- name: /etc/default/tomcat7 with urandom and 384m heap mem
+  template:
+    src: roles/tomcat7/templates/tomcat7
+    dest: /etc/default/tomcat7
+
+- name: Install JSTL-1.2 library
+  get_url:
+    url: https://repo1.maven.org/maven2/jstl/jstl/1.2/jstl-1.2.jar
+    dest: /usr/share/tomcat7/lib
+
+- name: Link mysql-java library
+  file:
+    src: /usr/share/java/mysql.jar
+    dest: /usr/share/tomcat7/lib/mysql.jar
+    state: link
+  
+- name: Restart Tomcat7
+  service: name=tomcat7 state=restarted enabled=yes

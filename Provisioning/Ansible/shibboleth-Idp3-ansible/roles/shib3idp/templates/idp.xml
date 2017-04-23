@@ -1,0 +1,6 @@
+<Context docBase="{{ idp_path }}/war/idp.war"
+         privileged="true"
+         antiResourceLocking="false"
+         swallowOutput="true">
+  <Manager pathname="" />
+</Context>

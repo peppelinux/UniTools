@@ -1,0 +1,37 @@
+- name: Check debconf for mysql-server entries
+  shell: (debconf-get-selections | grep -q -s mysql-server); echo $?
+  register: debconf
+  ignore_errors: yes
+
+- name: Set debconf mysql root password
+  debconf: name=mysql-server question="mysql-server/root_password" value="{{ mysql_pw }}" vtype="password"
+  when: debconf.stdout == "1"
+    
+- name: Set debconf mysql root password again
+  debconf: name=mysql-server question="mysql-server/root_password_again" value="{{ mysql_pw }}" vtype="password"
+  when: debconf.stdout == "1"
+
+- name: Install Mysql
+  apt: name=mysql-server state=present
+
+- name: Run Mysql
+  service: name=mysql state=started enabled=yes
+
+- name: upload sql datatabse
+  copy: 
+    src: roles/mysql/files/shibboleth.sql
+    dest: /tmp/shibboleth.sql
+
+- name: Create Shibboleth Database
+  shell: mysql -u root --password=password < /tmp/shibboleth.sql
+
+- name: Remove temporary SQL dump
+  file: path=/tmp/shibboleth.sql state=absent
+
+- name: Check table RuoliOrganizzativi
+  shell: echo 'SELECT * FROM RuoliOrganizzativi' | mysql -u root --password=password shibboleth
+  register: ruoli_org
+
+- name: Load table RuoliOrganizzativi
+  shell: mysql -u root --password=password shibboleth < roles/mysql/files/insert-ruoliorganizzativi.sql
+  when: ruoli_org.stdout == ""

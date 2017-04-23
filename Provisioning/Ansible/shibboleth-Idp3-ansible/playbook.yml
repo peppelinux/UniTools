@@ -1,0 +1,42 @@
+# ansible-playbook playbook.yml -i hosts -v
+# or if you want to run specifieds roles:
+# ansible-playbook playbook.yml -i hosts -v --tag common
+
+---
+- name: Install IdP Course VM
+  hosts: all
+  become: yes
+  vars:
+    name:   testunical
+    domain1: it
+    domain: "{{ name }}.{{ domain1 }}"
+    ldap_basedc: "dc={{ name }},dc={{ domain1 }}"
+    ldap_basedn: "ou=people,dc={{ name }},dc={{ domain1 }}"
+    ldap_binddn: "cn=search,ou=system,dc={{ name }},dc={{ domain1 }}"
+    ldap_pw: password
+    # ldap_bind: localhost
+    cert_path: /etc/ssl/certs
+    idp_dl_url: https://shibboleth.net/downloads/identity-provider/3.3.1/shibboleth-identity-provider-3.3.1.tar.gz
+    idp_fqdn: "idp.{{ domain }}"
+    idp_path: /opt/shibboleth-idp
+    # generate with: openssl rand -base64 36
+    # ansible-playbook playbook.yml -i hosts --extra-vars "persId_salt=xlbB06G6P6Omt7f5RCopfBvF8Sx1+frf99kSHdb8EEfSB4yt user=starbuck"
+    # persId_salt: xlbB06G6P6Omt7f5RCopfBvF8Sx1+frf99kSHdb8EEfSB4yt
+    sp_fqdn: "sp.{{ domain }}"
+    idp_pw: password
+    mysql_pw: password
+    idpdb_user: shibboleth
+    idpdb_pw: password
+    tomcat_admin_pw: password
+    tomcat_manager_pw: password
+
+  roles:
+    - { role: common, tags: ["common"] }
+    - { role: tomcat7, tags: ["tomcat7"] }
+    - { role: slapd, tags: ["slapd"] }
+    - { role: shib3idp, tags: ["shib3idp"] }
+    - { role: apache2, tags: ["apache2"] }
+    - { role: mod-shib2, tags: ["apache2", "shib2"] }  
+    #- { role: unified, tags: ["unified"] } 
+    - { role: mysql, tags: ["mysql"] }      
+

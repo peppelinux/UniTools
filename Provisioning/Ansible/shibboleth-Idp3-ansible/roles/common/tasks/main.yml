@@ -1,0 +1,96 @@
+
+
+#~ - name: Add GARR apt sources
+  #~ template: src=roles/common/templates/sources.list dest=/etc/apt/sources.list
+#~ 
+#~ - name: Update apt cache
+#~ #  apt: update_cache=yes
+  #~ apt: update_cache=yes cache_valid_time=86400
+  #~ tags: online
+
+# CLEANUPS
+- name: Uninstall libapache2-mod-shib2
+  apt: name=libapache2-mod-shib2 state=absent purge=yes
+  when: cleanup is defined
+
+- name: Remove /etc/shibboleth dir
+  file: path=/etc/shibboleth state=absent
+  when: cleanup is defined
+
+- name: Install apt packages
+  apt: name={{ item }} state=present
+  with_items:
+    - html2text
+    - emacs24-nox
+    - vim
+    - ntp
+    - apache2
+    - openjdk-7-jdk
+    - libjstl1.1-java
+    - tomcat7
+    - libmysql-java
+    - libapache2-mod-shib2
+    - libapache2-mod-php5
+  tags: online
+
+- name: Configure /etc/hosts
+  template: 
+    src: roles/common/templates/hosts 
+    dest: /etc/hosts
+
+- name: get JAVA_HOME
+  shell: readlink -f /usr/bin/java | sed "s:bin/java::"
+  register: java_home
+
+- name: Configure /etc/environment
+  template: src=roles/common/templates/environment dest=/etc/environment
+
+# create self signed certificates manually using easy-rsa
+# edit easy-rsa'a vars file and customize keys output path as you prefer
+# export KEY_DIR="$EASY_RSA/keys" to export KEY_DIR="$EASY_RSA/keys_unical"
+# the same for every attribute you will customize
+
+#~ aptitude install easy-rsa
+#~ cp -Rp /usr/share/easy-rsa/ .
+#~ cd easy-rsa
+
+# customize dh lenght, keys attributes and keys output path
+#~ nano vars
+
+# activate environment
+#~ source vars
+
+# purge all the previous keys/dh/crts
+#~ ./clean-all
+
+# creates: ca.crt	ca.key	index.txt serial
+#~ ./build-ca
+
+# creates diffie hellman's dh$lenght.pem
+#~ ./build-dh
+
+# then creates client certificates
+#~ ./build-key idp.example.org
+#~ ./build-key sp.example.org
+
+# Put key and crt in roles/common/files/{{ domain }}/ folder
+# renaiming them with .pem suffix as the next examples
+
+
+- name: Install CA Certificate
+  copy: src=roles/common/files/{{ domain }}/cacert.pem dest=/etc/ssl/certs/cacert.pem
+
+- name: Install CA Key
+  copy: src=roles/common/files/{{ domain }}/cakey.pem dest=/etc/ssl/private mode=0600
+
+- name: Install IdP Certificate
+  copy: src=roles/common/files/{{ domain }}/{{ idp_fqdn }}-cert.pem dest=/etc/ssl/certs/{{ idp_fqdn }}-cert.pem
+
+- name: Install IdP Key
+  copy: src=roles/common/files/{{ domain }}/{{ idp_fqdn }}-key.pem dest=/etc/ssl/private/{{ idp_fqdn }}-key.pem group=ssl-cert mode=0640
+
+- name: Install SP Certificate
+  copy: src=roles/common/files/{{ domain }}/{{ sp_fqdn }}-cert.pem dest=/etc/ssl/certs/{{ sp_fqdn }}-cert.pem
+
+- name: Install SP Key
+  copy: src=roles/common/files/{{ domain }}/{{ sp_fqdn }}-key.pem dest=/etc/ssl/private/{{ sp_fqdn }}-key.pem group=ssl-cert mode=0640

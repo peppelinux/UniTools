@@ -1,0 +1,142 @@
+# CLEANUPS
+- name: Cleanup Shibboleth IdP Install
+  file: path=/opt/shibboleth-idp state=absent
+  when: cleanup is defined
+
+
+
+# END CLEANUPS
+
+- name: Stat Shibboleth IdP tarball in /opt 
+  stat: path=/opt/shibboleth-identity-provider-3.3.1.tar.gz
+  register: shib_tarball
+
+- name: Download Shibboleth IdP
+  get_url: url={{ idp_dl_url }} dest=/opt
+  when: shib_tarball.stat.exists == False
+
+- name: Stat Shibboleth IdP source dir in /opt 
+  stat: path=/opt/shibboleth-identity-provider-3.3.1
+  register: shib_dir_source
+  
+- name: Unarchive Shibboleth IdP
+  unarchive: src=/opt/shibboleth-identity-provider-3.3.1.tar.gz dest=/opt copy=no
+  # without copy=no means that src= should be on a localpath. Then file will be uploadade and unarchived 
+
+# Esegui setup di shibboleth e rispondi al prompt di installazione
+# http://docs.ansible.com/ansible/expect_module.html
+
+- name: Prepare properties for Shibboleth IdP install
+  template: 
+    src: roles/shib3idp/templates/shib-install.properties 
+    dest: /tmp/shib-install.properties
+  #when: pre_t is defined and pre_t > 1 
+
+- name: get JAVA_HOME
+  shell: readlink -f /usr/bin/java | sed "s:bin/java::"
+  register: java_home
+
+- name: Stat Shibboleth IdP dest dir in /opt
+  stat: path=/opt/shibboleth-idp/metadata
+  register: shib_dir_dest
+
+- name: Install Shibboleth Idp
+  environment: 
+    JAVA_HOME: "{{ java_home.stdout }}"
+  command: |
+    /opt/shibboleth-identity-provider-3.3.1/bin/install.sh \
+    -Didp.sealer.password={{ idp_pw }} \
+    -Didp.keystore.password={{ idp_pw }} \
+    -Didp.scope={{ domain }} \
+    -Didp.src.dir=/opt/shibboleth-identity-provider-3.3.1 \
+    -Didp.host.name={{ idp_fqdn }} \
+    -Didp.target.dir=/opt/shibboleth-idp \
+    -Didp.merge.properties=/tmp/shib-install.properties
+  when: shib_dir_dest.stat.exists == False 
+
+- name: Copy template configuration for ldap.properties
+  template: 
+    src: roles/shib3idp/files/ldap.properties
+    dest: "{{ idp_path }}/conf/ldap.properties"
+
+- name: Generate salt for persistentId generator
+  shell: openssl rand -base64 36
+  register: persId_salt
+  when: persId_salt is not defined
+
+- name: Copy template configuration saml-nameid.properties
+  copy: 
+    src: roles/shib3idp/files/saml-nameid.properties-corso
+    dest: "{{ idp_path }}/conf/saml-nameid.properties"
+  
+- name: Copy template configuration global.xml
+  template: 
+    src: roles/shib3idp/templates/global.xml
+    dest: "{{ idp_path }}/conf/global.xml"
+
+- name: tomcat7 user for idp dirs
+  file: name="{{ item }}" owner=tomcat7 recurse=yes
+  with_items:
+    - "{{ idp_path }}/conf"
+    - "{{ idp_path }}/logs"
+    - "{{ idp_path }}/metadata"
+    - "{{ idp_path }}/credentials"
+  
+- name: Install the IdP WAR
+  template: 
+    src: roles/shib3idp/templates/idp.xml 
+    dest: /etc/tomcat7/Catalina/localhost/idp.xml
+  
+- name: Configure LDAP Auth
+  template: 
+    src: roles/shib3idp/files/ldap.properties 
+    dest: "{{ idp_path }}/conf/ldap.properties" 
+    
+- name: Configure Enhanced Logging
+  copy: 
+    src: roles/shib3idp/files/logback.xml 
+    dest: "{{ idp_path }}/conf/logback.xml"
+
+- name: Configure saml-nameid.properties (dataStore and persistentId)
+  template: 
+    src: roles/shib3idp/templates/saml-nameid.properties 
+    dest: "{{ idp_path }}/conf/saml-nameid.properties" 
+
+- name: Configure saml-nameid.xml (persistentId)
+  copy: 
+    src: roles/shib3idp/files/saml-nameid.xml
+    dest:  "{{ idp_path }}/conf/saml-nameid.xml"
+
+- name: Configure relying-party.xml (persistentId)
+  template:
+    src: roles/shib3idp/files/relying-party.xml
+    dest:  "{{ idp_path }}/conf/relying-party.xml"
+
+- name: Configure global.xml (dataStore and persistentId)
+  template:
+    src: roles/shib3idp/templates/global.xml
+    dest:  "{{ idp_path }}/conf/global.xml"
+
+- name: Configure IdP attribute-filter.xml 
+  template: 
+    src: roles/shib3idp/files/attribute-filter.xml
+    dest: "{{ idp_path }}/conf/attribute-filter.xml"
+
+- name: Copy configured attribute-resolver-full.xml in attribute-resolver.xml
+  copy: 
+    src: roles/shib3idp/files/attribute-resolver-full.xml
+    dest: "{{ idp_path }}/conf/attribute-resolver.xml"
+
+- name: Add attribute-resolver-full.xml to services.xml
+  copy: 
+    src: roles/shib3idp/files/services.xml
+    dest: "{{ idp_path }}/conf/services.xml"
+
+- name: Add metadata providers
+  template: 
+    src: roles/shib3idp/files/metadata-providers.xml-1
+    dest: "{{ idp_path }}/conf/metadata-providers.xml"
+  
+- name: Restart Tomcat7
+  service: name=tomcat7 state=restarted
+

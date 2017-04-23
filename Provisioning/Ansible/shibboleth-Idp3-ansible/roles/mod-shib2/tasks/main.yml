@@ -1,0 +1,46 @@
+- name: Create Shibboleth SP keys
+  shell: /usr/sbin/shib-keygen -f -h {{ sp_fqdn }} -e https://{{ sp_fqdn }}/shibboleth 
+  args:
+    creates: /etc/shibboleth/{{ sp_fqdn }}-key.pem
+
+- name: Create metadata directory for IdP metadata
+  file: name=/etc/shibboleth/metadata state=directory
+
+- name: Configure Shibboleth SP
+  template:
+    src: roles/mod-shib2/files/shibboleth2.xml
+    dest: /etc/shibboleth/shibboleth2.xml
+    
+- name: Configure Shibboleth SP Attribute Map
+  copy:
+    src: roles/mod-shib2/files/attribute-map.xml
+    dest: /etc/shibboleth/attribute-map.xml
+
+- name: Add IdP Metadata to Shibboleth SP
+  get_url:
+    url: https://{{ idp_fqdn }}/idp/shibboleth
+    dest: /etc/shibboleth/metadata/{{ idp_fqdn }}-metadata.xml
+    validate_certs: no
+    #ignore_errors: yes
+  #~ when: pre_t is defined and pre_t > 1
+  
+- name: Restart shibd
+  service: name=shibd state=restarted enabled=yes
+  #~ when: pre_t is defined and pre_t > 1
+  
+- name: Add SP {{ sp_fqdn }} Metadata to Shibboleth IdP
+  get_url:
+    url: https://{{ sp_fqdn }}/Shibboleth.sso/Metadata
+    dest: /opt/shibboleth-idp/metadata/{{ sp_fqdn }}-metadata.xml
+    validate_certs: no
+  #~ when: pre_t is defined and pre_t > 2 
+
+- name: Configure SP Metadata in Shibboleth IdP
+  template:
+    src: roles/shib3idp/files/metadata-providers.xml
+    dest: /opt/shibboleth-idp/conf/metadata-providers.xml
+  #~ when: pre_t is defined and pre_t > 2 
+  
+- name: Restart tomcat7
+  service: name=tomcat7 state=restarted enabled=yes
+  #~ when: pre_t is defined and pre_t > 2
