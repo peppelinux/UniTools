@@ -7,6 +7,10 @@
   apt: name=slapd state=absent purge=yes
   when: cleanup is defined
   # END CLEANUP
+
+- name: Remove /etc/tomcat7
+  file: path=/etc/tomcat7 state=absent
+  when: cleanup is defined
   
 # to improve security watch this: https://www.owasp.org/index.php/Securing_tomcat
 
@@ -14,7 +18,7 @@
   apt: name=tomcat7 state=present
 
 - name: /etc/tomcat7/server.xml with AJP, NO 8080, and no autoDeploy
-  template:
+  copy:
     src: roles/tomcat7/templates/server.xml
     dest: /etc/tomcat7/server.xml
 
