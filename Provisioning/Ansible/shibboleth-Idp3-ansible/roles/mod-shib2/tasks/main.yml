@@ -3,10 +3,6 @@
   #~ apt: name=libapache2-mod-shib2 state=absent purge=yes
   #~ when: cleanup is defined
 
-- name: Remove /etc/shibboleth dir
-  file: path=/etc/shibboleth state=absent
-  when: cleanup is defined
-
 - name: Create Shibboleth SP keys
   shell: /usr/sbin/shib-keygen -f -h {{ sp_fqdn }} -e https://{{ sp_fqdn }}/shibboleth 
   args:
