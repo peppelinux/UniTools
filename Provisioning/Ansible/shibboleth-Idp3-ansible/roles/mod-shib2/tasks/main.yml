@@ -27,25 +27,20 @@
     dest: /etc/shibboleth/metadata/{{ idp_fqdn }}-metadata.xml
     validate_certs: no
     #ignore_errors: yes
-  #~ when: pre_t is defined and pre_t > 1
   
 - name: Restart shibd
   service: name=shibd state=restarted enabled=yes
-  #~ when: pre_t is defined and pre_t > 1
   
 - name: Add SP {{ sp_fqdn }} Metadata to Shibboleth IdP
   get_url:
     url: https://{{ sp_fqdn }}/Shibboleth.sso/Metadata
     dest: /opt/shibboleth-idp/metadata/{{ sp_fqdn }}-metadata.xml
     validate_certs: no
-  #~ when: pre_t is defined and pre_t > 2 
 
 - name: Configure SP Metadata in Shibboleth IdP
   template:
     src: roles/shib3idp/templates/metadata-providers.xml
     dest: /opt/shibboleth-idp/conf/metadata-providers.xml
-  #~ when: pre_t is defined and pre_t > 2 
   
 - name: Restart tomcat7
   service: name=tomcat7 state=restarted enabled=yes
-  #~ when: pre_t is defined and pre_t > 2
