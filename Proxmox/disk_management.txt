@@ -1,3 +1,11 @@
+Disable PVE subscritions
+====================
+
+rm /etc/apt/sources.list.d/pve-enterprise.list  
+echo "deb http://download.proxmox.com/debian jessie pve-no-subscription" >> /etc/apt/source.list
+aptitude update
+aptitude upgrade
+
 Comandi riepilogativi
 ====================
 lvs
@@ -29,7 +37,7 @@ lvdisplay | more
 #detto ciò:
 mount /dev/pve/vm-103-disk-1 /test/
 
-Montare una immagine raw kvm:
+Montare un dispositivo a blocchi PVE kvm:
 ============================
 # Create device maps from partition tables
 # view
@@ -71,3 +79,66 @@ Spostare un disco, rilevare il path
 
 pvesm path local-lvm:vm-102-disk-1
 # /dev/pve/vm-102-disk-1
+
+Ripristinare uno snapshot al di fuori di Proxmox
+=============================
+aptitude install lzop
+# decompress it
+lzop -d vzdump-qemu-102-2017_03_20-13_15_45.vma.lzo 
+# this restores raw image and config file
+# https://forum.proxmox.com/threads/vma-archive-restore-outside-of-proxmox.14226/
+# https://forum.proxmox.com/threads/vma-archive-restore-outside-of-proxmox.14226/#post-76387
+# or compile vma executable from: https://github.com/proxmox/pve-qemu-kvm
+vma extract vzdump-qemu-102-2017_03_20-13_15_45.vma -v ./restored-vma/
+# migrate from raw to VirtualBox vdi
+VBoxManage convertdd sdb.raw sdb.vdi --format VDI
+
+Removing a volume group (Breaks proxmox if VG is pve !!!)
+================================
+
+# Make sure that no logical volumes are present in the volume group, see later section for how to do this.
+
+gvs
+lvs
+
+# Deactivate the volume group:
+vgchange -a n pve
+        
+#Now you actually remove the volume group:
+vgremove pve
+        
+
+Resize LVM-thin pool and use free space as Backup folder :)
+=============================
+#Only extension of thin pool is supported  (offline/online).
+#You cannot shrink the thin pool size, you just have to destroy it and recreate it again.
+# example
+
+# this doesn't works, read stoud
+lvreduce -L 160.0G pve/data
+# Thin pool volumes cannot be reduced in size yet.
+
+# comandi riepilogativi
+pvs
+vgs
+lvs
+
+lvdisplay /dev/mapper/pve-data
+
+# remove lvm-thin pool, this will destroy all the volumes in it
+# please DO backup of VM before do this
+lvremove pve/data
+
+# create it again
+lvcreate -L 160G -T pve/data
+
+# now it create another logical volume, it will be used for backup
+lvcreate -L 239.35G -T pve/backup
+
+# production use-case
+lvs
+# create fs on it
+mkfs.ext4  /dev/pve/backup
+
+#And now add it to a VM id 222
+qm set 222  -virtio2 /dev/pve/backup
