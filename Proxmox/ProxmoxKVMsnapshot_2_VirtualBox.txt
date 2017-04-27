@@ -1,0 +1,13 @@
+# convert Proxmox snapshot to virtualbox disk
+# must be done on a proxmox machine or on a debina wheezy with proxmox repository (vma command is needed)
+
+aptitude install lzop
+
+lzop -x vzdump-qemu-102-2017_03_20-13_15_45.vma.lzo 
+vma list vzdump-qemu-102-2017_03_20-13_15_45.vma
+
+# this extracts config and disk into kvm-102 folder
+vma extract vzdump-qemu-102-2017_03_20-13_15_45.vma -v /kvm-102/
+
+# il più è fatto :)
+VBoxManage convertdd vm-102-disk.raw  PuppetMasterroot.vdi
