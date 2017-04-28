@@ -1,0 +1,6 @@
+
+export PROTO="http://"
+export HOST="cla.unical.it"
+export URL=$PROTO$URL
+
+wget -P ./destination/path -mpck --user-agent= -e robots=off --wait 1 -E $URL
