@@ -1,0 +1,22 @@
+client
+dev ovpn-udp
+proto udp
+remote 160.97.60.30 1194
+resolv-retry infinite 
+nobind 
+ca ca.crt 
+cert clientname.crt 
+key  clientname.key
+comp-lzo 
+persist-tun 
+persist-key 
+verb 3
+#redirect-gateway def1
+
+remote-cert-tls server 
+
+#cipher none
+#float 1
+# tweak per performance                               
+#tun-mtu 1492 
+#mssfix 1400 
