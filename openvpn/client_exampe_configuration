@@ -1,7 +1,7 @@
 client
 dev ovpn-udp
 proto udp
-remote 160.97.60.30 1194
+remote 10.97.0.3 1194
 resolv-retry infinite 
 nobind 
 ca ca.crt 
