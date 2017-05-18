@@ -16,6 +16,16 @@ verb 3
 
 remote-cert-tls server 
 
+route-nopull
+
+# noexec avoid next route statement...so nopull if good enough
+#route-noexec
+route 10.7.60.0/24
+
+# only in 2.4.x
+#pull-filter ignore "route 10.7.104."
+
+
 #cipher none
 #float 1
 # tweak per performance                               
