@@ -1,5 +1,6 @@
 client
 dev ovpn-udp
+dev-type tun
 proto udp
 remote 10.97.0.3 1194
 resolv-retry infinite 
