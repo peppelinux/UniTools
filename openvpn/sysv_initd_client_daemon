@@ -1,0 +1,21 @@
+#! /bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+# Carry out specific functions when asked to by the system
+case "$1" in
+  start)
+    echo "Start oVPN"
+    cd  /opt/ovpn
+    openvpn --config client.ovpn --daemon
+    ;;
+  stop)
+    echo "Stop VPN"
+    killall -TERM openvpn
+    ;;
+  *)
+    echo "Usage: /etc/init.d/vpn_access {start|stop}"
+    exit 1
+    ;;
+esac
+
+exit 0
