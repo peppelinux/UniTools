@@ -1,3 +1,4 @@
+```bash
 cd /tmp
 git clone https://github.com/antirez/disque.git
 cd disque/
@@ -41,3 +42,4 @@ cp /tmp/disque.services /etc/systemd/system/disque.service
 sudo systemctl daemon-reload # reload systemd
 sudo service disque start    # actually start the service
 sudo service disque status   # ensure everything is running well
+```
