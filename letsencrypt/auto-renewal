@@ -1,0 +1,5 @@
+# renew
+/opt/letsencrypt/letsencrypt-auto --nginx renew
+
+# summary
+/opt/letsencrypt/letsencrypt-auto certificates
