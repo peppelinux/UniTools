@@ -26,6 +26,9 @@ Group=disque
 Environment=statedir=/var/run/disque/
 WorkingDirectory=/var/run/disque/
 PermissionsStartOnly=true
+ExecStartPre=/bin/mkdir -p ${statedir}
+ExecStartPre=/bin/mkdir -p /var/logs/disque
+ExecStartPre=/bin/chown -R disque:disque ${statedir} /var/logs/disque
 ExecStart=/usr/local/bin/disque-server /etc/disque/disque.conf
 ExecReload=/bin/kill -USR2 $MAINPID
 ExecStop=/usr/local/bin/disque shutdown
