@@ -41,6 +41,9 @@ WantedBy=multi-user.target
 # avoids # WARNING: overcommit_memory is set to 0! Background save may fail under low memory condition.
 sysctl vm.overcommit_memory=1
 
+# avoids #  WARNING: The TCP backlog setting of 511 cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128.
+sysctl -w net.core.somaxconn=65535
+
 #
 cp /tmp/disque.service /etc/systemd/system/disque.service
 sudo systemctl daemon-reload # reload systemd
