@@ -1,5 +1,5 @@
 ```bash
-aptitude install build-essential git
+aptitude install build-essential git tcl
 cd /tmp
 git clone https://github.com/antirez/disque.git
 cd disque/
