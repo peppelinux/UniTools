@@ -1,0 +1,21 @@
+sudo apt install python-pip python3-dev
+sudo pip install pip --upgrade
+sudo pip install virtualenv 
+sudo pip install ipython
+
+VENV="djangoQ"
+
+virtualenv -ppython3 $VENV
+cd $VENV
+source bin/activate
+
+echo "
+django
+django-picklefield
+arrow
+blessed
+psutil
+hiredis
+" > djangoq_requirements.txt
+
+pip install -r djangoq_requirements.txt
