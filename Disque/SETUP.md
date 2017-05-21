@@ -40,7 +40,7 @@ EOL
 > /tmp/disque.service;
 
 #
-cp /tmp/disque.services /etc/systemd/system/disque.service
+cp /tmp/disque.service /etc/systemd/system/disque.service
 sudo systemctl daemon-reload # reload systemd
 sudo service disque start    # actually start the service
 sudo service disque status   # ensure everything is running well
