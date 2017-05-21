@@ -14,8 +14,17 @@ django
 django-picklefield
 arrow
 blessed
+django-q
 psutil
 hiredis
 " > djangoq_requirements.txt
 
 pip install -r djangoq_requirements.txt
+
+django-admin startproject $VENV
+cd $VENV
+
+cp $VENV/settings.py.old $VENV/settings.py
+sed "/staticfiles',/a    'django_q'," $VENV/settings.py.old > $VENV/settings.py
+
+python manage.py migrate 
