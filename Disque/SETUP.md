@@ -26,9 +26,9 @@ Group=disque
 Environment=statedir=/var/run/disque/
 WorkingDirectory=/var/run/disque/
 PermissionsStartOnly=true
-ExecStartPre=/bin/mkdir -p ${statedir}
+ExecStartPre=/bin/mkdir -p /var/run/disque/
 ExecStartPre=/bin/mkdir -p /var/logs/disque
-ExecStartPre=/bin/chown -R disque:disque ${statedir} /var/logs/disque
+ExecStartPre=/bin/chown -R disque:disque /var/run/disque/ /var/logs/disque
 ExecStart=/usr/local/bin/disque-server /etc/disque/disque.conf
 ExecReload=/bin/kill -USR2 $MAINPID
 ExecStop=/usr/local/bin/disque shutdown
@@ -37,9 +37,6 @@ Restart=always
 [Install]
 WantedBy=multi-user.target
 " > /tmp/disque.service
-
-/bin/mkdir -p /var/logs/disque
-/bin/chown -R disque:disque  /var/logs/disque
 
 # avoids # WARNING: overcommit_memory is set to 0! Background save may fail under low memory condition.
 sysctl vm.overcommit_memory=1
