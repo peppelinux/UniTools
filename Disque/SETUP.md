@@ -12,7 +12,7 @@ cp disque.conf /etc/disque/
 nano /etc/disque/disque.conf   # configure daemonize, pidfile, bind
 
 # Creates a systemd target
-echo << EOL
+echo "
 [Unit]
 Description=Disque Distributed Message Broker
 After=network.target
@@ -36,8 +36,7 @@ Restart=always
 
 [Install]
 WantedBy=multi-user.target
-EOL
-> /tmp/disque.service;
+" > /tmp/disque.service
 
 #
 cp /tmp/disque.service /etc/systemd/system/disque.service
