@@ -1,0 +1,102 @@
+#!/bin/bash
+
+# it displays executed commands on stdout
+set -x
+
+# stop execution if some commands returns error (1|2)
+set -e
+
+NGINX_VER=1.10.3
+
+TEST_FILE=/etc/shibboleth/,\
+/usr/lib/x86_64-linux-gnu/shibboleth/
+
+# shibd dependencies
+aptitude install libmemcached11 libodbc1 shibboleth-sp2-common shibboleth-sp2-utils libshibsp6 libshibsp-plugins 
+
+# there will be something to compile over there
+aptitude install build-essential zlib1g-dev libpcre3 libpcre3-dev unzip libssl-dev
+
+# test presence of files
+for i in $(echo $TEST_FILE | sed "s/,/ /g"); 
+do 
+    # directory exists?
+    if [ ! -d $i ]; then
+        echo "$i not found!" && exit 1
+    fi
+done
+
+# shibboleth setup is then finished
+sudo systemctl restart shibd.service
+
+############
+# SUPERVISOR
+############
+
+# Create a configuration file for supervisor:
+aptitude install supervisor
+
+# check if _shibd unix group exists first
+echo "
+[fcgi-program:shibauthorizer]
+command=/usr/lib/x86_64-linux-gnu/shibboleth/shibauthorizer
+socket=unix:///var/run/shibboleth/shibauthorizer.sock
+socket_owner=_shibd:_shibd
+socket_mode=0666
+user=_shibd
+stdout_logfile=/var/log/supervisor/shibauthorizer.log
+stderr_logfile=/var/log/supervisor/shibauthorizer.error.log
+
+[fcgi-program:shibresponder]
+command=/usr/lib/x86_64-linux-gnu/shibboleth/shibresponder
+socket=unix:///var/run/shibboleth/shibresponder.sock
+socket_owner=_shibd:_shibd
+socket_mode=0666
+user=_shibd
+stdout_logfile=/var/log/supervisor/shibresponder.log
+stderr_logfile=/var/log/supervisor/shibresponder.error.log
+" > /etc/supervisor/conf.d/shib.conf
+
+# restart supervisor
+sudo service supervisor restart
+
+############
+# NGINX with shib patch
+############
+
+# recompile nginx for integrating shib module
+# https://serversforhackers.com/compiling-third-party-modules-into-nginx
+
+# download third part modules
+# ngx_headers_more - Set and clear input and output headers...more than "add"!
+git clone https://github.com/openresty/headers-more-nginx-module.git
+
+# nginx-shib
+git clone https://github.com/nginx-shib/nginx-http-shibboleth
+
+
+# nginx 1.9.11 supports dynamic module
+# ...but only Debian testing have nginx > 1.10
+# this scripts compile nginx 1.10 from scratch, hopefully usefull for Debian 7 and 8
+
+wget http://nginx.org/download/nginx-$NGINX_VER.tar.gz
+tar -xzvf nginx-$NGINX_VER.tar.gz
+cd nginx-$NGINX_VER
+
+./configure --sbin-path=/usr/sbin/nginx \
+ --conf-path=/etc/nginx/nginx.conf \
+ --pid-path=/run/nginx.pid \
+ --error-log-path=/var/log/nginx/error.log \
+ --http-log-path=/var/log/nginx/access.log \
+ --with-http_ssl_module \
+ --add-module=../nginx-http-shibboleth \
+ --add-module=../headers-more-nginx-module
+#--with-ipv6 \
+
+make
+make install
+
+############
+# NGINX configuration
+############
+
