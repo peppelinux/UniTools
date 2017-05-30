@@ -114,5 +114,9 @@ sed -i 's|auth = no|auth = yes|g' $RADCONFD/radiusd.conf
 sed -i 's|#.*auth_log|auth_log|' $RADCONFD/sites-enabled/default
 sed -i 's|#\s*reply_log$|reply_log|' $RADCONFD/sites-enabled/default
 
+# radlast command workaround (.f option doesn't still work)
+mkdir -p /usr/local/var/log/radius/
+ln -s /var/log/freeradius/radwtmp /usr/local/var/log/radius/
+
 update-rc.d  freeradius enable 2
 
