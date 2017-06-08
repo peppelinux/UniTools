@@ -1,0 +1,3 @@
+# m h dom mon dow user  command
+# cleans freeradius radacct file older then N days
+0 0 * * 1 root /usr/bin/find /var/log/freeradius/radacct -type f -mtime +365 -exec rm {} \;
