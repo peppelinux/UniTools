@@ -1,0 +1,14 @@
+    # all auth must be rewritten to ssl !
+    location ~ ^(/admin)?/login/*{
+     if ($scheme != "https") {
+        rewrite ^ https://$host$uri permanent;
+     }
+     try_files $uri @pass;
+    }
+
+    # Finally, send all non-media requests to the Django server of whatever the same of location / :)
+    location @pass {
+        uwsgi_pass  django_dexam;
+        uwsgi_param HTTP_X_FORWARDED_PROTOCOL https;
+        include     /opt/webapp/uwsgi_setup/uwsgi_params; # the uwsgi_params file you installed
+    }
