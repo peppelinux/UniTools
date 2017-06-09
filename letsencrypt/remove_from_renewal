@@ -1,0 +1,1 @@
+rm -Rf /etc/letsencrypt/{live,archive,renewal}/$NAME*
