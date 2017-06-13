@@ -16,7 +16,9 @@ TEST_FILE=/etc/shibboleth/,\
 aptitude install libmemcached11 libodbc1 shibboleth-sp2-common shibboleth-sp2-utils libshibsp6 libshibsp-plugins 
 
 # there will be something to compile over there
-aptitude install build-essential zlib1g-dev libpcre3 libpcre3-dev unzip libssl-dev
+#aptitude install build-essential zlib1g-dev libpcre3 libpcre3-dev unzip libssl-dev fakeroot
+
+apt-get build-dep nginx
 
 # test presence of files
 for i in $(echo $TEST_FILE | sed "s/,/ /g"); 
@@ -75,7 +77,6 @@ git clone https://github.com/openresty/headers-more-nginx-module.git
 # nginx-shib
 git clone https://github.com/nginx-shib/nginx-http-shibboleth
 
-
 # nginx 1.9.11 supports dynamic module
 # ...but only Debian testing have nginx > 1.10
 # this scripts compile nginx 1.10 from scratch, hopefully usefull for Debian 7 and 8
@@ -94,12 +95,48 @@ cd nginx-$NGINX_VER
  --add-module=../headers-more-nginx-module
 #--with-ipv6 \
 
+###########
+# NGINX Installation
+###########
 make
 make install
+
+sudo adduser --system --no-create-home --disabled-login --disabled-password --group nginx
+
+###########
+# NGINX build DEB
+###########
+# http://nginx.org/en/linux_packages.html
+# This section needs to be emproved!
+
+# apt-get source nginx
+# copy ./debian folder to your nginx source folder, then
+
+# First edit debian/changelog and add your dbrand new definition at the top of it
+# The next file we need to edit is: debian/control, just update the maintainer and uploader to your own information.
+# Almost done, now edit the file debian/rules and change the configure options to suit your sites needs.
+#Feel free to edit any of the default configurations under debian/conf/ before running the final command.
+# remove ./debian/patches/* because they are referred to old nginx debian setup
+
+# then
+#cp ../nginx-$NGINX_VER.tar.gz ../nginx_$NGINX_VER.orig.tar.gz
+#dpkg-buildpackage -us -uc
 
 ############
 # NGINX configuration
 ############
+
+# if you have not a backup/legacy/preexistent configuration you can move server {} definition from nginx.conf and add
+	##
+	# Virtual Host Configs
+	##
+
+    # uncomment the following lines 
+	#include /etc/nginx/conf.d/*.conf;
+	#include /etc/nginx/sites-enabled/*;
+    
+# then put that serrver {} definition in a file called default in sites-available. You should also link it in sites-enabled
+# keep also in mind to change execution user, from nobody (commented in nginx.conf) to the previously created nginx
 
 ############
 # NGINX systemd
@@ -122,3 +159,8 @@ PrivateTmp=true
 [Install]
 WantedBy=multi-user.target
 " > /lib/systemd/system/nginx.service
+
+# reload and restart 
+systemctl daemon-reload 
+systemctl enable nginx
+systemctl start nginx
