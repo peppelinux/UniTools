@@ -100,7 +100,6 @@ cd nginx-$NGINX_VER
 ###########
 make
 make install
-
 sudo adduser --system --no-create-home --disabled-login --disabled-password --group nginx
 
 ###########
