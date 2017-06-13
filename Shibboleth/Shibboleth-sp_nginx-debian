@@ -1,4 +1,5 @@
 #!/bin/bash
+# Tested on Debian GNU/Linux 8.8 (jessie)
 
 # it displays executed commands on stdout
 set -x
