@@ -12,10 +12,15 @@ cd disque/
 make
 make test
 sudo make install
-sudo useradd -M -r disque
 mkdir /etc/disque/
 cp disque.conf /etc/disque/
 nano /etc/disque/disque.conf   # configure daemonize, pidfile, bind
+
+/bin/mkdir -p /var/run/disque/
+/bin/mkdir -p /var/logs/disque
+
+sudo useradd -M -r disque
+/bin/chown -R disque:disque /var/run/disque/ /var/logs/disque
 
 # Creates a systemd target
 echo "
@@ -32,9 +37,6 @@ Group=disque
 Environment=statedir=/var/run/disque/
 WorkingDirectory=/var/run/disque/
 PermissionsStartOnly=true
-ExecStartPre=/bin/mkdir -p /var/run/disque/
-ExecStartPre=/bin/mkdir -p /var/logs/disque
-ExecStartPre=/bin/chown -R disque:disque /var/run/disque/ /var/logs/disque
 ExecStart=/usr/local/bin/disque-server /etc/disque/disque.conf
 ExecReload=/bin/kill -USR2 $MAINPID
 ExecStop=/usr/local/bin/disque shutdown
