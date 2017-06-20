@@ -16,11 +16,10 @@ mkdir /etc/disque/
 cp disque.conf /etc/disque/
 nano /etc/disque/disque.conf   # configure daemonize, pidfile, bind
 
-/bin/mkdir -p /var/run/disque/
-/bin/mkdir -p /var/logs/disque
-
+/bin/mkdir -p /opt/disque/
+/bin/mkdir -p /opt/disque
 sudo useradd -M -r disque
-/bin/chown -R disque:disque /var/run/disque/ /var/logs/disque
+/bin/chown -R disque:disque /opt/disque/ /opt/disque
 
 # Creates a systemd target
 echo "
@@ -30,15 +29,14 @@ After=network.target
 
 [Service]
 Type=forking
-PIDFile=/var/run/disque/disque.pid
+WorkingDirectory=/opt/disque
+PermissionsStartOnly=true
+#Environment=statedir=/opt/disque
+PIDFile=/opt/disque/disque.pid
 User=disque
 Group=disque
-
-Environment=statedir=/var/run/disque/
-WorkingDirectory=/var/run/disque/
-PermissionsStartOnly=true
 ExecStart=/usr/local/bin/disque-server /etc/disque/disque.conf
-ExecReload=/bin/kill -USR2 $MAINPID
+ExecReload=/bin/kill -USR2
 ExecStop=/usr/local/bin/disque shutdown
 Restart=always
 
