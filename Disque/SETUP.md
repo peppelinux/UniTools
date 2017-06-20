@@ -46,6 +46,7 @@ Restart=always
 WantedBy=multi-user.target
 " > /tmp/disque.service
 
+echo "vm.overcommit_memory = 1" >> /etc/sysctl.conf
 # avoids # WARNING: overcommit_memory is set to 0! Background save may fail under low memory condition.
 sysctl -w vm.overcommit_memory=1
 
