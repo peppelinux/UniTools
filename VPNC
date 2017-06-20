@@ -1,0 +1,28 @@
+aptitude install network-manager-vpnc
+
+wget http://svn.unix-ag.uni-kl.de/vpnc/trunk/pcf2vpnc
+
+./pcf2vpnc Scaricati/Accesso.vpnc.conf
+
+in caso di:
+vpnc: vpnc.c:1206: lifetime_ike_process: Assertion `a->next->type == IKE_ATTRIB_LIFE_DURATION' failed.
+
+http://rolandtapken.de/blog/2015-06/how-connect-fortigate-ipsec-vpn-using-linux
+http://roland265.rssing.com/chan-13051314/all_p2.html
+
+sudo apt-get install build-essential dh-make fakeroot devscripts
+sudo aptitude build-dep vpnc
+
+cd vpnc/
+apt-get source vpnc
+
+nano vpnc.c
+
+e commenti
+assert(a->next->type == IKE_ATTRIB_LIFE_DURATION);
+
+(cd vpnc-0.5.3r512 && debuild -b -uc -us)
+
+eppoi lo installi :)
+
+
