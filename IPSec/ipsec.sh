@@ -6,7 +6,7 @@
 
 CA_BASEDIR="/opt"
 CA_DIRNAME="CA-ipsec"
-CA_PATH=$CA_BASEDIR$CA_DIRNAME
+CA_PATH=$CA_BASEDIR/$CA_DIRNAME
 RSA_BIT=4096
 CERT_LIFETIME=3650
 # ip or hostname of the server
@@ -19,7 +19,7 @@ apt-get install aptitude
 aptitude install strongswan moreutils iptables-persistent
 
 # ubuntu 16
-aptitude install strongswan-plugin-eap-mschapv2
+# aptitude install strongswan-plugin-eap-mschapv2
 
 # debian 9, già nelle dipendenze di strongswan
 # aptitude install libstrongswan-standard-plugins 
