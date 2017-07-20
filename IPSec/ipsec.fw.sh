@@ -35,7 +35,7 @@ $IPT -t nat -I POSTROUTING -s $IPSEC_NET -o $IPSEC_WAN_IF -j MASQUERADE
 
 # It prevents IP packet fragmentation on some clients, we'll tell IPTables to reduce the size of packets by adjusting the packets' maximum segment size. 
 # This prevents issues with some VPN clients
-$IPT -t mangle -A FORWARD --match policy --pol ipsec --dir in -s $IPSEC_NET -o eth0 -p tcp -m tcp --tcp-flags SYN,RST SYN -m tcpmss --mss 1361:1536 -j TCPMSS --set-mss 1360
+$IPT -t mangle -A FORWARD --match policy --pol ipsec --dir in -s $IPSEC_NET -o $IPSEC_WAN_IF -p tcp -m tcp --tcp-flags SYN,RST SYN -m tcpmss --mss 1361:1536 -j TCPMSS --set-mss 1360
 
 # save iptables rules
 netfilter-persistent save
