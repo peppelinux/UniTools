@@ -28,7 +28,9 @@ aptitude install strongswan moreutils iptables-persistent
 # aptitude install libstrongswan-standard-plugins
 
 # CA, an IKEv2 server requires a certificate to identify itself to clients.
-mv $CA_PATH $CA_PATH.$(date +"%Y-%m-%d.%H:%M")
+if [ -d "$CA_PATH" ]; then
+    mv $CA_PATH $CA_PATH.$(date +"%Y-%m-%d.%H:%M")
+fi
 mkdir $CA_PATH && cd $CA_PATH
 
 ipsec pki --gen --type rsa --size $RSA_BIT --outform pem > $CA_PATH/server-root-key.pem
