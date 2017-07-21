@@ -4,16 +4,19 @@
  # | ||  __/ ___) | |__| |___ 
 # |___|_|   |____/|_____\____|
 
+set -e
+set -x
+
 CA_BASEDIR="/opt"
 CA_DIRNAME="CA-ipsec"
 CA_PATH=$CA_BASEDIR/$CA_DIRNAME
 RSA_BIT=4096
 CERT_LIFETIME=3650
 # ip or hostname of the server
-CA_CN="vpn1.unical.it"
+CA_CN="vpn12.unical.it"
 CA_DN="C=IT, O=UNICAL, CN=$CA_CN"
-VPN_NET="10.160.97.0/24"
-VPN_DNS="160.97.7.13,160.97.7.14"
+VPN_NET="10.9.8.0/24"
+VPN_DNS="10.9.8.1"
 
 apt-get install aptitude
 aptitude install strongswan moreutils iptables-persistent
@@ -22,39 +25,40 @@ aptitude install strongswan moreutils iptables-persistent
 # aptitude install strongswan-plugin-eap-mschapv2
 
 # debian 9, già nelle dipendenze di strongswan
-# aptitude install libstrongswan-standard-plugins 
+# aptitude install libstrongswan-standard-plugins
 
 # CA, an IKEv2 server requires a certificate to identify itself to clients.
 mv $CA_PATH $CA_PATH.$(date +"%Y-%m-%d.%H:%M")
 mkdir $CA_PATH && cd $CA_PATH
 
-ipsec pki --gen --type rsa --size $RSA_BIT --outform pem > server-root-key.pem
-chmod 600 server-root-key.pem
+ipsec pki --gen --type rsa --size $RSA_BIT --outform pem > $CA_PATH/server-root-key.pem
+chmod 600 $CA_PATH/server-root-key.pem
 
 # You can change the distinguished name (DN) values, such as country, 
 # organization, and common name, to something else to if you want to.
 ipsec pki --self --ca --lifetime $CERT_LIFETIME \
---in server-root-key.pem \
---type rsa --dn $CA_DN \
---outform pem > server-root-ca.pem
+--in $CA_PATH/server-root-key.pem \
+--type rsa --dn "$CA_DN" \
+--outform pem > $CA_PATH/server-root-ca.pem
+# Later, we'll copy the root certificate (server-root-ca.pem) to our client devices so they can verify the authenticity of the server when they connect
 
-ipsec pki --gen --type rsa --size $RSA_BIT --outform pem > vpn-server-key.pem
+ipsec pki --gen --type rsa --size $RSA_BIT --outform pem > $CA_PATH/vpn-server-key.pem
 
-ipsec pki --pub --in vpn-server-key.pem \
+ipsec pki --pub --in $CA_PATH/vpn-server-key.pem \
 --type rsa | ipsec pki --issue --lifetime $CERT_LIFETIME \
---cacert server-root-ca.pem \
---cakey server-root-key.pem \
---dn $CA_DN \
+--cacert $CA_PATH/server-root-ca.pem \
+--cakey $CA_PATH/server-root-key.pem \
+--dn "$CA_DN" \
 --san $CA_CN \
 --flag serverAuth --flag ikeIntermediate \
---outform pem > vpn-server-cert.pem
+--outform pem > $CA_PATH/vpn-server-cert.pem
 
 # ipsec setup
 cp $CA_PATH/vpn-server-cert.pem /etc/ipsec.d/certs/
 cp $CA_PATH/vpn-server-key.pem /etc/ipsec.d/private/
 
-chown root
-chgrp root
+chown root /etc/ipsec.d/private/*
+chgrp root /etc/ipsec.d/private/*
 chmod -R 600 /etc/ipsec.d/private/
 
 # Strongswan setup
@@ -64,9 +68,13 @@ mv /etc/ipsec.conf /etc/ipsec.conf.$(date +"%Y-%m-%d.%H:%M")
 # strongswan setup
 echo "
 config setup
-  charondebug=\"ike 1, knl 1, cfg 0\"
+  charondebug=\"cfg 2, dmn 2, ike 2, net 2, lib 2\"
+  # charondebug=\"ike 1, knl 1, cfg 0\"
   uniqueids=no
-
+  # charondebug=\"all\"
+  # uniqueids=yes
+  # strictcrlpolicy=no
+        
 # automatically load this configuration section when it starts up
 conn ikev2-vpn
   auto=add
@@ -107,20 +115,30 @@ conn ikev2-vpn
 
 # configure vpn auth
 echo "
-$CA_CN : RSA \"/etc/ipsec.d/private/vpn-server-key.pem\"
+# /etc/ipsec.secrets - strongSwan IPsec secrets file
+# $CA_CN : RSA \"/etc/ipsec.d/private/vpn-server-key.pem\"
+# include ipsec.*.secrets
+
+: RSA vpn-server-key.pem
+
 " > /etc/ipsec.secrets
 
 # put any user you want appending it to secrets
 echo "
-mario %any% : EAP \"rossi\"
-monica %any% : EAP \"camo\"
+#mario %any% : EAP \"rossi\"
+monica : EAP \"camo\"
 " >> /etc/ipsec.secrets
 
+# on every secrets change reread them
+ipsec rereadsecrets
+
 # first run
-ipsec start # Starting strongSwan 5.2.1 IPsec [starter]...
+ipsec restart # Starting strongSwan 5.2.1 IPsec [starter]...
 ipsec reload # Reloading strongSwan IPsec configuration...
 
+# status
+ipsec status
+ipsec statusall
 
 
-
-
+# https://www.strongswan.org/uml/testresults/ikev2/rw-eap-sim-id-radius/
