@@ -26,8 +26,7 @@ route 10.7.60.0/24
 #pull-filter ignore "route 10.7.104."
 
 # avoids "WARNING: this cipher's block size is less than 128 bit (64 bit).  Consider using a --cipher with a larger block size."
-#cipher AES-128-CBC
-cipher AES-256-CBC
+cipher AES-128-CBC
 #cipher none
 
 #float 1
