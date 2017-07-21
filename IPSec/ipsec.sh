@@ -28,7 +28,7 @@ aptitude install strongswan moreutils iptables-persistent
 # aptitude install strongswan-plugin-eap-mschapv2
 
 # debian 9
-# aptitude install strongswan-pki libcharon-extra-plugins
+# aptitude install strongswan-pki libcharon-extra-plugins strongswan-ikev2 strongswan-swanctl 
 
 # CA, an IKEv2 server requires a certificate to identify itself to clients.
 if [ -d "$CA_PATH" ]; then
