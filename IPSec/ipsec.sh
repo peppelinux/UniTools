@@ -18,14 +18,17 @@ CA_DN="C=IT, O=UNICAL, CN=$CA_CN"
 VPN_NET="10.9.8.0/24"
 VPN_DNS="10.9.8.1"
 
+# apt-get purge *strongswan*
+# apt-get purge *charon*
+
 apt-get install aptitude
 aptitude install strongswan moreutils iptables-persistent
 
 # ubuntu 16
 # aptitude install strongswan-plugin-eap-mschapv2
 
-# debian 9, già nelle dipendenze di strongswan
-# aptitude install libstrongswan-standard-plugins
+# debian 9
+# aptitude install strongswan-pki libcharon-extra-plugins
 
 # CA, an IKEv2 server requires a certificate to identify itself to clients.
 if [ -d "$CA_PATH" ]; then
@@ -135,12 +138,13 @@ monica : EAP \"camo\"
 ipsec rereadsecrets
 
 # first run
-ipsec restart # Starting strongSwan 5.2.1 IPsec [starter]...
-ipsec reload # Reloading strongSwan IPsec configuration...
+ipsec stop
+ipsec start # Starting strongSwan 5.2.1 IPsec [starter]...
+# ipsec reload # Reloading strongSwan IPsec configuration...
 
 # status
 ipsec status
 ipsec statusall
 
-
+# https://wiki.strongswan.org/projects/strongswan/wiki/IKEv2Examples
 # https://www.strongswan.org/uml/testresults/ikev2/rw-eap-sim-id-radius/

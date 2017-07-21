@@ -17,7 +17,7 @@ $IPT -I $CHAIN -p tcp -m tcp --dport $SSH_PORT -m recent --update --seconds $SEC
 $IPT -I $CHAIN -p tcp -m tcp --dport $SSH_PORT -m state --state NEW,ESTABLISHED  -j ACCEPT
 
 # IPSec
-IPSEC_NET="10.160.97.0/24"
+IPSEC_NET="10.9.8.0/24"
 IPSEC_WAN_IF=eth0
 $IPT -I INPUT -i lo -j ACCEPT
 
