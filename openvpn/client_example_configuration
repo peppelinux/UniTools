@@ -25,8 +25,11 @@ route 10.7.60.0/24
 # only in 2.4.x
 #pull-filter ignore "route 10.7.104."
 
-
+# avoids "WARNING: this cipher's block size is less than 128 bit (64 bit).  Consider using a --cipher with a larger block size."
+#cipher AES-128-CBC
+cipher AES-256-CBC
 #cipher none
+
 #float 1
 # tweak per performance                               
 #tun-mtu 1492 
