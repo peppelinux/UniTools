@@ -46,7 +46,9 @@ ipsec pki --self --ca --lifetime $CERT_LIFETIME \
 --type rsa --dn "$CA_DN" \
 --outform pem > $CA_PATH/server-root-ca.pem
 # Later, we'll copy the root certificate (server-root-ca.pem) to our client devices so they can verify the authenticity of the server when they connect
+# This is the Root Certificate of your Certificate Authority (CA). It can be downloaded from web or exported from system keychain.
 
+# Server Identity signed with our CA
 ipsec pki --gen --type rsa --size $RSA_BIT --outform pem > $CA_PATH/vpn-server-key.pem
 
 ipsec pki --pub --in $CA_PATH/vpn-server-key.pem \
@@ -73,13 +75,13 @@ mv /etc/ipsec.conf /etc/ipsec.conf.$(date +"%Y-%m-%d.%H:%M")
 # strongswan setup
 echo "
 config setup
+  # charondebug=\"all\"
   #charondebug=\"cfg 2, dmn 2, ike 2, net 2, lib 2\"
   charondebug=\"ike 1, knl 1, cfg 0\"
+  # permits multiple clients with the same id
   uniqueids=no
-  # charondebug=\"all\"
-  # uniqueids=yes
   # strictcrlpolicy=no
-        
+
 # automatically load this configuration section when it starts up
 conn ikev2-vpn
   auto=add
@@ -100,13 +102,16 @@ conn ikev2-vpn
 
   # left - local (server) side
   left=%any
-  # leftid=@vpn.unical.it
+  # leftid=@vpn12.unical.it
   leftid=@$CA_CN
   leftcert=/etc/ipsec.d/certs/vpn-server-cert.pem
   leftsendcert=always
   
   # Routes pushed to clients. If you don't have ipv6 then remove ::/0
   leftsubnet=0.0.0.0/0
+  
+  # automatically inserts iptables-based firewall rules that let pass the tunneled traffic
+  leftfirewall=yes
   
   # right - remote (client) side
   right=%any
@@ -137,7 +142,7 @@ echo "
 
 # put any user you want appending it to secrets
 echo "
-#mario %any% : EAP \"rossi\"
+mario : EAP \"rossi\"
 monica : EAP \"camo\"
 " >> /etc/ipsec.secrets
 
@@ -158,8 +163,22 @@ ipsec statusall
 
 # erify that all cerifitaces configured correctly by executing
 ipsec listall
+# ipsec listcacerts
 
+# introduction
+# https://wiki.strongswan.org/projects/strongswan/wiki/IntroductiontostrongSwan
+
+# official doc
+# https://wiki.strongswan.org/projects/strongswan/wiki/Windows7#C-Authentication-using-EAP-MSCHAP-v2
 # https://wiki.strongswan.org/projects/strongswan/wiki/IKEv2Examples
 # https://www.strongswan.org/uml/testresults/ikev2/rw-eap-sim-id-radius/
+
+# tutorials
 # https://hub.zhovner.com/geek/universal-ikev2-server-configuration/
 # http://www.slsmk.com/strongswan-ipsec-vpn-for-remote-users-with-certificate-based-authentication/
+
+# linux client gui network manager - client and server example
+# https://wiki.strongswan.org/projects/strongswan/wiki/NetworkManager
+
+# end user
+# http://help.uis.cam.ac.uk/devices-networks-printing/remote-access/uis-vpn/generic
