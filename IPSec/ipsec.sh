@@ -98,18 +98,25 @@ conn ikev2-vpn
   dpddelay=300s
   rekey=no
 
+  # left - local (server) side
   left=%any
   # leftid=@vpn.unical.it
   leftid=@$CA_CN
   leftcert=/etc/ipsec.d/certs/vpn-server-cert.pem
   leftsendcert=always
+  
+  # Routes pushed to clients. If you don't have ipv6 then remove ::/0
   leftsubnet=0.0.0.0/0
-
+  
+  # right - remote (client) side
   right=%any
   rightid=%any
   rightauth=eap-mschapv2
+  
+  # ipv4 and ipv6 subnets that assigns to clients. If you don't have ipv6 then remove it
   rightsourceip=$VPN_NET
   rightdns=$VPN_DNS
+  
   rightsendcert=never
   
   # ask the client for user credentials when they connect
@@ -138,6 +145,9 @@ monica : EAP \"camo\"
 ipsec rereadsecrets
 
 # first run
+systemctl stop strongswan
+systemctl start strongswan
+
 ipsec stop
 ipsec start # Starting strongSwan 5.2.1 IPsec [starter]...
 # ipsec reload # Reloading strongSwan IPsec configuration...
@@ -146,5 +156,10 @@ ipsec start # Starting strongSwan 5.2.1 IPsec [starter]...
 ipsec status
 ipsec statusall
 
+# erify that all cerifitaces configured correctly by executing
+ipsec listall
+
 # https://wiki.strongswan.org/projects/strongswan/wiki/IKEv2Examples
 # https://www.strongswan.org/uml/testresults/ikev2/rw-eap-sim-id-radius/
+# https://hub.zhovner.com/geek/universal-ikev2-server-configuration/
+# http://www.slsmk.com/strongswan-ipsec-vpn-for-remote-users-with-certificate-based-authentication/
