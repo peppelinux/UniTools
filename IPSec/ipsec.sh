@@ -73,8 +73,8 @@ mv /etc/ipsec.conf /etc/ipsec.conf.$(date +"%Y-%m-%d.%H:%M")
 # strongswan setup
 echo "
 config setup
-  charondebug=\"cfg 2, dmn 2, ike 2, net 2, lib 2\"
-  # charondebug=\"ike 1, knl 1, cfg 0\"
+  #charondebug=\"cfg 2, dmn 2, ike 2, net 2, lib 2\"
+  charondebug=\"ike 1, knl 1, cfg 0\"
   uniqueids=no
   # charondebug=\"all\"
   # uniqueids=yes
@@ -145,8 +145,8 @@ monica : EAP \"camo\"
 ipsec rereadsecrets
 
 # first run
-systemctl stop strongswan
-systemctl start strongswan
+# systemctl stop strongswan
+# systemctl start strongswan
 
 ipsec stop
 ipsec start # Starting strongSwan 5.2.1 IPsec [starter]...
