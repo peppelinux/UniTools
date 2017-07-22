@@ -1,0 +1,47 @@
+Jul 22 23:18:08 stretch charon: 08[NET] received packet: from 10.0.7.190[500] to 10.0.7.121[500] (880 bytes)
+Jul 22 23:18:08 stretch charon: 08[ENC] parsed IKE_SA_INIT request 0 [ SA KE No N(NATD_S_IP) N(NATD_D_IP) V V V V ]
+Jul 22 23:18:08 stretch charon: 08[IKE] received MS NT5 ISAKMPOAKLEY v9 vendor ID
+Jul 22 23:18:08 stretch charon: 08[IKE] received MS-Negotiation Discovery Capable vendor ID
+Jul 22 23:18:08 stretch charon: 08[IKE] received Vid-Initial-Contact vendor ID
+Jul 22 23:18:08 stretch charon: 08[ENC] received unknown vendor ID: 01:52:8b:bb:c0:06:96:12:18:49:ab:9a:1c:5b:2a:51:00:00:00:02
+Jul 22 23:18:08 stretch charon: 08[IKE] 10.0.7.190 is initiating an IKE_SA
+Jul 22 23:18:08 stretch charon: 08[IKE] faking NAT situation to enforce UDP encapsulation
+Jul 22 23:18:08 stretch charon: 08[ENC] generating IKE_SA_INIT response 0 [ SA KE No N(NATD_S_IP) N(NATD_D_IP) N(MULT_AUTH) ]
+Jul 22 23:18:08 stretch charon: 08[NET] sending packet: from 10.0.7.121[500] to 10.0.7.190[500] (312 bytes)
+Jul 22 23:18:08 stretch charon: 09[NET] received packet: from 10.0.7.190[4500] to 10.0.7.121[4500] (1216 bytes)
+Jul 22 23:18:08 stretch charon: 09[ENC] parsed IKE_AUTH request 1 [ IDi CERTREQ N(MOBIKE_SUP) CPRQ(ADDR DNS NBNS SRV ADDR6 DNS6 SRV6) SA TSi TSr ]
+Jul 22 23:18:08 stretch charon: 09[IKE] received 38 cert requests for an unknown ca
+Jul 22 23:18:08 stretch charon: 09[IKE] initiating EAP_IDENTITY method (id 0x00)
+Jul 22 23:18:08 stretch charon: 09[IKE] peer supports MOBIKE
+Jul 22 23:18:08 stretch charon: 09[IKE] authentication of 'vpn12.unical.it' (myself) with RSA signature successful
+Jul 22 23:18:08 stretch charon: 09[IKE] sending end entity cert "C=IT, O=UNICAL, CN=vpn12.unical.it"
+Jul 22 23:18:08 stretch charon: 09[ENC] generating IKE_AUTH response 1 [ IDr CERT AUTH EAP/REQ/ID ]
+Jul 22 23:18:08 stretch charon: 09[NET] sending packet: from 10.0.7.121[4500] to 10.0.7.190[4500] (2000 bytes)
+Jul 22 23:18:08 stretch charon: 11[NET] received packet: from 10.0.7.190[4500] to 10.0.7.121[4500] (96 bytes)
+Jul 22 23:18:08 stretch charon: 11[ENC] parsed IKE_AUTH request 2 [ EAP/RES/ID ]
+Jul 22 23:18:08 stretch charon: 11[IKE] received EAP identity 'monica'
+Jul 22 23:18:08 stretch charon: 11[IKE] initiating EAP_MSCHAPV2 method (id 0x2D)
+Jul 22 23:18:08 stretch charon: 11[ENC] generating IKE_AUTH response 2 [ EAP/REQ/MSCHAPV2 ]
+Jul 22 23:18:08 stretch charon: 11[NET] sending packet: from 10.0.7.121[4500] to 10.0.7.190[4500] (112 bytes)
+Jul 22 23:18:08 stretch charon: 10[NET] received packet: from 10.0.7.190[4500] to 10.0.7.121[4500] (144 bytes)
+Jul 22 23:18:08 stretch charon: 10[ENC] parsed IKE_AUTH request 3 [ EAP/RES/MSCHAPV2 ]
+Jul 22 23:18:08 stretch charon: 10[ENC] generating IKE_AUTH response 3 [ EAP/REQ/MSCHAPV2 ]
+Jul 22 23:18:08 stretch charon: 10[NET] sending packet: from 10.0.7.121[4500] to 10.0.7.190[4500] (144 bytes)
+Jul 22 23:18:08 stretch charon: 13[NET] received packet: from 10.0.7.190[4500] to 10.0.7.121[4500] (80 bytes)
+Jul 22 23:18:08 stretch charon: 13[ENC] parsed IKE_AUTH request 4 [ EAP/RES/MSCHAPV2 ]
+Jul 22 23:18:08 stretch charon: 13[IKE] EAP method EAP_MSCHAPV2 succeeded, MSK established
+Jul 22 23:18:08 stretch charon: 13[ENC] generating IKE_AUTH response 4 [ EAP/SUCC ]
+Jul 22 23:18:08 stretch charon: 13[NET] sending packet: from 10.0.7.121[4500] to 10.0.7.190[4500] (80 bytes)
+Jul 22 23:18:08 stretch charon: 12[NET] received packet: from 10.0.7.190[4500] to 10.0.7.121[4500] (112 bytes)
+Jul 22 23:18:08 stretch charon: 12[ENC] parsed IKE_AUTH request 5 [ AUTH ]
+Jul 22 23:18:08 stretch charon: 12[IKE] authentication of '10.0.7.190' with EAP successful
+Jul 22 23:18:08 stretch charon: 12[IKE] authentication of 'vpn12.unical.it' (myself) with EAP
+Jul 22 23:18:08 stretch charon: 12[IKE] IKE_SA ike2-eap-vpn[1] established between 10.0.7.121[vpn12.unical.it]...10.0.7.190[10.0.7.190]
+Jul 22 23:18:08 stretch charon: 12[IKE] peer requested virtual IP %any
+Jul 22 23:18:08 stretch charon: 12[IKE] assigning virtual IP 10.9.8.1 to peer 'monica'
+Jul 22 23:18:08 stretch charon: 12[IKE] peer requested virtual IP %any6
+Jul 22 23:18:08 stretch charon: 12[IKE] no virtual IP found for %any6 requested by 'monica'
+Jul 22 23:18:08 stretch charon: 12[IKE] CHILD_SA ike2-eap-vpn{1} established with SPIs cbd6d183_i 0f13fd74_o and TS 0.0.0.0/0 === 10.9.8.1/32
+Jul 22 23:18:08 stretch vpn: + 10.0.7.190 10.9.8.1/32 == 10.0.7.190 -- 10.0.7.121 == 0.0.0.0/0
+Jul 22 23:18:08 stretch charon: 12[ENC] generating IKE_AUTH response 5 [ AUTH CPRP(ADDR DNS) SA TSi TSr N(MOBIKE_SUP) N(ADD_4_ADDR) N(ADD_6_ADDR) ]
+Jul 22 23:18:08 stretch charon: 12[NET] sending packet: from 10.0.7.121[4500] to 10.0.7.190[4500] (272 bytes)

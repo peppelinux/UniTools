@@ -17,7 +17,7 @@ CA_CN="vpn12.unical.it"
 CA_DN="C=IT, O=UNICAL, CN=$CA_CN"
 VPN_NET="10.9.8.0/24"
 VPN_DNS="10.9.8.1"
-
+BUILD_CA_CERTS="0"
 # apt-get purge *strongswan*
 # apt-get purge *charon*
 
@@ -30,43 +30,48 @@ aptitude install strongswan moreutils iptables-persistent
 # debian 9
 # aptitude install strongswan-pki libcharon-extra-plugins strongswan-ikev2 strongswan-swanctl 
 
-# CA, an IKEv2 server requires a certificate to identify itself to clients.
-if [ -d "$CA_PATH" ]; then
-    mv $CA_PATH $CA_PATH.$(date +"%Y-%m-%d.%H:%M")
+if [ "$BUILD_CA_CERTS" -eq "1" ]; then
+
+    # CA, an IKEv2 server requires a certificate to identify itself to clients.
+    if [ -d "$CA_PATH" ]; then
+        mv $CA_PATH $CA_PATH.$(date +"%Y-%m-%d.%H:%M")
+    fi
+    mkdir $CA_PATH && cd $CA_PATH
+    
+    
+    ipsec pki --gen --type rsa --size $RSA_BIT --outform pem > $CA_PATH/server-root-key.pem
+    chmod 600 $CA_PATH/server-root-key.pem
+    
+    # You can change the distinguished name (DN) values, such as country, 
+    # organization, and common name, to something else to if you want to.
+    ipsec pki --self --ca --lifetime $CERT_LIFETIME \
+    --in $CA_PATH/server-root-key.pem \
+    --type rsa --dn "$CA_DN" \
+    --outform pem > $CA_PATH/server-root-ca.pem
+    # Later, we'll copy the root certificate (server-root-ca.pem) to our client devices so they can verify the authenticity of the server when they connect
+    # This is the Root Certificate of your Certificate Authority (CA). It can be downloaded from web or exported from system keychain.
+    
+    # Server Identity signed with our CA
+    ipsec pki --gen --type rsa --size $RSA_BIT --outform pem > $CA_PATH/vpn-server-key.pem
+    
+    ipsec pki --pub --in $CA_PATH/vpn-server-key.pem \
+    --type rsa | ipsec pki --issue --lifetime $CERT_LIFETIME \
+    --cacert $CA_PATH/server-root-ca.pem \
+    --cakey $CA_PATH/server-root-key.pem \
+    --dn "$CA_DN" \
+    --san $CA_CN \
+    --flag serverAuth --flag ikeIntermediate \
+    --outform pem > $CA_PATH/vpn-server-cert.pem
+    
+    # ipsec setup
+    cp $CA_PATH/vpn-server-cert.pem /etc/ipsec.d/certs/
+    cp $CA_PATH/vpn-server-key.pem /etc/ipsec.d/private/
+    
+    chown root /etc/ipsec.d/private/*
+    chgrp root /etc/ipsec.d/private/*
+    chmod -R 600 /etc/ipsec.d/private/
+
 fi
-mkdir $CA_PATH && cd $CA_PATH
-
-ipsec pki --gen --type rsa --size $RSA_BIT --outform pem > $CA_PATH/server-root-key.pem
-chmod 600 $CA_PATH/server-root-key.pem
-
-# You can change the distinguished name (DN) values, such as country, 
-# organization, and common name, to something else to if you want to.
-ipsec pki --self --ca --lifetime $CERT_LIFETIME \
---in $CA_PATH/server-root-key.pem \
---type rsa --dn "$CA_DN" \
---outform pem > $CA_PATH/server-root-ca.pem
-# Later, we'll copy the root certificate (server-root-ca.pem) to our client devices so they can verify the authenticity of the server when they connect
-# This is the Root Certificate of your Certificate Authority (CA). It can be downloaded from web or exported from system keychain.
-
-# Server Identity signed with our CA
-ipsec pki --gen --type rsa --size $RSA_BIT --outform pem > $CA_PATH/vpn-server-key.pem
-
-ipsec pki --pub --in $CA_PATH/vpn-server-key.pem \
---type rsa | ipsec pki --issue --lifetime $CERT_LIFETIME \
---cacert $CA_PATH/server-root-ca.pem \
---cakey $CA_PATH/server-root-key.pem \
---dn "$CA_DN" \
---san $CA_CN \
---flag serverAuth --flag ikeIntermediate \
---outform pem > $CA_PATH/vpn-server-cert.pem
-
-# ipsec setup
-cp $CA_PATH/vpn-server-cert.pem /etc/ipsec.d/certs/
-cp $CA_PATH/vpn-server-key.pem /etc/ipsec.d/private/
-
-chown root /etc/ipsec.d/private/*
-chgrp root /etc/ipsec.d/private/*
-chmod -R 600 /etc/ipsec.d/private/
 
 # Strongswan setup
 # backupit first
@@ -82,40 +87,65 @@ config setup
   uniqueids=no
   # strictcrlpolicy=no
 
+# Default configuration options, used below if an option is not specified.
+# See: https://wiki.strongswan.org/projects/strongswan/wiki/ConnSection
+conn %default
+  # Use IKEv2 by default
+  keyexchange=ikev2
+  # dead-peer detection to clear any \"dangling\" connections in case the client unexpectedly disconnects
+  dpdaction=clear
+  
+  # If the tunnel has no traffic for this long (default 30 secs), Charon will send a dead peer detection packet. The value 0 means to not send such packets, relying on ordinary traffic, which will occur at least once an hour, which is the default rekeying lifetime.
+  dpddelay=300s
+  
+  # Do not renegotiate a connection if it is about to expire
+  rekey=no
+  
+  # Prefer modern cipher suites that allow PFS (Perfect Forward Secrecy)
+  ike=aes128-sha256-ecp256,aes256-sha384-ecp384,aes128-sha256-modp2048,aes128-sha1-modp2048,aes256-sha384-modp4096,aes256-sha256-modp4096,aes256-sha1-modp4096,aes128-sha256-modp1536,aes128-sha1-modp1536,aes256-sha384-modp2048,aes256-sha256-modp2048,aes256-sha1-modp2048,aes128-sha256-modp1024,aes128-sha1-modp1024,aes256-sha384-modp1536,aes256-sha256-modp1536,aes256-sha1-modp1536,aes256-sha384-modp1024,aes256-sha256-modp1024,aes256-sha1-modp1024!
+  esp=aes128gcm16-ecp256,aes256gcm16-ecp384,aes128-sha256-ecp256,aes256-sha384-ecp384,aes128-sha256-modp2048,aes128-sha1-modp2048,aes256-sha384-modp4096,aes256-sha256-modp4096,aes256-sha1-modp4096,aes128-sha256-modp1536,aes128-sha1-modp1536,aes256-sha384-modp2048,aes256-sha256-modp2048,aes256-sha1-modp2048,aes128-sha256-modp1024,aes128-sha1-modp1024,aes256-sha384-modp1536,aes256-sha256-modp1536,aes256-sha1-modp1536,aes256-sha384-modp1024,aes256-sha256-modp1024,aes256-sha1-modp1024,aes128gcm16,aes256gcm16,aes128-sha256,aes128-sha1,aes256-sha384,aes256-sha256,aes256-sha1!
+  
+  # Server side
+  # left - local (server) side
+  # This is the IP address of the left end. %any means, for a responder, to use the IP address of the network interface through which the initiator is sending packets
+  left=%any
+  
+  # This is the filename of the (public) X.509 certificate certifying the left peer's right to use the included Distinguished Name and/or hostname (SAN).
+  leftcert=/etc/ipsec.d/certs/vpn-server-cert.pem
+  
+  # Routes pushed to clients. If you don't have ipv6 then remove ::/0
+  # This is a comma separated list of CIDR address ranges which the client should be told to route through the tunnel.
+  leftsubnet=0.0.0.0/0
+  
+  
+  # right - remote (client) side
+  # %any means that any host in the whole Internet can use this conn.
+  right=%any
+  rightid=%any
+
+
 # automatically load this configuration section when it starts up
-conn ikev2-vpn
+conn ike2-eap-vpn
   auto=add
   compress=no
   type=tunnel
-  keyexchange=ikev2
   fragmentation=yes
   forceencaps=yes
   
   # which encryption algorithms to use for the VPN
-  ike=aes256-sha1-modp1024,3des-sha1-modp1024!
-  esp=aes256-sha1,3des-sha1!
+  # ike=aes256-sha1-modp1024,3des-sha1-modp1024!
+  # esp=aes256-sha1,3des-sha1!
   
-  # dead-peer detection to clear any \"dangling\" connections in case the client unexpectedly disconnects
-  dpdaction=clear
-  dpddelay=300s
-  rekey=no
-
-  # left - local (server) side
-  left=%any
   # leftid=@vpn12.unical.it
   leftid=@$CA_CN
-  leftcert=/etc/ipsec.d/certs/vpn-server-cert.pem
+  
+  # There are choices for whan to send your certificate to the peer. Likely ifasked is sufficient, but I know that the client will always need the cert, so I avoid client screwups by always sending it.
   leftsendcert=always
-  
-  # Routes pushed to clients. If you don't have ipv6 then remove ::/0
-  leftsubnet=0.0.0.0/0
-  
+    
   # automatically inserts iptables-based firewall rules that let pass the tunneled traffic
   leftfirewall=yes
   
-  # right - remote (client) side
-  right=%any
-  rightid=%any
+  # Client side
   rightauth=eap-mschapv2
   
   # ipv4 and ipv6 subnets that assigns to clients. If you don't have ipv6 then remove it
@@ -126,8 +156,6 @@ conn ikev2-vpn
   
   # ask the client for user credentials when they connect
   eap_identity=%identity
-  
-
 " > /etc/ipsec.conf
 
 # configure vpn auth
@@ -161,12 +189,16 @@ ipsec start # Starting strongSwan 5.2.1 IPsec [starter]...
 ipsec status
 ipsec statusall
 
-# erify that all cerifitaces configured correctly by executing
+# verify that all cerifitaces configured correctly by executing
+ipsec listcerts
+
+# list every enc and plugins
 ipsec listall
-# ipsec listcacerts
 
 # introduction
 # https://wiki.strongswan.org/projects/strongswan/wiki/IntroductiontostrongSwan
+# http://jfcarter.net/~jimc/documents/strongswan-1308.html
+# https://wiki.archlinux.org/index.php/StrongSwan
 
 # official doc
 # https://wiki.strongswan.org/projects/strongswan/wiki/Windows7#C-Authentication-using-EAP-MSCHAP-v2
