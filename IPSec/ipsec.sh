@@ -230,6 +230,7 @@ ip route list table 220
 # internals
 # http://kernelspec.blogspot.it/2014/10/ipsec-implementation-in-linux-kernel.html
 # https://blog.croz.net/en/blog/xfrm-programming/
+# http://www.lorier.net/docs/xfrm
 
 # end user
 # http://help.uis.cam.ac.uk/devices-networks-printing/remote-access/uis-vpn/generic
