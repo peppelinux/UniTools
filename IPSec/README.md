@@ -5,6 +5,8 @@ These scripts are based on this tutorial and some others commented in ipsec.sh f
 
 https://www.digitalocean.com/community/tutorials/how-to-set-up-an-ikev2-vpn-server-with-strongswan-on-ubuntu-16-04
 
+you can event test this configuration with these embedded firmwares:
+https://github.com/peppelinux/pplnx-LEDE-firmwares
 
 Setup
 =====
