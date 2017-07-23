@@ -19,6 +19,8 @@ $IPT -I $CHAIN -p tcp -m tcp --dport $SSH_PORT -m state --state NEW,ESTABLISHED 
 # IPSec
 IPSEC_NET="10.9.8.0/24"
 IPSEC_WAN_IF=eth0
+STORE_PROCVAR_PERMANENTLY=1
+
 $IPT -I INPUT -i lo -j ACCEPT
 
 $IPT -A $CHAIN -p udp --dport  500 -j ACCEPT
@@ -41,6 +43,7 @@ $IPT -t mangle -A FORWARD --match policy --pol ipsec --dir in -s $IPSEC_NET -o $
 netfilter-persistent save
 netfilter-persistent reload
 
+
 # configure server ipv4 behaviour
 sysctl -w net.ipv4.ip_forward=1
 # Do not accept ICMP redirects (prevent MITM attacks)
@@ -49,4 +52,28 @@ sysctl -w net.ipv4.conf.all.accept_redirects=0
 sysctl -w net.ipv4.conf.all.send_redirects=0
 sysctl -w net.ipv4.ip_no_pmtu_disc=1
 
+#
 
+if [ "$STORE_PROCVAR_PERMANENTLY" -eq "1" ]; then
+    echo "store procvar permanently with sed"
+    
+    sed -r -i 's/#?\ ?net.ipv4.ip_forward\ ?=\ ?(0|1)/net.ipv4.ip_forward=1/' /etc/sysctl.conf
+    grep net.ipv4.ip_forward /etc/sysctl.conf
+    
+    sed -r -i 's/#?\ ?net.ipv4.conf.all.accept_redirects\ ?=\ ?(0|1)/net.ipv4.conf.all.accept_redirects=0/' /etc/sysctl.conf
+    grep net.ipv4.conf.all.accept_redirects /etc/sysctl.conf
+
+    sed -r -i 's/#?\ ?net.ipv4.conf.all.send_redirects\ ?=\ ?(0|1)/net.ipv4.conf.all.send_redirects=0/' /etc/sysctl.conf 
+    grep net.ipv4.conf.all.send_redirects /etc/sysctl.conf
+
+    #~ sed -r -i 's/#?\ ?net.ipv4.ip_no_pmtu_disc\ ?=\ ?(0|1)/net.ipv4.ip_no_pmtu_disc=0/' /etc/sysctl.conf
+    #~ grep net.ipv4.ip_no_pmtu_disc /etc/sysctl.conf
+    
+    # test if the latests exists or append it
+    grep -q '^#?\ ?net.ipv4.ip_no_pmtu_disc' /etc/sysctl.conf && \
+    sed -r -i 's/#?\ ?net.ipv4.ip_no_pmtu_disc\ ?=\ ?(0|1)/net.ipv4.ip_no_pmtu_disc=0/' /etc/sysctl.conf || \
+    echo 'net.ipv4.ip_no_pmtu_disc=0' >> /etc/sysctl.conf
+    
+    grep net.ipv4.ip_no_pmtu_disc /etc/sysctl.conf
+
+fi
