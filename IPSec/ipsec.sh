@@ -11,14 +11,13 @@ set -x
 SERVER_HOST="vpn12.unical.it"
 VPN_NET="10.9.8.0/24"
 VPN_DNS="10.9.8.1"
-BUILD_CA_CERTS="0"
 
 # CA setup
+BUILD_CA_CERTS="1"
 CA_BASEDIR="/opt"
 CA_DIRNAME="CA-ipsec"
 CA_PATH=$CA_BASEDIR/$CA_DIRNAME
-CA_CN=SERVER_HOST
-CA_DN="C=IT, O=UNICAL, CN=$CA_CN"
+CA_DN="C=IT, O=UNICAL, CN=$SERVER_HOST"
 RSA_BIT=4096
 CERT_LIFETIME=3650
 
@@ -45,7 +44,9 @@ if [ "$BUILD_CA_CERTS" -eq "1" ]; then
     # CA, an IKEv2 server requires a certificate to identify itself to clients.
     if [ -d "$CA_PATH" ]; then
         mv $CA_PATH $CA_PATH.$(date +"%Y-%m-%d.%H:%M")
-    fi
+        mv $CA_PATH.d $CA_PATH.d.$(date +"%Y-%m-%d.%H:%M")
+        mv $CA_PATH.secrets $CA_PATH.secrets.$(date +"%Y-%m-%d.%H:%M")    
+fi
     mkdir $CA_PATH && cd $CA_PATH
     
     
@@ -78,7 +79,7 @@ if [ "$BUILD_CA_CERTS" -eq "1" ]; then
     cp $CA_PATH/$SERVER_KEY /etc/ipsec.d/private/
     
     # ipsec listcacerts
-    cp $CA_PATH/$SERVER_CA_CERT/etc/ipsec.d/cacerts/
+    cp $CA_PATH/$SERVER_CA_CERT /etc/ipsec.d/cacerts/
 
     chown root /etc/ipsec.d/private/*
     chgrp root /etc/ipsec.d/private/*
@@ -210,14 +211,14 @@ ipsec listcerts
 
 # diagnostics
 # Setting xfrm. xfrm is an IP framework, which can transform format of the datagrams, i.e. encrypt the packets with some algorithm. xfrm policy and xfrm state are associated through templates TMPL_LIST. 
-This framework is used as a part of IPsec protocol.
-ip -s xfrm monitor
-ip -s xfrm policy
-ip -s xfrm state
+# This framework is used as a part of IPsec protocol.
+# ip -s xfrm monitor
+# ip -s xfrm policy
+# ip -s xfrm state
 
 # routing is quite transparent
-ip route show table all
-ip route list table 220
+# ip route show table all
+# ip route list table 220
 
 # introduction
 # https://wiki.strongswan.org/projects/strongswan/wiki/IntroductiontostrongSwan
