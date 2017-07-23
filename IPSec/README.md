@@ -17,7 +17,7 @@ Linux strongSwan U5.5.1/K4.9.0-3-amd64
 
 First of all change vars as you prefer in ipsec.sh file.
 You can decide to reuse already (self-)signed certs or create them automatically.
-If you want to create them from scratch you can do this:
+If you want to create them from scratch simply do this:
 
 ````
 # this var in ipsec.sh
@@ -27,16 +27,16 @@ BUILD_CA_CERTS="0"
 BUILD_CA_CERTS="1"
 ````
 
-Once strongwan beign started you can copy $SERVER_CA_CERT to your clients.
-In clients/ folder there are some example, test log and screenshot, hope you enjoy.
+Then run ipsec.sh for strongswan setup and ipsec.fw.sh for firewall, NAT and kernel routing sysctl rules.
 
-For Linux strongswan client the $SERVER_CA_CERT must be copied in
+Once strongwan beign started you can copy $SERVER_CA_CERT to your clients.
+In clients/ folder there are some examples, test log and screenshots, hope you enjoy.
+
+For Linux strongswan clients the $SERVER_CA_CERT must be copied in
 
 ````
 /etc/ipsec.d/certs/cacerts
 ````
-
-Once CA and certs are configured you can simply run ipsec.sh for strongswan setup and ipsec.fw.sh for firewall, NAT and kernel routing proc capabilities rules.
 
 
 Troubleshooting
