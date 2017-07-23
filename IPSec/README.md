@@ -36,6 +36,8 @@ For Linux strongswan client the $SERVER_CA_CERT must be copied in
 /etc/ipsec.d/certs/cacerts
 ````
 
+Once CA and certs are configured you can simply run ipsec.sh for strongswan setup and ipsec.fw.sh for firewall, NAT and kernel routing proc capabilities rules.
+
 
 Troubleshooting
 ===============
