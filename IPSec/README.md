@@ -1,4 +1,4 @@
-IPSEC ike2 strongswan universal setup
+IPSEC ike2-mschap2 strongswan universal setup
 =====================================
 
 These scripts are based on this tutorial and some others commented in ipsec.sh file.
