@@ -2,11 +2,13 @@ IPSEC ike2 strongswan setup based on
 
 https://www.digitalocean.com/community/tutorials/how-to-set-up-an-ikev2-vpn-server-with-strongswan-on-ubuntu-16-04
 
+
 SETUP
+=====
 
 First of all change vars as you prefer in ipsec.sh file.
-You can decide to reuse already (self-)signed certs or create it automatically, just
-change 
+You can decide to reuse already (self-)signed certs or create them automatically.
+If you want to create them from scratch you can do this:
 
 ````
 # this var in ipsec.sh
@@ -16,8 +18,8 @@ BUILD_CA_CERTS="0"
 BUILD_CA_CERTS="1"
 ````
 
-Once strongwan beign started you can copy $SERVER_CA_CERT to your client.
-In clients/ folder there are some example, test log and screenshot.
+Once strongwan beign started you can copy $SERVER_CA_CERT to your clients.
+In clients/ folder there are some example, test log and screenshot, hope you enjoy.
 
 For Linux strongswan client the $SERVER_CA_CERT must be copied in
 
@@ -27,6 +29,7 @@ For Linux strongswan client the $SERVER_CA_CERT must be copied in
 
 
 TROUBLESHOOTING
+===============
 
 ````
 problem:
