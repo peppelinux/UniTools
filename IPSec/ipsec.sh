@@ -17,6 +17,7 @@ BUILD_CA_CERTS="1"
 CA_BASEDIR="/opt"
 CA_DIRNAME="CA-ipsec"
 CA_PATH=$CA_BASEDIR/$CA_DIRNAME
+CA_CN="$SERVER_HOST"
 CA_DN="C=IT, O=UNICAL, CN=$SERVER_HOST"
 RSA_BIT=4096
 CERT_LIFETIME=3650
@@ -44,8 +45,6 @@ if [ "$BUILD_CA_CERTS" -eq "1" ]; then
     # CA, an IKEv2 server requires a certificate to identify itself to clients.
     if [ -d "$CA_PATH" ]; then
         mv $CA_PATH $CA_PATH.$(date +"%Y-%m-%d.%H:%M")
-        mv $CA_PATH.d $CA_PATH.d.$(date +"%Y-%m-%d.%H:%M")
-        mv $CA_PATH.secrets $CA_PATH.secrets.$(date +"%Y-%m-%d.%H:%M")    
 fi
     mkdir $CA_PATH && cd $CA_PATH
     
@@ -90,6 +89,8 @@ fi
 # Strongswan setup
 # backupit first
 mv /etc/ipsec.conf /etc/ipsec.conf.$(date +"%Y-%m-%d.%H:%M")
+cp -R /etc/ipsec.d /etc/ipsec.d.$(date +"%Y-%m-%d.%H:%M")
+cp -R /etc/ipsec.secrets /etc/ipsec.secrets.$(date +"%Y-%m-%d.%H:%M")    
 
 # strongswan setup
 echo "
