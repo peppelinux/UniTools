@@ -37,7 +37,7 @@ For Linux strongswan client the $SERVER_CA_CERT must be copied in
 ````
 
 
-TROUBLESHOOTING
+Troubleshooting
 ===============
 
 ````
