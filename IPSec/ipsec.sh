@@ -232,6 +232,9 @@ ipsec listcerts
 # https://wiki.strongswan.org/projects/strongswan/wiki/IKEv2Examples
 # https://www.strongswan.org/uml/testresults/ikev2/rw-eap-sim-id-radius/
 
+# assign interface to tunnel (not only rt table 220 and xrfm)
+# https://wiki.strongswan.org/projects/strongswan/wiki/RouteBasedVPN
+
 # tutorials
 # https://hub.zhovner.com/geek/universal-ikev2-server-configuration/
 # http://www.slsmk.com/strongswan-ipsec-vpn-for-remote-users-with-certificate-based-authentication/
