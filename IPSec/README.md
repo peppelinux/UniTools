@@ -6,8 +6,14 @@ These scripts are based on this tutorial and some others commented in ipsec.sh f
 https://www.digitalocean.com/community/tutorials/how-to-set-up-an-ikev2-vpn-server-with-strongswan-on-ubuntu-16-04
 
 
-SETUP
+Setup
 =====
+
+Tested as fully working with:
+````
+Linux strongSwan U5.2.1/K3.16.0-4-amd64
+Linux strongSwan U5.5.1/K4.9.0-3-amd64
+````
 
 First of all change vars as you prefer in ipsec.sh file.
 You can decide to reuse already (self-)signed certs or create them automatically.
