@@ -7,17 +7,27 @@
 set -e
 set -x
 
-CA_BASEDIR="/opt"
-CA_DIRNAME="CA-ipsec"
-CA_PATH=$CA_BASEDIR/$CA_DIRNAME
-RSA_BIT=4096
-CERT_LIFETIME=3650
 # ip or hostname of the server
-CA_CN="vpn12.unical.it"
-CA_DN="C=IT, O=UNICAL, CN=$CA_CN"
+SERVER_HOST="vpn12.unical.it"
 VPN_NET="10.9.8.0/24"
 VPN_DNS="10.9.8.1"
 BUILD_CA_CERTS="0"
+
+# CA setup
+CA_BASEDIR="/opt"
+CA_DIRNAME="CA-ipsec"
+CA_PATH=$CA_BASEDIR/$CA_DIRNAME
+CA_CN=SERVER_HOST
+CA_DN="C=IT, O=UNICAL, CN=$CA_CN"
+RSA_BIT=4096
+CERT_LIFETIME=3650
+
+SERVER_CA_CERT="server-root-ca.pem" # pub key in cert
+SERVER_CA_KEY="server-root-key.pem" # private key
+SERVER_CERT="vpn-server-cert.pem"
+SERVER_KEY="vpn-server-key.pem"
+
+# purge olds if needed
 # apt-get purge *strongswan*
 # apt-get purge *charon*
 
@@ -39,36 +49,36 @@ if [ "$BUILD_CA_CERTS" -eq "1" ]; then
     mkdir $CA_PATH && cd $CA_PATH
     
     
-    ipsec pki --gen --type rsa --size $RSA_BIT --outform pem > $CA_PATH/server-root-key.pem
-    chmod 600 $CA_PATH/server-root-key.pem
+    ipsec pki --gen --type rsa --size $RSA_BIT --outform pem > $CA_PATH/$SERVER_CA_KEY
+    chmod 600 $CA_PATH/$SERVER_CA_KEY
     
     # You can change the distinguished name (DN) values, such as country, 
     # organization, and common name, to something else to if you want to.
     ipsec pki --self --ca --lifetime $CERT_LIFETIME \
-    --in $CA_PATH/server-root-key.pem \
+    --in $CA_PATH/$SERVER_CA_KEY \
     --type rsa --dn "$CA_DN" \
-    --outform pem > $CA_PATH/server-root-ca.pem
+    --outform pem > $CA_PATH/$SERVER_CA_CERT
     # Later, we'll copy the root certificate (server-root-ca.pem) to our client devices so they can verify the authenticity of the server when they connect
     # This is the Root Certificate of your Certificate Authority (CA). It can be downloaded from web or exported from system keychain.
     
     # Server Identity signed with our CA
-    ipsec pki --gen --type rsa --size $RSA_BIT --outform pem > $CA_PATH/vpn-server-key.pem
+    ipsec pki --gen --type rsa --size $RSA_BIT --outform pem > $CA_PATH/$SERVER_KEY
     
-    ipsec pki --pub --in $CA_PATH/vpn-server-key.pem \
+    ipsec pki --pub --in $CA_PATH/$SERVER_KEY \
     --type rsa | ipsec pki --issue --lifetime $CERT_LIFETIME \
-    --cacert $CA_PATH/server-root-ca.pem \
-    --cakey $CA_PATH/server-root-key.pem \
+    --cacert $CA_PATH/$SERVER_CA_CERT \
+    --cakey $CA_PATH/$SERVER_CA_KEY \
     --dn "$CA_DN" \
     --san $CA_CN \
     --flag serverAuth --flag ikeIntermediate \
-    --outform pem > $CA_PATH/vpn-server-cert.pem
+    --outform pem > $CA_PATH/$SERVER_CERT
     
     # ipsec setup
-    cp $CA_PATH/vpn-server-cert.pem /etc/ipsec.d/certs/
-    cp $CA_PATH/vpn-server-key.pem /etc/ipsec.d/private/
+    cp $CA_PATH/$SERVER_CERT /etc/ipsec.d/certs/
+    cp $CA_PATH/$SERVER_KEY /etc/ipsec.d/private/
     
     # ipsec listcacerts
-    cp $CA_PATH/server-root-ca.pem /etc/ipsec.d/cacerts/
+    cp $CA_PATH/$SERVER_CA_CERT/etc/ipsec.d/cacerts/
 
     chown root /etc/ipsec.d/private/*
     chgrp root /etc/ipsec.d/private/*
@@ -114,7 +124,7 @@ conn %default
   left=%any
   
   # This is the filename of the (public) X.509 certificate certifying the left peer's right to use the included Distinguished Name and/or hostname (SAN).
-  leftcert=/etc/ipsec.d/certs/vpn-server-cert.pem
+  leftcert=$SERVER_CERT
   
   # Routes pushed to clients. If you don't have ipv6 then remove ::/0
   # This is a comma separated list of CIDR address ranges which the client should be told to route through the tunnel.
