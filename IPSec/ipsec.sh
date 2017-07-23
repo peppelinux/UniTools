@@ -222,3 +222,6 @@ ip route list table 220
 
 # end user
 # http://help.uis.cam.ac.uk/devices-networks-printing/remote-access/uis-vpn/generic
+
+# TODO
+# https://wiki.strongswan.org/projects/strongswan/wiki/EAPRAdius
