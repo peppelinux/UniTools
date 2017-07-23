@@ -67,6 +67,9 @@ if [ "$BUILD_CA_CERTS" -eq "1" ]; then
     cp $CA_PATH/vpn-server-cert.pem /etc/ipsec.d/certs/
     cp $CA_PATH/vpn-server-key.pem /etc/ipsec.d/private/
     
+    # ipsec listcacerts
+    cp $CA_PATH/server-root-ca.pem /etc/ipsec.d/cacerts/
+
     chown root /etc/ipsec.d/private/*
     chgrp root /etc/ipsec.d/private/*
     chmod -R 600 /etc/ipsec.d/private/
@@ -193,7 +196,12 @@ ipsec statusall
 ipsec listcerts
 
 # list every enc and plugins
-ipsec listall
+# ipsec listall
+
+# diagnostics
+ip -s xfrm policy
+ip -s xfrm state
+ip route list table 220
 
 # introduction
 # https://wiki.strongswan.org/projects/strongswan/wiki/IntroductiontostrongSwan
