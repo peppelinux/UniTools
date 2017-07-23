@@ -21,6 +21,6 @@ problem:
   Jul 23 02:11:12 stretch charon: 05[IKE] failed to establish CHILD_SA, keeping IKE_SA
 
 solution:
-  ...
+  just add leftsourceip= %config OR x.y.z.n in client ipsec.conf conn
 ````
 
