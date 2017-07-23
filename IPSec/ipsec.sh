@@ -199,8 +199,14 @@ ipsec listcerts
 # ipsec listall
 
 # diagnostics
+# Setting xfrm. xfrm is an IP framework, which can transform format of the datagrams, i.e. encrypt the packets with some algorithm. xfrm policy and xfrm state are associated through templates TMPL_LIST. 
+This framework is used as a part of IPsec protocol.
+ip -s xfrm monitor
 ip -s xfrm policy
 ip -s xfrm state
+
+# routing is quite transparent
+ip route show table all
 ip route list table 220
 
 # introduction
@@ -209,6 +215,7 @@ ip route list table 220
 # https://wiki.archlinux.org/index.php/StrongSwan
 
 # official doc
+# https://wiki.strongswan.org/projects/strongswan/wiki/IpsecCommand
 # https://wiki.strongswan.org/projects/strongswan/wiki/Windows7#C-Authentication-using-EAP-MSCHAP-v2
 # https://wiki.strongswan.org/projects/strongswan/wiki/IKEv2Examples
 # https://www.strongswan.org/uml/testresults/ikev2/rw-eap-sim-id-radius/
@@ -220,8 +227,11 @@ ip route list table 220
 # linux client gui network manager - client and server example
 # https://wiki.strongswan.org/projects/strongswan/wiki/NetworkManager
 
+# internals
+# http://kernelspec.blogspot.it/2014/10/ipsec-implementation-in-linux-kernel.html
+# https://blog.croz.net/en/blog/xfrm-programming/
+
 # end user
 # http://help.uis.cam.ac.uk/devices-networks-printing/remote-access/uis-vpn/generic
 
-# TODO
-# https://wiki.strongswan.org/projects/strongswan/wiki/EAPRAdius
+

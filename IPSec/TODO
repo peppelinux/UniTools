@@ -1,0 +1,10 @@
+# TODO List
+
+
+Radius EAP
+https://wiki.strongswan.org/projects/strongswan/wiki/EAPRAdius
+
+Static IP leases
+https://wiki.strongswan.org/projects/strongswan/wiki/IpsecLeases
+
+Migliorare timeout drop clients disconnessi/morti
