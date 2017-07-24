@@ -183,7 +183,7 @@ echo "
 
 " > /etc/ipsec.secrets
 
-# put any user you want appending it to secrets
+# put any user you want appending them to secrets
 echo "
 mario : EAP \"rossi\"
 monica : EAP \"camo\"
