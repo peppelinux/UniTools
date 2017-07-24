@@ -7,4 +7,7 @@ https://wiki.strongswan.org/projects/strongswan/wiki/EAPRAdius
 Static IP leases
 https://wiki.strongswan.org/projects/strongswan/wiki/IpsecLeases
 
+ip pool db
+https://www.strongswan.org/uml/testresults/ikev2/ip-pool-db/
+
 Migliorare timeout drop clients disconnessi/morti
