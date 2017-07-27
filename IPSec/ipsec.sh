@@ -234,6 +234,9 @@ ipsec listcerts
 
 # assign interface to tunnel (not only rt table 220 and xrfm)
 # https://wiki.strongswan.org/projects/strongswan/wiki/RouteBasedVPN
+# https://gist.github.com/heri16/2f59d22d1d5980796bfb
+# https://wiki.strongswan.org/issues/2266
+# https://end.re/2015-01-06_vti-tunnel-interface-with-strongswan.html
 
 # tutorials
 # https://hub.zhovner.com/geek/universal-ikev2-server-configuration/
