@@ -143,6 +143,13 @@ conn ike2-eap-radius
   rightauth=eap-mschapv2
   eap_identity=peppelinux
 
+conn ike2-eap-chap-l2
+  also=ike2-eap-radius
+  rightauth=eap-mschapv2
+  eap_identity=peppelinux2
+  rightsourceip=160.97.24.144-160.97.24.151
+  rightdns=8.8.8.8
+
 
 # automatically load this configuration section when it starts up
 conn ike2-eap-mschap2
