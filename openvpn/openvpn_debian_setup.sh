@@ -29,3 +29,5 @@ touch keys/index.txt
 echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.d/99-sysctl.conf
 
 echo AUTOSTART="server" >> /etc/default/openvpn 
+
+systemctl enable openvpn
