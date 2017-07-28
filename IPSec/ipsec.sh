@@ -111,7 +111,7 @@ conn %default
   dpdaction=clear
   
   # If the tunnel has no traffic for this long (default 30 secs), Charon will send a dead peer detection packet. The value 0 means to not send such packets, relying on ordinary traffic, which will occur at least once an hour, which is the default rekeying lifetime.
-  dpddelay=300s
+  dpddelay=30s
   
   # Do not renegotiate a connection if it is about to expire
   rekey=no
@@ -131,7 +131,6 @@ conn %default
   # Routes pushed to clients. If you don't have ipv6 then remove ::/0
   # This is a comma separated list of CIDR address ranges which the client should be told to route through the tunnel.
   leftsubnet=0.0.0.0/0
-  
   
   # right - remote (client) side
   # %any means that any host in the whole Internet can use this conn.
@@ -164,7 +163,9 @@ conn ike2-eap-vpn
   rightauth=eap-mschapv2
   
   # ipv4 and ipv6 subnets that assigns to clients. If you don't have ipv6 then remove it
+  # rightsourceip=%dhcp # if dnsmasq is enabled
   rightsourceip=$VPN_NET
+  
   rightdns=$VPN_DNS
   
   rightsendcert=never
