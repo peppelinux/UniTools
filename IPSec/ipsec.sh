@@ -4,6 +4,10 @@
  # | ||  __/ ___) | |__| |___ 
 # |___|_|   |____/|_____\____|
 
+# This IKEv2 setup will connect using ESP in tunnel (rather than transport) 
+# mode. (By contrast, L2TP/IPSec or GRE over IPSec will use ESP in transport mode.) 
+# The ESP tunnel is just for IP traffic (Layer 3) whereas other tunnel types can handle layer 2 protocols. 
+
 set -e
 set -x
 
