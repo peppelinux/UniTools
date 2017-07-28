@@ -137,9 +137,15 @@ conn %default
   right=%any
   rightid=%any
 
+# conn inheritance :)
+conn ike2-eap-radius
+  also=ike2-eap-mschap2
+  rightauth=eap-mschapv2
+  eap_identity=peppelinux
+
 
 # automatically load this configuration section when it starts up
-conn ike2-eap-vpn
+conn ike2-eap-mschap2
   auto=add
   compress=no
   type=tunnel
