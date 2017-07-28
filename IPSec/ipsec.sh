@@ -245,6 +245,9 @@ ipsec listcerts
 # https://wiki.strongswan.org/issues/2266
 # https://end.re/2015-01-06_vti-tunnel-interface-with-strongswan.html
 
+# connection trigger
+# https://serverfault.com/questions/583907/running-a-custom-script-when-strongswan-connection-is-established
+
 # tutorials
 # https://hub.zhovner.com/geek/universal-ikev2-server-configuration/
 # http://www.slsmk.com/strongswan-ipsec-vpn-for-remote-users-with-certificate-based-authentication/
