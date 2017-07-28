@@ -1,0 +1,9 @@
+#interface=enp0s3.220
+dhcp-range=enp0s3.220,10.9.8.1,10.9.8.250,4h
+dhcp-host=7a:a7:51:cc:22:4a,10.1.0.30
+dhcp-host=7a:a7:93:70:2b:21,10.1.0.40
+dhcp-option=option:router,10.9.8.254
+dhcp-option=option:dns-server,8.8.8.8
+#dhcp-option=option:netbios-ns,PH_IP_ALICE
+#dhcp-option=option:domain-name,strongswan.org
+log-dhcp
