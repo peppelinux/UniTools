@@ -149,7 +149,10 @@ conn ike2-eap-mschap2
   auto=add
   compress=no
   type=tunnel
+  
   fragmentation=yes
+  
+  # IP protocol 50 (native ESP tunnelled traffic) can't pass through most NAT routers. Ordinarily, IKEv2 will attempt to detect the presence of a NAT and will switch to UDP-encapsulated ESP. However, IP protocol 50 might not pass through some non-NAT firewalls, too, which won't be detected by this means.
   forceencaps=yes
   
   # which encryption algorithms to use for the VPN
@@ -246,7 +249,9 @@ ipsec listcerts
 # https://end.re/2015-01-06_vti-tunnel-interface-with-strongswan.html
 
 # connection trigger
+# https://www.cl.cam.ac.uk/~mas90/resources/strongswan/
 # https://serverfault.com/questions/583907/running-a-custom-script-when-strongswan-connection-is-established
+# https://wiki.strongswan.org/projects/strongswan/repository/revisions/master/entry/src/_updown/_updown.in
 
 # tutorials
 # https://hub.zhovner.com/geek/universal-ikev2-server-configuration/
