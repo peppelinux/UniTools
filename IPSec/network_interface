@@ -1,0 +1,6 @@
+auto enp0s3.220
+iface enp0s3.220 inet static
+    address 10.9.8.254
+    netmask 255.255.255.0
+    vlan-raw-device enp0s3
+    # pre-up ip link set enp0s3.220 name vpn
