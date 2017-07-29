@@ -1,5 +1,6 @@
 Su Linux è possibile che dipendenze o differenze di versioni tra server e client comportino 
-problemi apparentemente di natura diversa... risolvibili con un allineamento delle versioni.
+problemi apparentemente di natura diversa... risolvibili con un allineamento
+delle versioni, ovvero compilare.
 
 Sul client
 Scaricare i sorgenti della versione di strongswan da installare
