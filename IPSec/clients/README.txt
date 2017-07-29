@@ -10,12 +10,12 @@ SWVER="5.5.3"
 aptitude install libldns-dev clearsilver-dev libfcgi-dev libsqlite3-dev
 
 # debian 9: "No package 'libiptc' found"
-# ./configure --enable-monolithic  --enable-acert --enable-bypass-lan --enable-cmd  --enable-connmark  --enable-eap-dynamic --enable-eap-identity  --enable-eap-tls --enable-eap-md5 --enable-eap-mschapv2  --enable-manager --enable-md4 --enable-md5 --enable-openssl  --enable-pkcs11  --enable-sha3 --enable-xauth-eap --prefix=/usr --sysconfdir=/etc
+# ./configure --enable-monolithic  --enable-acert --enable-bypass-lan --enable-cmd  --enable-connmark  --enable-eap-dynamic --enable-eap-identity  --enable-eap-tls --enable-eap-md5 --enable-eap-mschapv2  --enable-manager --enable-md4 --enable-md5 --enable-openssl  --enable-pkcs11  --enable-sha3 --enable-eap-aka --enable-xauth-eap --prefix=/usr --sysconfdir=/etc
 
 # mamanger da rogne con libxml
-#./configure --enable-monolithic  --enable-acert --enable-bypass-lan --enable-cmd  --enable-eap-dynamic --enable-eap-identity --enable-eap-md5  --enable-eap-tls --enable-eap-mschapv2  --enable-manager --enable-md4 --enable-md5 --enable-openssl  --enable-pkcs11  --enable-sha3 --enable-xauth-eap --prefix=/usr --sysconfdir=/etc
+#./configure --enable-monolithic  --enable-acert --enable-bypass-lan --enable-cmd  --enable-eap-dynamic --enable-eap-identity --enable-eap-md5  --enable-eap-tls --enable-eap-mschapv2  --enable-manager --enable-md4 --enable-md5 --enable-openssl  --enable-pkcs11  --enable-sha3 --enable-xauth-eap --enable-eap-aka --prefix=/usr --sysconfdir=/etc
 
-./configure --enable-monolithic  --enable-acert --enable-bypass-lan --enable-cmd  --enable-eap-dynamic --enable-eap-identity --enable-eap-md5 --enable-eap-mschapv2 --enable-md4 --enable-md5 --enable-openssl  --enable-pkcs11  --enable-sha3 --enable-xauth-eap  --enable-eap-tls --prefix=/usr --sysconfdir=/etc
+./configure --enable-monolithic  --enable-acert --enable-bypass-lan --enable-cmd  --enable-eap-dynamic --enable-eap-identity --enable-eap-md5 --enable-eap-mschapv2 --enable-md4 --enable-md5 --enable-openssl  --enable-pkcs11  --enable-sha3 --enable-xauth-eap  --enable-eap-tls --enable-eap-aka --prefix=/usr --sysconfdir=/etc
 
 cp -R /usr/include/libxml2/libxml .
 
