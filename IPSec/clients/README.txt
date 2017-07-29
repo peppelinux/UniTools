@@ -5,10 +5,7 @@ delle versioni, ovvero compilare.
 Sul client
 Scaricare i sorgenti della versione di strongswan da installare
 
-
-
 SWVER="5.5.3"
-
 
 aptitude install libldns-dev clearsilver-dev libfcgi-dev libsqlite3-dev
 
