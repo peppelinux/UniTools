@@ -15,7 +15,7 @@ aptitude install libldns-dev clearsilver-dev libfcgi-dev libsqlite3-dev
 # mamanger da rogne con libxml
 #./configure --enable-monolithic  --enable-dhcp --enable-ctr --enable-blowfish -enable-af-alg --enable-aesni  --enable-addrblock --enable-acert --enable-bypass-lan --enable-cmd  --enable-eap-dynamic --enable-eap-identity --enable-eap-md5  --enable-eap-tls --enable-eap-mschapv2  --enable-manager --enable-md4 --enable-md5 --enable-openssl  --enable-pkcs11  --enable-sha3 --enable-xauth-eap --enable-eap-aka --enable-eap-aka-3gpp2 --prefix=/usr --sysconfdir=/etc
 
-./configure --enable-monolithic  --enable-dhcp --enable-ctr --enable-blowfish -enable-af-alg --enable-aesni  --enable-addrblock --enable-acert --enable-bypass-lan --enable-cmd  --enable-eap-dynamic --enable-eap-identity --enable-eap-md5 --enable-eap-mschapv2 --enable-md4 --enable-md5 --enable-openssl  --enable-pkcs11  --enable-sha3 --enable-xauth-eap  --enable-eap-tls --enable-eap-aka --enable-eap-aka-3gpp2 --prefix=/usr --sysconfdir=/etc
+./configure --enable-monolithic  --enable-dhcp --enable-ctr --enable-blowfish -enable-af-alg --enable-aesni  --enable-addrblock --enable-acert --enable-bypass-lan --enable-cmd  --enable-eap-dynamic --enable-eap-identity --enable-eap-md5 --enable-eap-mschapv2 --enable-md4 --enable-md5 --enable-openssl  --enable-pkcs11  --enable-sha3 --enable-xauth-eap  --enable-eap-tls --enable-eap-aka --enable-eap-aka-3gpp2 --enable-dhcp --enable-ctr --enable-blowfish -enable-af-alg --enable-aesni  --enable-addrblock --prefix=/usr --sysconfdir=/etc
 
 cp -R /usr/include/libxml2/libxml .
 
