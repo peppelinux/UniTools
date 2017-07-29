@@ -142,17 +142,17 @@ conn %default
   rightid=%any
 
 # conn inheritance :)
-conn ike2-eap-radius
-  also=ike2-eap-mschap2
-  rightauth=eap-mschapv2
-  eap_identity=peppelinux
+#conn ike2-eap-radius
+#  also=ike2-eap-mschap2
+#  rightauth=eap-mschapv2
+#  eap_identity=peppelinux
 
-conn ike2-eap-chap-l2
-  also=ike2-eap-radius
-  rightauth=eap-mschapv2
-  eap_identity=peppelinux2
-  rightsourceip=160.97.24.144-160.97.24.151
-  rightdns=8.8.8.8
+#conn ike2-eap-chap-l2
+#  also=ike2-eap-radius
+#  rightauth=eap-mschapv2
+#  eap_identity=peppelinux2
+#  rightsourceip=160.97.24.144-160.97.24.151
+#  rightdns=8.8.8.8
 
 
 # automatically load this configuration section when it starts up
@@ -226,6 +226,7 @@ ipsec status
 ipsec statusall
 
 # verify that all cerifitaces configured correctly by executing
+ipsec rereadall
 ipsec listcerts
 
 # list every enc and plugins
