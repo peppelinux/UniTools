@@ -8,7 +8,7 @@ set -x
 set -e
 
 NGINX_VER=1.10.3
-
+SP_HOSTNAME=nginx-sp.testunical.it
 TEST_FILE=/etc/shibboleth/,\
 /usr/lib/x86_64-linux-gnu/shibboleth/
 
@@ -163,7 +163,38 @@ PrivateTmp=true
 WantedBy=multi-user.target
 " > /lib/systemd/system/nginx.service
 
+# put ssl certificate, avoids
+# no "ssl_certificate" is defined in server listening on SSL port while SSL handshaking
+# must be created from IDP CA and then copied to sp's nginx
+# TODO
+
+# configure nginx virtual server
+# TODO
+
 # reload and restart 
 systemctl daemon-reload 
 systemctl enable nginx
 systemctl start nginx
+
+###########
+# Configure Shibboleth SP
+###########
+
+/usr/sbin/shib-keygen -f -h $SP_HOSTNAME -e https://$SP_HOSTNAME/shibboleth 
+# writing new private key to '/etc/shibboleth/sp-key.pem'
+
+mkdir /etc/shibboleth/metadata
+cd  /etc/shibboleth/metadata
+# copy idp.testunical.it-metadata.xml in it !
+wget --no-check-certificate https://idp.testunical.it/idp/shibboleth -O idp.testunical.it-metadata.xml
+
+# edit /etc/shibboleth/shibboleth2.xml like 
+# https://github.com/peppelinux/ansible-Debian8-shibboleth-IDP-SP/blob/master/roles/mod-shib2/templates/shibboleth2.xml
+
+# Configure Shibboleth SP Attribute Map
+# copy https://github.com/peppelinux/ansible-Debian8-shibboleth-IDP-SP/blob/master/roles/mod-shib2/files/attribute-map.xml
+# to
+# /etc/shibboleth/attribute-map.xml
+
+# Add SP {{ sp_fqdn }} Metadata to Shibboleth IdP
+### TODO
