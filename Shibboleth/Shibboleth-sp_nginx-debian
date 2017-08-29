@@ -92,8 +92,8 @@ cd nginx-$NGINX_VER
  --http-log-path=/var/log/nginx/access.log \
  --with-http_ssl_module \
  --add-module=../nginx-http-shibboleth \
- --add-module=../headers-more-nginx-module
-#--with-ipv6 \
+ --add-module=../headers-more-nginx-module \
+ --with-ipv6
 
 ###########
 # NGINX Installation
@@ -101,6 +101,10 @@ cd nginx-$NGINX_VER
 make
 make install
 sudo adduser --system --no-create-home --disabled-login --disabled-password --group nginx
+
+mkdir -p /opt/nginx-modules/shib
+cp objs/addon/nginx-http-shibboleth/ngx_http_shibboleth_module.o /opt/nginx-modules/shib/
+cp -Rp ../nginx-http-shibboleth/includes /opt/nginx-modules/shib/
 
 ###########
 # NGINX build DEB
