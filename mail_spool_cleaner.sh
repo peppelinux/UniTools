@@ -1,8 +1,10 @@
 #!/bin/bash
 # automatic clean your mailbox
 
+USERNAME="username"
+
 # change it according to your path
-MAIL_SPOOL_FILE="/var/spool/mail/username"
+MAIL_SPOOL_FILE="/var/spool/mail/$USERNAME"
 
 # percent
 EMAIL_PERCENT_TO_PURGE=33
