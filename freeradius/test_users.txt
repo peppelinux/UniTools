@@ -8,8 +8,11 @@ radtest test@test.realm.it test localhost 0 testing123
 # wget latest wpa-supplicant and decompress it
 
 aptitude install libnl-3-dev libssl-dev
-check if lib path is good, else: ln -s /lib/x86_64-linux-gnu/libnl-3.so /lib/x86_64-linux-gnu/libnl.so
-cp defconfig .config && nano .config # change CONFIG_EAPOL_TEST=y
+#check if lib path is good, else: 
+ln -s /lib/x86_64-linux-gnu/libnl-3.so /lib/x86_64-linux-gnu/libnl.so
+
+# then change CONFIG_EAPOL_TEST=y
+cp defconfig .config && nano .config 
 make eapol_test && cp eapol_test /usr/local/bin
 
 echo "
