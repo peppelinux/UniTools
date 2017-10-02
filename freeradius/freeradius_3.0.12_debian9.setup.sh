@@ -126,4 +126,9 @@ update-rc.d  freeradius enable 2
 
 # with eap
 # you have to compile eapol_test first :)
+# wget latest wpa-supplicant and decompress it
+# aptitude install libnl-3-dev libssl-dev
+# check if lib path is good, else: ln -s /lib/x86_64-linux-gnu/libnl-3.so /lib/x86_64-linux-gnu/libnl.so
+# cp defconfig .config && nano .config # change CONFIG_EAPOL_TEST=y
+# make eapol_test && cp eapol_test /usr/local/bin
 # ./wpa_supplicant-2.5/wpa_supplicant/eapol_test  -a 10.87.7.213  -s SeCreTXXx -c eapol_test 
