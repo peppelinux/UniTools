@@ -131,4 +131,22 @@ update-rc.d  freeradius enable 2
 # check if lib path is good, else: ln -s /lib/x86_64-linux-gnu/libnl-3.so /lib/x86_64-linux-gnu/libnl.so
 # cp defconfig .config && nano .config # change CONFIG_EAPOL_TEST=y
 # make eapol_test && cp eapol_test /usr/local/bin
+echo "
+#
+#   eapol_test -c peap-mschapv2.conf -s testing123
+#
+network={
+        ssid="example"
+        key_mgmt=WPA-EAP
+        eap=PEAP
+        identity="testuser@test.unical.it"
+        #anonymous_identity="anonymous"
+        password="that_password"
+        phase2="autheap=MSCHAPV2"
+
+        #
+        #  Uncomment the following to perform server certificate validation.
+#       ca_cert="/etc/raddb/certs/ca.der"
+}" > eapol_peap
+# eapol_test -s testing123 -c eapol_peap
 # eapol_test -a 10.87.7.213  -s SeCreTXXx -c eapol_test 
