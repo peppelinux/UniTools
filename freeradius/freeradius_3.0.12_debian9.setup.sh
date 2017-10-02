@@ -120,3 +120,10 @@ ln -s /var/log/freeradius/radwtmp /usr/local/var/log/radius/
 
 update-rc.d  freeradius enable 2
 
+# test user with a Cleartext-Password
+# radtest {username} {password} {hostname} 0 {radius_secret}
+# radtest test@test.realm.it test localhost 0 testing123
+
+# with eap
+# you have to compile eapol_test first :)
+# ./wpa_supplicant-2.5/wpa_supplicant/eapol_test  -a 10.87.7.213  -s SeCreTXXx -c eapol_test 
