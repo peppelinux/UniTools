@@ -2,7 +2,8 @@
 # radtest {username} {password} {hostname} 0 {radius_secret}
 radtest test@test.realm.it test localhost 0 testing123
 
-# with eap
+# with eap MSCHAP
+# otherwise take a look to: http://deployingradius.com/scripts/eapol_test/
 # you have to compile eapol_test first :)
 # wget latest wpa-supplicant and decompress it
 
