@@ -76,8 +76,8 @@ if [ "$STORE_PROCVAR_PERMANENTLY" -eq "1" ]; then
     
     # test if the latests exists or append it
     grep -q '^#?\ ?net.ipv4.ip_no_pmtu_disc' /etc/sysctl.conf && \
-    sed -r -i 's/#?\ ?net.ipv4.ip_no_pmtu_disc\ ?=\ ?(0|1)/net.ipv4.ip_no_pmtu_disc=0/' /etc/sysctl.conf || \
-    echo 'net.ipv4.ip_no_pmtu_disc=0' >> /etc/sysctl.conf
+    sed -r -i 's/#?\ ?net.ipv4.ip_no_pmtu_disc\ ?=\ ?(0|1)/net.ipv4.ip_no_pmtu_disc=1/' /etc/sysctl.conf || \
+    echo 'net.ipv4.ip_no_pmtu_disc=1' >> /etc/sysctl.conf
     
     grep net.ipv4.ip_no_pmtu_disc /etc/sysctl.conf
 
