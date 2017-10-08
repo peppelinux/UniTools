@@ -4,18 +4,22 @@ radtest test@test.realm.it test localhost 0 testing123
 
 # with eap MSCHAP
 # otherwise take a look to: http://deployingradius.com/scripts/eapol_test/
-# you have to compile eapol_test first :)
+# now you have to compile eapol_test :)
 # wget latest wpa-supplicant and decompress it
+http://w1.fi/releases/wpa_supplicant-2.6.tar.gz
+tar xzvf wpa_supplicant-2.6.tar.gz
+cd wpa_supplicant-2.6/wpa_supplicant
 
 aptitude install libnl-3-dev libssl-dev
 #check if lib path is good, else: 
 ln -s /lib/x86_64-linux-gnu/libnl-3.so /lib/x86_64-linux-gnu/libnl.so
 
 # then change CONFIG_EAPOL_TEST=y
-cp defconfig .config && nano .config 
+cp defconfig .config #&& nano .config
+sed -i -E 's/#CONFIG_EAPOL_TEST=[yn]+/CONFIG_EAPOL_TEST=y/' .config
 make eapol_test && cp eapol_test /usr/local/bin
 
-echo "
+echo '
 #
 #   eapol_test -c peap-mschapv2.conf -s testing123
 #
@@ -30,6 +34,6 @@ network={
         #
         #  Uncomment the following to perform server certificate validation.
 #       ca_cert="/etc/raddb/certs/ca.der"
-}" > eapol_peap
+}' > eapol_peap
 
 eapol_test -s testing123 -c eapol_peap
