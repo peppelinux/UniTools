@@ -6,7 +6,7 @@ radtest test@test.realm.it test localhost 0 testing123
 # otherwise take a look to: http://deployingradius.com/scripts/eapol_test/
 # now you have to compile eapol_test :)
 # wget latest wpa-supplicant and decompress it
-http://w1.fi/releases/wpa_supplicant-2.6.tar.gz
+wget http://w1.fi/releases/wpa_supplicant-2.6.tar.gz
 tar xzvf wpa_supplicant-2.6.tar.gz
 cd wpa_supplicant-2.6/wpa_supplicant
 
