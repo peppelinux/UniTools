@@ -23,10 +23,10 @@ STORE_PROCVAR_PERMANENTLY=1
 
 $IPT -I INPUT -i lo -j ACCEPT
 
-$IPT -A $CHAIN -p udp --dport  500 -m limit --limit 5/m --limit-burst 7 -j LOG --log-level 4 --log-prefix "VPN outgoing: "
+$IPT -A $CHAIN -p udp --dport  500 -m limit --limit 5/m --limit-burst 7 -j LOG --log-level 4 --log-prefix "VPN strongswan"
 $IPT -A $CHAIN -p udp --dport  500 -j ACCEPT
 
-$IPT -A $CHAIN -p udp --dport 4500 -m limit --limit 5/m --limit-burst 7 -j LOG --log-level 4 --log-prefix "VPN outgoing: "
+$IPT -A $CHAIN -p udp --dport 4500 -m limit --limit 5/m --limit-burst 7 -j LOG --log-level 4 --log-prefix "VPN strongswan"
 $IPT -A $CHAIN -p udp --dport 4500 -j ACCEPT
 
 # forward ESP (Encapsulating Security Payload) traffic so the VPN clients will be able to connect. 
