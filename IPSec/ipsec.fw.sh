@@ -40,6 +40,10 @@ $IPT -t nat -A POSTROUTING -s $IPSEC_NET -o $IPSEC_WAN_IF -m policy --pol ipsec 
 $IPT -t nat -A POSTROUTING -s $IPSEC_NET -o $IPSEC_WAN_IF -m limit --limit 5/m --limit-burst 7 -j LOG --log-level 4 --log-prefix "VPN outgoing: "
 $IPT -t nat -A POSTROUTING -s $IPSEC_NET -o $IPSEC_WAN_IF -j MASQUERADE
 
+# if you want to map a public pool of ip
+# IP_POOL="1.97.10.0/24"
+# $IPT -t nat -A PREROUTING -d $IPSEC_NET -j NETMAP --to $IP_POOL
+
 # It prevents IP packet fragmentation on some clients, we'll tell IPTables to reduce the size of packets by adjusting the packets' maximum segment size. 
 # This prevents issues with some VPN clients
 $IPT -t mangle -A FORWARD --match policy --pol ipsec --dir in -s $IPSEC_NET -o $IPSEC_WAN_IF -p tcp -m tcp --tcp-flags SYN,RST SYN -m tcpmss --mss 1361:1536 -j TCPMSS --set-mss 1360
