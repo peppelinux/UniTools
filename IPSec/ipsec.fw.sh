@@ -35,10 +35,10 @@ $IPT -A FORWARD --match policy --pol ipsec --dir in  --proto esp -s $IPSEC_NET -
 $IPT -A FORWARD --match policy --pol ipsec --dir out --proto esp -d $IPSEC_NET -j ACCEPT
 
 # ipsec default gateways to the clients
-$IPT -t nat -I POSTROUTING -s $IPSEC_NET -o $IPSEC_WAN_IF -m policy --pol ipsec --dir out -j ACCEPT
+$IPT -t nat -A POSTROUTING -s $IPSEC_NET -o $IPSEC_WAN_IF -m policy --pol ipsec --dir out -j ACCEPT
 # log connections 
-$IPT -t nat -I POSTROUTING -s $IPSEC_NET -o $IPSEC_WAN_IF -m limit --limit 5/m --limit-burst 7 -j LOG --log-level 4 --log-prefix "VPN outgoing: "
-$IPT -t nat -I POSTROUTING -s $IPSEC_NET -o $IPSEC_WAN_IF -j MASQUERADE
+$IPT -t nat -A POSTROUTING -s $IPSEC_NET -o $IPSEC_WAN_IF -m limit --limit 5/m --limit-burst 7 -j LOG --log-level 4 --log-prefix "VPN outgoing: "
+$IPT -t nat -A POSTROUTING -s $IPSEC_NET -o $IPSEC_WAN_IF -j MASQUERADE
 
 # It prevents IP packet fragmentation on some clients, we'll tell IPTables to reduce the size of packets by adjusting the packets' maximum segment size. 
 # This prevents issues with some VPN clients
