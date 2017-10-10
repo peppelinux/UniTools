@@ -91,9 +91,9 @@ if [ "$BUILD_CA_CERTS" -eq "1" ]; then
 fi
 
 # if using letsencrypt certs
-# ln -s /etc/letsencrypt/live/$SERVER_HOST/fullchain.pem /etc/ipsec.d/certs/fullchain.pem
-# ln -s /etc/letsencrypt/live/$SERVER_HOST/privkey.pem /etc/ipsec.d/private/privkey.pem
-# ln -s /etc/letsencrypt/live/$SERVER_HOST/chain.pem /etc/ipsec.d/cacerts/chain.pem
+# ln -s /etc/letsencrypt/live/$SERVER_HOST/fullchain.pem /etc/ipsec.d/certs/$SERVER_CERT
+# ln -s /etc/letsencrypt/live/$SERVER_HOST/privkey.pem /etc/ipsec.d/private/$SERVER_KEY
+# ln -s /etc/letsencrypt/live/$SERVER_HOST/chain.pem /etc/ipsec.d/cacerts/$SERVER_CA_CERT
 
 # Strongswan setup
 # backupit first
