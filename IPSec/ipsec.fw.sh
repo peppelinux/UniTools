@@ -52,6 +52,7 @@ $IPT -t mangle -A FORWARD --match policy --pol ipsec --dir in -s $IPSEC_NET -o $
 netfilter-persistent save
 netfilter-persistent reload
 
+# https://www.kernel.org/doc/Documentation/networking/ip-sysctl.txt
 
 # configure server ipv4 behaviour
 sysctl -w net.ipv4.ip_forward=1
@@ -61,7 +62,6 @@ sysctl -w net.ipv4.conf.all.accept_redirects=0
 sysctl -w net.ipv4.conf.all.send_redirects=0
 sysctl -w net.ipv4.ip_no_pmtu_disc=1
 
-#
 
 if [ "$STORE_PROCVAR_PERMANENTLY" -eq "1" ]; then
     echo "store procvar permanently with sed"
