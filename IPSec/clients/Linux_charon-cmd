@@ -1,0 +1,6 @@
+charon-cmd --host vpn.server.org --profile ikev2-eap --identity yourlogin --cert /etc/ipsec.d/cacerts/vpn.server.org.crt
+
+# if you use eap-radius instead of eap-mschapv2 and freeradius auth fails with:
+Cleartext-Password is required for EAP-MD5 authentication
+
+# remember to remove md5 support in mods-enabled/eap
