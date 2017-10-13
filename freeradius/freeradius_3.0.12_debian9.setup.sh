@@ -101,6 +101,16 @@ sed -i 's|accounting {|accounting {\nsql|' $RADCONFD/sites-enabled/default
 # disable unused eap methods
 sed -i 's|default_eap_type = md5|default_eap_type = peap|' $RADCONFD/mods-available/eap
 
+# rememebr to disable md5 auth in eap module
+        #
+        #  We do NOT recommend using EAP-MD5 authentication
+        #  for wireless connections.  It is insecure, and does
+        #  not provide for dynamic WEP keys.
+        #
+        #md5 {
+        #}
+
+
 # logging
 # it could be done also with this:
 # radiusconfig -setconfig auth yes
