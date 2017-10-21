@@ -30,7 +30,7 @@ aptitude install libldns-dev clearsilver-dev libfcgi-dev libsqlite3-dev libgmp-d
 --enable-blowfish \
 --enable-af-alg \
 --enable-attr-sql \
---prefix=/usr --sysconfdir=/etc
+--prefix=/usr/local --sysconfdir=/usr/local/etc
 
 cp -R /usr/include/libxml2/libxml .
 
