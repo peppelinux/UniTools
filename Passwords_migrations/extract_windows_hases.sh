@@ -1,3 +1,6 @@
+# http://blog.ericjonwalker.com/
+# https://xinn.org/blog/JtR-AD-Password-Auditing.html
+
 apt install libesedb-utils 
 
 ls 
