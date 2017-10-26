@@ -21,5 +21,8 @@ ls
 esedbexport ntds.dit 
 # it will create a subfolder called: ntds.dit.export
 cd ntds.dit.export
-dsusers.py datatable.3 link_table.4 ../_DSoutput2 --passwordhashes --lmoutfile LM.out --ntoutfile NT.out --pwdformat john --syshive ../system 
+dsusers.py datatable.3 link_table.4 ../_DSoutput2 --passwordhashes --lmoutfile LM.out --ntoutfile NT.out --pwdformat john --syshive ../system > domain.txt
+
+# everything with its NT hashes is right here
+cat domain.txt
 
