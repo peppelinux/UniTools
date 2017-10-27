@@ -69,7 +69,7 @@ class ADdomainExportParser(object):
         #~ print(acct_type, ancestors, hashes)
         account_dict[acct_type[0][0]]   = self._clean_subset(acct_type)
         account_dict[ancestors[0][0]]   = ancestors[0][1:]
-        account_dict[hashes[0][0]]      = self._clean_subset(hashes[0][1:])
+        account_dict[hashes[0][0]]      = self._clean_subset(hashes)
         
         self.accounts.append(account_dict)
         
