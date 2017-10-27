@@ -30,11 +30,11 @@ python ADdomain_parser.py -f domain.txt -ancestors "Ospiti, Jessica"  -stdout
 # it filter only Jessica and write output into file domain_ext.txt
 python ADdomain_parser.py -f domain.txt -ancestors Jessica  -stdout -o domain_ext.txt
 
-# Filter all the accounts that never log in
-python ADdomain_parser.py -f domain.txt  -stdout -type NORMAL_ACCOUNT -last Never
+# Filter all the accounts that never logged in
+python ADdomain_parser.py -f domain.txt  -stdout -last Never
 
-# Exclude all the accounts that never log in
-python ADdomain_parser.py -f domain.txt  -stdout -type NORMAL_ACCOUNT -last \!Never
+# Exclude all the accounts that been logged in at least one time
+python ADdomain_parser.py -f domain.txt  -stdout -last \!Never
 
 # Filter all the NORMAL_ACCOUNT that logged out, as lastlog, in the year 2012
 python ADdomain_parser.py -f domain.txt -ancestors "Ospiti"  -stdout -type NORMAL_ACCOUNT -last 2012
