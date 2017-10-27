@@ -65,7 +65,9 @@ class ADdomainExportParser(object):
 
     def _filter_lastlog(self, lastlog):
         for anc in self.lastlog: 
-            if lastlog.startswith(anc): 
+            if anc[0] == '!' and not lastlog.startswith(anc[1:]): 
+                return True
+            elif anc[0] != '!' and lastlog.startswith(anc): 
                 return True
 
     def _filter_accttype(self, accttypes):
