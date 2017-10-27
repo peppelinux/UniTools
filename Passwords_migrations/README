@@ -20,6 +20,9 @@ python ADdomain_parser.py -f domain.txt -ancestors Jessica  -stdout -o domain_ex
 # Filter all the accounts that never log in
 python ADdomain_parser.py -f domain.txt  -stdout -type NORMAL_ACCOUNT -last Never
 
+# Exclude all the accounts that never log in
+python ADdomain_parser.py -f domain.txt  -stdout -type NORMAL_ACCOUNT -last \!Never
+
 # Filter all the NORMAL_ACCOUNT that logged out, as lastlog, in the year 2012
 python ADdomain_parser.py -f domain.txt -ancestors "Ospiti"  -stdout -type NORMAL_ACCOUNT -last 2012
 
