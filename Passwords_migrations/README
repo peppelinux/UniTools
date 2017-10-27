@@ -1,13 +1,24 @@
 usage: ADdomain_parser.py [-h] -f F [F ...] [-stdout] [-o O [O ...]]
+                          [-ancestors ANCESTORS [ANCESTORS ...]]
+                          [-last LAST [LAST ...]] [-type TYPE [TYPE ...]]
 
 optional arguments:
-  -h, --help    show this help message and exit
-  -f F [F ...]  domain.txt extracted with command 'dsusers.py datatable.3
-                link_table.4 ../_DSoutput2 --passwordhashes --lmoutfile LM.out
-                --ntoutfile NT.out --pwdformat john --syshive ../system >
-                domain.txt'
-  -stdout       print json output
-  -o O [O ...]  store output in the file X.json
+  -h, --help            show this help message and exit
+  -f F [F ...]          domain.txt extracted with command 'dsusers.py
+                        datatable.3 link_table.4 ../_DSoutput2
+                        --passwordhashes --lmoutfile LM.out --ntoutfile NT.out
+                        --pwdformat john --syshive ../system > domain.txt'
+  -stdout               print json output
+  -o O [O ...]          store output in the file X.json
+  -ancestors ANCESTORS [ANCESTORS ...]
+                        extract only accounts that have these ancestors name,
+                        es: Ospiti. This filter works like a string match
+  -last LAST [LAST ...]
+                        filters the accounts with last login in the date, es:
+                        2017-09-11 OR 2017-09 OR just 2017
+  -type TYPE [TYPE ...]
+                        Account type, es: NORMAL_ACCOUNT or ACCOUNTDISABLE
+
 
 examples:
 
