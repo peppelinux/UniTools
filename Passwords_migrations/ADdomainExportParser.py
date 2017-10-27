@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 import re 
+import json
 import pprint
 
 class ADdomainExportParser(object):
-    def __init__(self, fname):
-        with open(fname) as f:
+    def __init__(self, fname, fout=None, stdout=None):
+        with open(fname[0]) as f:
             self.domain_text = f.read()
         # a list of dictionaries
         self.accounts = []
@@ -21,7 +22,13 @@ class ADdomainExportParser(object):
         '(?P<key>Ancestors):[\n\t ]*(?P<values>([a-zA-Z0-9\ \_\$\,\-\:\t\n]*))')
         self.regexp_hashes = re.compile(\
         '(?P<key>Password hashes):[\n\t ]*(?P<values>([a-zA-Z0-9\ _\$\,\.\-\:\t\n]*))')
-
+        
+        self.stdout = stdout
+        if fout: 
+            self.fout   = open(fout[0], 'a')
+            print('Saving output in: {}'.format(fout[0]))
+        else: self.fout = None
+        
     def _extract_key_val(self, value):
         res = re.match(self.regexp_keyval, value)
         if not res: 
@@ -63,7 +70,11 @@ class ADdomainExportParser(object):
             .replace('\t','').replace('\n\n','\n').splitlines()
         
         self.accounts.append(account_dict)
-        print('.'),
+        
+        if self.stdout: pprint.pprint(account_dict)
+        else: print('.'),
+        
+        if self.fout: json.dump(account_dict, self.fout)
 
     def parse(self):
         # get all but the header "\nList of users:\n==============\n"
@@ -80,12 +91,16 @@ class ADdomainExportParser(object):
             sleep(1)
     
 if __name__ == '__main__':
-    ad = ADdomainExportParser('./domain.txt')
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-f', nargs='+', required=True, help="domain.txt extracted with command\
+    'dsusers.py datatable.3 link_table.4 ../_DSoutput2 --passwordhashes --lmoutfile LM.out --ntoutfile NT.out --pwdformat john --syshive ../system > domain.txt'")
+    parser.add_argument('-stdout', action="store_true", help="print json output")
+    parser.add_argument('-o', nargs='+', help="store output in the file X.json")
+    args = parser.parse_args()
+        
+    ad = ADdomainExportParser(args.f, args.o, args.stdout)
     ad.parse()
     
     # all the accounts will be available here:
     # ad.accounts
-    
-    # view them in a fancy way
-    ad.scroll_results()
-    
