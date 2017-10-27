@@ -99,21 +99,22 @@ class ADdomainExportParser(object):
         # get subset
         acct_type, ancestors, hashes = self._extract_subvalues(account)
         #~ print(acct_type, ancestors, hashes)
-        ancestors = ancestors[0][1:]
+        _ancestors = ancestors[0][1:]
         account_dict[acct_type[0][0]]   = self._clean_subset(acct_type)
-        account_dict[ancestors[0][0]]   = ancestors
+        account_dict[ancestors[0][0]]   = _ancestors
         account_dict[hashes[0][0]]      = self._clean_subset(hashes)
         
         # filters
-        if self.ancestors and not self._filter_ancestors(ancestors): return
+        if self.ancestors and not self._filter_ancestors(_ancestors): return
+        
         lastlog = account_dict.get('Last logon timestamp')
         if self.lastlog and lastlog and not self._filter_lastlog(lastlog): return
         
         accttypes = account_dict.get('User Account Control')
-        #~ print(accttypes)
         if self.accttypes and \
         not self._filter_accttype(accttypes): return
-
+        # and filters checks
+        
         # if stdout 
         if self.stdout: 
             pprint.pprint(account_dict)
