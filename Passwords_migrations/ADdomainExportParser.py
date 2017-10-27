@@ -149,12 +149,14 @@ if __name__ == '__main__':
     parser.add_argument('-o', nargs='+', help="store output in the file X.json")
     parser.add_argument('-ancestors', nargs='+', required=False, 
     help="extract only accounts that have these ancestors name, es: Ospiti. \
-    This filter works like a string match")
+    This filter works like a string match. \!Ospiti means to exclude them")
     parser.add_argument('-last', nargs='+', required=False, 
     help="filters the accounts with last login in the date, \
-    es: 2017-09-11 OR 2017-09 OR just 2017")  
+    es: 2017-09-11 OR 2017-09 OR just 2017.\
+    \!2017 means to exclude them")  
     parser.add_argument('-type', nargs='+', required=False, 
-    help="Account type, es: NORMAL_ACCOUNT or ") 
+    help="Account type, es: NORMAL_ACCOUNT or ACCOUNTDISABLE. \
+    \!ACCOUNTDISABLE means to exclude them") 
     args = parser.parse_args()
         
     ad = ADdomainExportParser(args.f, 
