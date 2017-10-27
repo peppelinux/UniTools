@@ -42,7 +42,11 @@ class ADdomainExportParser(object):
         ancestors = re.findall(self.regexp_ancestors, account)
         hashes = re.findall(self.regexp_hashes, account)
         return(acct_type, ancestors, hashes)
-
+    
+    def _clean_subset(self, subset):
+        return ''.join(list(set(subset[0][1:])))\
+            .replace('\t','').replace('\n\n','\n').splitlines()
+    
     def _extract_account(self, account):
         account_dict = {value:None for value in self.nested}
         for i in account.splitlines():
@@ -63,15 +67,15 @@ class ADdomainExportParser(object):
         
         acct_type, ancestors, hashes = self._extract_subvalues(account)
         #~ print(acct_type, ancestors, hashes)
-        account_dict[acct_type[0][0]]   = ''.join(acct_type[0][1:])\
-            .replace('\t','').replace('\n\n','\n').splitlines()
+        account_dict[acct_type[0][0]]   = self._clean_subset(acct_type)
         account_dict[ancestors[0][0]]   = ancestors[0][1:]
-        account_dict[hashes[0][0]]      = ''.join(hashes[0][1:])\
-            .replace('\t','').replace('\n\n','\n').splitlines()
+        account_dict[hashes[0][0]]      = self._clean_subset(hashes[0][1:])
         
         self.accounts.append(account_dict)
         
-        if self.stdout: pprint.pprint(account_dict)
+        if self.stdout: 
+            pprint.pprint(account_dict)
+            print('\n\n')
         else: print('.'),
         
         if self.fout: json.dump(account_dict, self.fout)
