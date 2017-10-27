@@ -12,13 +12,15 @@ optional arguments:
   -o O [O ...]          store output in the file X.json
   -ancestors ANCESTORS [ANCESTORS ...]
                         extract only accounts that have these ancestors name,
-                        es: Ospiti. This filter works like a string match
+                        es: Ospiti. This filter works like a string match.
+                        \!Ospiti means to exclude them
   -last LAST [LAST ...]
                         filters the accounts with last login in the date, es:
-                        2017-09-11 OR 2017-09 OR just 2017
+                        2017-09-11 OR 2017-09 OR just 2017. \!2017 means to
+                        exclude them
   -type TYPE [TYPE ...]
-                        Account type, es: NORMAL_ACCOUNT or ACCOUNTDISABLE
-
+                        Account type, es: NORMAL_ACCOUNT or ACCOUNTDISABLE.
+                        \!ACCOUNTDISABLE means to exclude them
 
 examples:
 
