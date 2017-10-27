@@ -3,5 +3,5 @@
 # see how many storage you have
 pvesm status
 
-# restore a backup with a different VMID (not permitted via web GUI)
+# restore a backup with a different VMID
 qmrestore vzdump-qemu-105-2017_05_11-21_06_25.vma.gz 777 -storage local
