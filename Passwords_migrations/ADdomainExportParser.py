@@ -93,7 +93,7 @@ class ADdomainExportParser(object):
                     self.failed.append(i)
                     continue
                 account_dict[ext['key']] = ext['value']
-            elif len(spline)==1 and spline[0] == 'Bad password time':
+            elif len(spline)==1 and spline[0].strartswith('Bad password time'):
                 account_dict['Bad password time'] = row.replace('Bad password time',
                                               '').strip()
         # get subset
