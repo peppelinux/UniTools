@@ -4,7 +4,7 @@ import json
 import pprint
 
 class ADdomainExportParser(object):
-    def __init__(self, fname, fout=None, stdout=None):
+    def __init__(self, fname, fout=None, stdout=None, ancestors=None):
         with open(fname[0]) as f:
             self.domain_text = f.read()
         # a list of dictionaries
@@ -23,6 +23,7 @@ class ADdomainExportParser(object):
         self.regexp_hashes = re.compile(\
         '(?P<key>Password hashes):[\n\t ]*(?P<values>([a-zA-Z0-9\ _\$\,\.\-\:\t\n]*))')
         
+        self.ancestors = ancestors
         self.stdout = stdout
         if fout: 
             self.fout   = open(fout[0], 'a')
@@ -67,11 +68,16 @@ class ADdomainExportParser(object):
         
         acct_type, ancestors, hashes = self._extract_subvalues(account)
         #~ print(acct_type, ancestors, hashes)
+        ancestors = ancestors[0][1:]
         account_dict[acct_type[0][0]]   = self._clean_subset(acct_type)
-        account_dict[ancestors[0][0]]   = ancestors[0][1:]
+        account_dict[ancestors[0][0]]   = ancestors
         account_dict[hashes[0][0]]      = self._clean_subset(hashes)
         
-        self.accounts.append(account_dict)
+
+        for anc in self.ancestors: 
+            for ancc in ancestors:
+                if anc not in ancc: 
+                    return
         
         if self.stdout: 
             pprint.pprint(account_dict)
@@ -97,13 +103,23 @@ class ADdomainExportParser(object):
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument('-f', nargs='+', required=True, help="domain.txt extracted with command\
-    'dsusers.py datatable.3 link_table.4 ../_DSoutput2 --passwordhashes --lmoutfile LM.out --ntoutfile NT.out --pwdformat john --syshive ../system > domain.txt'")
+    parser.add_argument('-f', nargs='+', required=True, 
+    help="domain.txt extracted with command\
+    'dsusers.py datatable.3 link_table.4 ../_DSoutput2 \
+    --passwordhashes --lmoutfile LM.out --ntoutfile NT.out \
+    --pwdformat john --syshive ../system > domain.txt'")
     parser.add_argument('-stdout', action="store_true", help="print json output")
     parser.add_argument('-o', nargs='+', help="store output in the file X.json")
+    parser.add_argument('-ancestors', nargs='+', required=False, 
+    help="extract only accounts that have these ancestors name, es: Ospiti. \
+    This filter works like a string match")
     args = parser.parse_args()
         
-    ad = ADdomainExportParser(args.f, args.o, args.stdout)
+    ad = ADdomainExportParser(args.f, 
+                              fout=args.o, 
+                              stdout=args.stdout, 
+                              ancestors=args.ancestors
+                              )
     ad.parse()
     
     # all the accounts will be available here:
