@@ -16,3 +16,9 @@ python ADdomain_parser.py -f domain_4.37.txt -ancestors "Ospiti, Jessica"  -stdo
 
 # it filter only Jessica and write output into file domain_ext.txt
 python ADdomain_parser.py -f domain_4.37.txt -ancestors Jessica  -stdout -o domain_ext.txt
+
+# Filter all the NORMAL_ACCOUNT that logged out, as lastlog, in the year 2012
+python ADdomain_parser.py -f domain_4.154.txt -ancestors "Ospiti"  -stdout -type NORMAL_ACCOUNT -last 2012
+
+# filter all the accounts but not the NORMAL_ACCOUNT
+python ADdomain_parser.py -f domain_4.154.txt -ancestors "Ospiti"  -stdout -type \!NORMAL_ACCOUNT
