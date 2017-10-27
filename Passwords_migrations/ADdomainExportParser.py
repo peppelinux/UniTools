@@ -4,7 +4,8 @@ import json
 import pprint
 
 class ADdomainExportParser(object):
-    def __init__(self, fname, fout=None, stdout=None, ancestors=None):
+    def __init__(self, fname, fout=None, stdout=None, 
+                 ancestors=None, lastlog=None, accttype=None):
         with open(fname[0]) as f:
             self.domain_text = f.read()
         # a list of dictionaries
@@ -13,7 +14,7 @@ class ADdomainExportParser(object):
         self.nested = [ 'User Account Control',
                         'Ancestors',
                         'Password hashes']
-
+        
         self.regexp_keyval = re.compile(\
         '(?P<key>[A-Za-z \-]+):[ \t]*(?P<value>[A-Za-z0-9 \.\:\+\-\@\_]+)')
         self.regexp_acct_type = re.compile(\
@@ -23,12 +24,15 @@ class ADdomainExportParser(object):
         self.regexp_hashes = re.compile(\
         '(?P<key>Password hashes):[\n\t ]*(?P<values>([a-zA-Z0-9\ _\$\,\.\-\:\t\n]*))')
         
-        self.ancestors = ancestors
+        self.ancestors = ancestors if ancestors else []
         self.stdout = stdout
         if fout: 
             self.fout   = open(fout[0], 'a')
             print('Saving output in: {}'.format(fout[0]))
         else: self.fout = None
+        
+        self.lastlog  = lastlog if lastlog else []
+        self.accttypes = accttype if accttype else []
         
     def _extract_key_val(self, value):
         res = re.match(self.regexp_keyval, value)
@@ -43,11 +47,36 @@ class ADdomainExportParser(object):
         ancestors = re.findall(self.regexp_ancestors, account)
         hashes = re.findall(self.regexp_hashes, account)
         return(acct_type, ancestors, hashes)
-    
+
     def _clean_subset(self, subset):
         return ''.join(list(set(subset[0][1:])))\
             .replace('\t','').replace('\n\n','\n').splitlines()
-    
+
+    def _filter_ancestors(self, ancestors):
+        # ancestor filter :)
+        for anc in self.ancestors: 
+            for ancc in ancestors:
+                if anc.startswith('!'):
+                    if anc not in ancc: 
+                        return True
+                else:
+                    if anc in ancc: 
+                        return True
+
+    def _filter_lastlog(self, lastlog):
+        for anc in self.lastlog: 
+            if lastlog.startswith(anc): 
+                return True
+
+    def _filter_accttype(self, accttypes):
+        for anc in self.accttypes: 
+            if anc.startswith('!'):
+                if anc not in accttypes:
+                    return True
+            else:
+                if anc in accttypes:
+                    return True
+
     def _extract_account(self, account):
         account_dict = {value:None for value in self.nested}
         for i in account.splitlines():
@@ -64,8 +93,8 @@ class ADdomainExportParser(object):
                 account_dict[ext['key']] = ext['value']
             elif len(spline)==1 and spline[0] == 'Bad password time':
                 account_dict['Bad password time'] = row.replace('Bad password time',
-                                                                '').strip()
-        
+                                              '').strip()
+        # get subset
         acct_type, ancestors, hashes = self._extract_subvalues(account)
         #~ print(acct_type, ancestors, hashes)
         ancestors = ancestors[0][1:]
@@ -73,12 +102,17 @@ class ADdomainExportParser(object):
         account_dict[ancestors[0][0]]   = ancestors
         account_dict[hashes[0][0]]      = self._clean_subset(hashes)
         
-
-        for anc in self.ancestors: 
-            for ancc in ancestors:
-                if anc not in ancc: 
-                    return
+        # filters
+        if self.ancestors and not self._filter_ancestors(ancestors): return
+        lastlog = account_dict.get('Last logon timestamp')
+        if self.lastlog and lastlog and not self._filter_lastlog(lastlog): return
         
+        accttypes = account_dict.get('User Account Control')
+        #~ print(accttypes)
+        if self.accttypes and \
+        not self._filter_accttype(accttypes): return
+
+        # if stdout 
         if self.stdout: 
             pprint.pprint(account_dict)
             print('\n\n')
@@ -113,12 +147,19 @@ if __name__ == '__main__':
     parser.add_argument('-ancestors', nargs='+', required=False, 
     help="extract only accounts that have these ancestors name, es: Ospiti. \
     This filter works like a string match")
+    parser.add_argument('-last', nargs='+', required=False, 
+    help="filters the accounts with last login in the date, \
+    es: 2017-09-11 OR 2017-09 OR just 2017")  
+    parser.add_argument('-type', nargs='+', required=False, 
+    help="Account type, es: NORMAL_ACCOUNT or ") 
     args = parser.parse_args()
         
     ad = ADdomainExportParser(args.f, 
                               fout=args.o, 
                               stdout=args.stdout, 
-                              ancestors=args.ancestors
+                              ancestors=args.ancestors,
+                              lastlog=args.last,
+                              accttype=args.type
                               )
     ad.parse()
     
