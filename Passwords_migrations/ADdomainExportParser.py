@@ -57,6 +57,7 @@ class ADdomainExportParser(object):
 
     def _filter_ancestors(self, ancestors):
         # ancestor filter :)
+        if not self.ancestors: return True
         for anc in self.ancestors: 
             for ancc in ancestors:
                 if anc.startswith('!'):
@@ -67,6 +68,7 @@ class ADdomainExportParser(object):
                         return True
 
     def _filter_lastlog(self, lastlog):
+        if not self.lastlog: return True        
         for anc in self.lastlog: 
             if anc[0] == '!' and not lastlog.startswith(anc[1:]): 
                 return True
@@ -74,6 +76,7 @@ class ADdomainExportParser(object):
                 return True
 
     def _filter_accttype(self, accttypes):
+        if not self.accttypes: return True
         for anc in self.accttypes: 
             if anc.startswith('!'):
                 if anc not in accttypes:
@@ -131,12 +134,9 @@ class ADdomainExportParser(object):
     def parse(self):
         # get all but the header "\nList of users:\n==============\n"
         splitted = self.domain_text.split('Record ID:')[1:]
-        cnt = 0
         for account in splitted:
             #print(account)
             self._extract_account(account)
-            cnt += 1
-        print('{} processed'.format(cnt))
             
     def scroll_results(self):
         from time import sleep
@@ -178,3 +178,4 @@ if __name__ == '__main__':
     
     # all the accounts will be available here:
     # ad.accounts
+    print('{} processed'.format(len(ad.accounts)))
