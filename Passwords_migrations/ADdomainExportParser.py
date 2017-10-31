@@ -20,7 +20,7 @@ class ADdomainExportParser(object):
         self.regexp_acct_type = re.compile(\
         '(?P<key>User Account Control):[\n\t ]*(?P<values>[A-Z\_\n\t\ ]*)Ancestors:')
         self.regexp_ancestors = re.compile(\
-        '(?P<key>Ancestors):[\n\t ]*(?P<values>([a-zA-Z0-9\ \_\$\,\-\:\t\n]*))')
+        '(?P<key>Ancestors):[\n\t ]*(?P<values>[a-zA-Z0-9\ \.\_\$\,\-\:\t\n]*)Password hashes:')
         self.regexp_hashes = re.compile(\
         '(?P<key>Password hashes):[\n\t ]*(?P<values>([a-zA-Z0-9\ _\$\,\.\-\:\t\n]*))')
         
@@ -49,7 +49,10 @@ class ADdomainExportParser(object):
         return(acct_type, ancestors, hashes)
 
     def _clean_subset(self, subset):
-        return ''.join(list(set(subset[0][1:])))\
+        # if subset has no value return False
+        if len(subset) == 0 or len(subset[0]) == 0: return 
+        lsub = list(set(subset[0][1:]))
+        return ''.join(lsub)\
             .replace('\t','').replace('\n\n','\n').splitlines()
 
     def _filter_ancestors(self, ancestors):
@@ -93,19 +96,25 @@ class ADdomainExportParser(object):
                     self.failed.append(i)
                     continue
                 account_dict[ext['key']] = ext['value']
-            elif len(spline)==1 and spline[0].strartswith('Bad password time'):
+            elif len(spline)==1 and spline[0].startswith('Bad password time'):
                 account_dict['Bad password time'] = row.replace('Bad password time',
                                               '').strip()
         # get subset
         acct_type, ancestors, hashes = self._extract_subvalues(account)
         #~ print(acct_type, ancestors, hashes)
-        _ancestors = ancestors[0][1:]
+        #_ancestors = ancestors[0][1:]
+        #~ _ancestors = [ anc for anc in ancestors if len(anc) > 0 ]
+        #~ print(_ancestors)
         account_dict[acct_type[0][0]]   = self._clean_subset(acct_type)
-        account_dict[ancestors[0][0]]   = _ancestors
-        account_dict[hashes[0][0]]      = self._clean_subset(hashes)
+        
+        if ancestors:
+            account_dict[ancestors[0][0]]   = self._clean_subset(ancestors) #_ancestors
+        
+        if hashes:
+            account_dict[hashes[0][0]]      = self._clean_subset(hashes)
         
         # filters
-        if self.ancestors and not self._filter_ancestors(_ancestors): return
+        if self.ancestors and not self._filter_ancestors(ancestors): return
         
         lastlog = account_dict.get('Last logon timestamp')
         if self.lastlog and lastlog and not self._filter_lastlog(lastlog): return
