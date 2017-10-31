@@ -61,10 +61,10 @@ class ADdomainExportParser(object):
         for anc in self.ancestors: 
             for ancc in ancestors:
                 if anc.startswith('!'):
-                    if anc not in ancc: 
+                    if anc not in ancc[1]: 
                         return True
                 else:
-                    if anc in ancc: 
+                    if anc in ancc[1]: 
                         return True
 
     def _filter_lastlog(self, lastlog):
@@ -127,10 +127,11 @@ class ADdomainExportParser(object):
         if self.stdout: 
             pprint.pprint(account_dict)
             print('\n\n')
-        else: print('.'),
+        else: print('.', end='')
         
         if self.fout: json.dump(account_dict, self.fout)
-
+        self.accounts.append(account_dict)
+        
     def parse(self):
         # get all but the header "\nList of users:\n==============\n"
         splitted = self.domain_text.split('Record ID:')[1:]
@@ -143,7 +144,7 @@ class ADdomainExportParser(object):
         for i in self.accounts:
             pprint.pprint(i)
             print('\n\n')
-            sleep(1)
+            sleep(0.5)
     
 if __name__ == '__main__':
     import argparse
@@ -153,7 +154,7 @@ if __name__ == '__main__':
     'dsusers.py datatable.3 link_table.4 ../_DSoutput2 \
     --passwordhashes --lmoutfile LM.out --ntoutfile NT.out \
     --pwdformat john --syshive ../system > domain.txt'")
-    parser.add_argument('-stdout', action="store_true", help="print json output")
+    parser.add_argument('-stdout', action="store_true", help="print json output")    
     parser.add_argument('-o', nargs='+', help="store output in the file X.json")
     parser.add_argument('-ancestors', nargs='+', required=False, 
     help="extract only accounts that have these ancestors name, es: Ospiti. \
