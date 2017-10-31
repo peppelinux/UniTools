@@ -101,15 +101,11 @@ class ADdomainExportParser(object):
                                               '').strip()
         # get subset
         acct_type, ancestors, hashes = self._extract_subvalues(account)
-        #~ print(acct_type, ancestors, hashes)
-        #_ancestors = ancestors[0][1:]
-        #~ _ancestors = [ anc for anc in ancestors if len(anc) > 0 ]
-        #~ print(_ancestors)
-        account_dict[acct_type[0][0]]   = self._clean_subset(acct_type)
         
+        if acct_type:
+            account_dict[acct_type[0][0]]   = self._clean_subset(acct_type)
         if ancestors:
-            account_dict[ancestors[0][0]]   = self._clean_subset(ancestors) #_ancestors
-        
+            account_dict[ancestors[0][0]]   = self._clean_subset(ancestors)
         if hashes:
             account_dict[hashes[0][0]]      = self._clean_subset(hashes)
         
@@ -135,9 +131,12 @@ class ADdomainExportParser(object):
     def parse(self):
         # get all but the header "\nList of users:\n==============\n"
         splitted = self.domain_text.split('Record ID:')[1:]
+        cnt = 0
         for account in splitted:
             #print(account)
             self._extract_account(account)
+            cnt += 1
+        print('{} processed'.format(cnt))
             
     def scroll_results(self):
         from time import sleep
