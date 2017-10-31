@@ -25,7 +25,7 @@ optional arguments:
 examples:
 
 # it filter Ospiti and Jessica
-python ADdomain_parser.py -f domain.txt -ancestors "Ospiti, Jessica"  -stdout
+python ADdomain_parser.py -f domain.txt -ancestors Ospiti Jessica  -stdout
 
 # it filter only Jessica and write output into file domain_ext.txt
 python ADdomain_parser.py -f domain.txt -ancestors Jessica  -stdout -o domain_ext.txt
