@@ -115,7 +115,7 @@ class ADdomainExportParser(object):
                     'username': username,
                     'attribute': 'NT-Password',
                     'op': ':=',
-                    'value': 'NON-VISIBILE :)', #password,
+                    'value': password,
                     'is_active': 1,
                     'created': acct_dict['When changed'],
                     'modified': acct_dict['Password last set'],
