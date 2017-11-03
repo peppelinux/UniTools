@@ -2,6 +2,7 @@
 import re 
 import json
 import pprint
+import os
 
 class ADdomainExportParser(object):
     def __init__(self, fname, fout=None, stdout=None, 
@@ -26,10 +27,14 @@ class ADdomainExportParser(object):
         '(?P<key>Password hashes):[\n\t ]*(?P<values>([a-zA-Z0-9\ _\$\,\.\-\:\t\n]*))')
         
         self.ancestors = ancestors if ancestors else []
-        self.stdout = stdout
+        self.stdout = stdout[0] if stdout else None
+        
         if fout: 
-            self.fout   = open(fout[0], 'a')
-            print('Saving output in: {}'.format(fout[0]))
+            fout = fout[0]
+            self.fout = fout
+            if not os.path.exists(fout):
+                os.makedirs(fout)
+            print('Saving output in: {}'.format(fout))
         else: self.fout = None
         
         self.lastlog  = lastlog if lastlog else []
@@ -94,7 +99,29 @@ class ADdomainExportParser(object):
                 return True
             elif us[0] != '!' and us in user_pname: 
                 return True
-
+    
+    def _print_stdout(self, acct_dict):
+        #~ print(acct_dict)
+        if self.stdout == 'radcheck':
+            username = acct_dict['User principal name']
+            try:
+                password = acct_dict['Password hashes'][0].split(':')[1].strip('$NT$')
+            except:
+                password = ''
+            print({
+                    'username': username,
+                    'attribute': 'NT-Password',
+                    'op': ':=',
+                    'value': password,
+                    'is_active': 1
+                  })
+            
+            
+        elif self.stdout == 'json':
+            pprint.pprint(account_dict)
+            print('\n\n')
+        else: print('.', end='')
+    
     def _extract_account(self, account):
         account_dict = {value:None for value in self.nested}
         for i in account.splitlines():
@@ -138,12 +165,13 @@ class ADdomainExportParser(object):
         
         # if stdout 
         if self.stdout: 
-            pprint.pprint(account_dict)
-            print('\n\n')
-        else: print('.', end='')
+            self._print_stdout(account_dict)
         
         self.accounts.append(account_dict)
-        if self.fout: json.dump(self.accounts, self.fout)
+        if self.fout: 
+            fout_path = os.path.sep.join((self.fout, account_dict['User principal name']))
+            with open(fout_path, 'w') as fout:
+                json.dump(account_dict, fout)
         
     def parse(self):
         # get all but the header "\nList of users:\n==============\n"
@@ -158,7 +186,7 @@ class ADdomainExportParser(object):
             pprint.pprint(i)
             print('\n\n')
             sleep(0.5)
-    
+
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser()
@@ -167,8 +195,9 @@ if __name__ == '__main__':
     'dsusers.py datatable.3 link_table.4 ../_DSoutput2 \
     --passwordhashes --lmoutfile LM.out --ntoutfile NT.out \
     --pwdformat john --syshive ../system > domain.txt'")
-    parser.add_argument('-stdout', action="store_true", help="print json output")    
-    parser.add_argument('-o', nargs='+', help="store output in the file X.json")
+    parser.add_argument('-stdout', nargs=1, help="print output, \
+    json or radcheck tuple", required=False)    
+    parser.add_argument('-o', nargs='+', help="store outputs in the folder called with this name")
     parser.add_argument('-ancestors', nargs='+', required=False, 
     help="extract only accounts that have these ancestors name, es: Ospiti. \
     This filter works like a string match. \!Ospiti means to exclude them")
@@ -183,7 +212,7 @@ if __name__ == '__main__':
     help="Account type, es: NORMAL_ACCOUNT or ACCOUNTDISABLE. \
     \!ACCOUNTDISABLE means to exclude them") 
     args = parser.parse_args()
-        
+
     ad = ADdomainExportParser(args.f, 
                               fout=args.o, 
                               stdout=args.stdout, 
