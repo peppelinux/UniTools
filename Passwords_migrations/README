@@ -1,6 +1,8 @@
-usage: ADdomain_parser.py [-h] -f F [F ...] [-stdout] [-o O [O ...]]
-                          [-ancestors ANCESTORS [ANCESTORS ...]]
-                          [-last LAST [LAST ...]] [-type TYPE [TYPE ...]]
+usage: ADdomainExportParser.py [-h] -f F [F ...] [-stdout STDOUT]
+                               [-o O [O ...]]
+                               [-ancestors ANCESTORS [ANCESTORS ...]]
+                               [-user_pname USER_PNAME [USER_PNAME ...]]
+                               [-last LAST [LAST ...]] [-type TYPE [TYPE ...]]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -8,12 +10,16 @@ optional arguments:
                         datatable.3 link_table.4 ../_DSoutput2
                         --passwordhashes --lmoutfile LM.out --ntoutfile NT.out
                         --pwdformat john --syshive ../system > domain.txt'
-  -stdout               print json output
-  -o O [O ...]          store output in the file X.json
+  -stdout STDOUT        print output, json or radcheck tuple
+  -o O [O ...]          store outputs in the folder called with this name
   -ancestors ANCESTORS [ANCESTORS ...]
                         extract only accounts that have these ancestors name,
                         es: Ospiti. This filter works like a string match.
                         \!Ospiti means to exclude them
+  -user_pname USER_PNAME [USER_PNAME ...]
+                        extract only accounts that contains (or not) that
+                        words in the User Principal name, es: dipendenti,
+                        studenti or \!dipendenti
   -last LAST [LAST ...]
                         filters the accounts with last login in the date, es:
                         2017-09-11 OR 2017-09 OR just 2017. \!2017 means to
@@ -21,6 +27,7 @@ optional arguments:
   -type TYPE [TYPE ...]
                         Account type, es: NORMAL_ACCOUNT or ACCOUNTDISABLE.
                         \!ACCOUNTDISABLE means to exclude them
+
 
 examples:
 
