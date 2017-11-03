@@ -5,7 +5,8 @@ import pprint
 
 class ADdomainExportParser(object):
     def __init__(self, fname, fout=None, stdout=None, 
-                 ancestors=None, lastlog=None, accttype=None):
+                 ancestors=None, lastlog=None, accttype=None,
+                 user_pname=None):
         with open(fname[0]) as f:
             self.domain_text = f.read()
         # a list of dictionaries
@@ -33,6 +34,7 @@ class ADdomainExportParser(object):
         
         self.lastlog  = lastlog if lastlog else []
         self.accttypes = accttype if accttype else []
+        self.user_pname = user_pname if user_pname else []
         
     def _extract_key_val(self, value):
         res = re.match(self.regexp_keyval, value)
@@ -85,6 +87,14 @@ class ADdomainExportParser(object):
                 if anc in accttypes:
                     return True
 
+    def _filter_user_pname(self, user_pname):
+        if not self.user_pname: return True        
+        for us in self.user_pname: 
+            if us[0] == '!' and not us[1:] in user_pname: 
+                return True
+            elif us[0] != '!' and us in user_pname: 
+                return True
+
     def _extract_account(self, account):
         account_dict = {value:None for value in self.nested}
         for i in account.splitlines():
@@ -121,6 +131,9 @@ class ADdomainExportParser(object):
         accttypes = account_dict.get('User Account Control')
         if self.accttypes and \
         not self._filter_accttype(accttypes): return
+        
+        if self.user_pname and \
+        not self._filter_user_pname(account_dict['User principal name']): return
         # and filters checks
         
         # if stdout 
@@ -129,8 +142,8 @@ class ADdomainExportParser(object):
             print('\n\n')
         else: print('.', end='')
         
-        if self.fout: json.dump(account_dict, self.fout)
         self.accounts.append(account_dict)
+        if self.fout: json.dump(self.accounts, self.fout)
         
     def parse(self):
         # get all but the header "\nList of users:\n==============\n"
@@ -159,6 +172,9 @@ if __name__ == '__main__':
     parser.add_argument('-ancestors', nargs='+', required=False, 
     help="extract only accounts that have these ancestors name, es: Ospiti. \
     This filter works like a string match. \!Ospiti means to exclude them")
+    parser.add_argument('-user_pname', nargs='+', required=False, 
+    help="extract only accounts that contains (or not) that words in \
+    the User Principal name, es: dipendenti, studenti or \\!dipendenti")
     parser.add_argument('-last', nargs='+', required=False, 
     help="filters the accounts with last login in the date, \
     es: 2017-09-11 OR 2017-09 OR just 2017.\
@@ -173,7 +189,8 @@ if __name__ == '__main__':
                               stdout=args.stdout, 
                               ancestors=args.ancestors,
                               lastlog=args.last,
-                              accttype=args.type
+                              accttype=args.type,
+                              user_pname=args.user_pname
                               )
     ad.parse()
     
