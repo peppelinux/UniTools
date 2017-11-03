@@ -108,12 +108,18 @@ class ADdomainExportParser(object):
                 password = acct_dict['Password hashes'][0].split(':')[1].strip('$NT$')
             except:
                 password = ''
+                return
+            
+            exp = acct_dict["Account expires"] 
             print({
                     'username': username,
                     'attribute': 'NT-Password',
                     'op': ':=',
-                    'value': password,
-                    'is_active': 1
+                    'value': 'NON-VISIBILE :)', #password,
+                    'is_active': 1,
+                    'created': acct_dict['When changed'],
+                    'modified': acct_dict['Password last set'],
+                    'expires': exp if exp != 'Never' else 'NULL',
                   })
             
             
