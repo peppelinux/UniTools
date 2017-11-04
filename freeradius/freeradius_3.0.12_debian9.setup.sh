@@ -110,6 +110,7 @@ sed -i 's|default_eap_type = md5|default_eap_type = peap|' $RADCONFD/mods-availa
         #md5 {
         #}
 
+# remember also to disable GTC e LEAP, these are very insecure!
 
 # logging
 # it could be done also with this:
