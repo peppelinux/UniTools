@@ -15,3 +15,8 @@ echo 'Sono un text in chiaro.' | openssl rsautl -encrypt -pubin -inkey pubkey | 
 echo "cose scritte" > file.txt
 openssl rsautl -encrypt -inkey pubkey -pubin -in file.txt -out file.enc
 openssl rsautl -decrypt -inkey privkey.pem -in file.enc -out file.clear.txt
+
+# stuff
+# get letsencrypt ca crt from
+# https://letsencrypt.org/certificates/ (Let’s Encrypt Authority X3 (IdenTrust cross-signed))
+wget https://letsencrypt.org/certs/lets-encrypt-x3-cross-signed.pem.txt
