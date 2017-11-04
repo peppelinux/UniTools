@@ -32,9 +32,10 @@ aptitude install libldns-dev clearsilver-dev libfcgi-dev libsqlite3-dev libgmp-d
 --enable-af-alg \
 --enable-attr-sql \
 --enable-mysql \
---prefix=/usr/local --sysconfdir=/usr/local/etc
+--prefix=/usr --sysconfdir=/etc
 
-cp -R /usr/include/libxml2/libxml .
+# solo in caso di rogne con xml
+#cp -R /usr/include/libxml2/libxml .
 
 make -j 4
 make install
