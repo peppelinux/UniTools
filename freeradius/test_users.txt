@@ -1,6 +1,7 @@
 # test user with a Cleartext-Password
 # radtest {username} {password} {hostname} 0 {radius_secret}
-radtest test@test.realm.it test localhost 0 testing123
+radtest -t mschap test@test.realm.it test localhost 0 testing123
+# if it works without -t mschap please keep attention: freeradius permits CHAP Auth-type!
 
 # with eap MSCHAP
 # otherwise take a look to: http://deployingradius.com/scripts/eapol_test/
