@@ -23,16 +23,17 @@ STORE_PROCVAR_PERMANENTLY=1
 
 $IPT -I INPUT -i lo -j ACCEPT
 
-$IPT -A $CHAIN -p udp --dport  500 -m limit --limit 5/m --limit-burst 7 -j LOG --log-level 4 --log-prefix "VPN strongswan"
+$IPT -A $CHAIN -p udp --dport  500 -m limit --limit 5/m --limit-burst 7 -j LOG --log-level 4 --log-prefix "VPN strongswan port 500"
 $IPT -A $CHAIN -p udp --dport  500 -j ACCEPT
 
-$IPT -A $CHAIN -p udp --dport 4500 -m limit --limit 5/m --limit-burst 7 -j LOG --log-level 4 --log-prefix "VPN strongswan"
+$IPT -A $CHAIN -p udp --dport 4500 -m limit --limit 5/m --limit-burst 7 -j LOG --log-level 4 --log-prefix "VPN strongswan port 4500"
 $IPT -A $CHAIN -p udp --dport 4500 -j ACCEPT
 
 # forward ESP (Encapsulating Security Payload) traffic so the VPN clients will be able to connect. 
 # ESP provides additional security for our VPN packets as they're traversing untrusted networks
-$IPT -A FORWARD --match policy --pol ipsec --dir in  --proto esp -s $IPSEC_NET -j ACCEPT
-$IPT -A FORWARD --match policy --pol ipsec --dir out --proto esp -d $IPSEC_NET -j ACCEPT
+# not needed if: leftfirewall=yes
+#$IPT -A FORWARD --match policy --pol ipsec --dir in  --proto esp -s $IPSEC_NET -j ACCEPT
+#$IPT -A FORWARD --match policy --pol ipsec --dir out --proto esp -d $IPSEC_NET -j ACCEPT
 
 # ipsec default gateways to the clients
 $IPT -t nat -A POSTROUTING -s $IPSEC_NET -o $IPSEC_WAN_IF -m policy --pol ipsec --dir out -j ACCEPT
