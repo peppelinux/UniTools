@@ -18,6 +18,17 @@ export SSL_subjectAltName="Diatic"
 export SSL_localityName="Arcavacata"
 export SSL_default_days="3650"
 
+# these sed breaks policy_match rules
+# then you should replace them fromyour /etc/ssl/openssl.cnf
+
+#[ policy_match ]
+#countryName		= match
+#stateOrProvinceName	= match
+#organizationName	= match
+#organizationalUnitName	= optional
+#commonName		= supplied
+#emailAddress		= optional
+
 # server.cnf
 sed -i 's/countryName\t*\s*= .*/countryName = "'"$SSL_countryName"'"/' server.cnf
 sed -i 's/stateOrProvinceName\t*\s*= .*/stateOrProvinceName = "'"$SSL_stateOrProvinceName"'"/' server.cnf
