@@ -50,7 +50,6 @@ sed -i 's/default_days\t*\s*= .*/default_days = '"$SSL_default_days"'/' client.c
 
 # pulizia
 rm -f *.pem *.der *.csr *.crt *.key *.p12 serial* index.txt*
-echo "unique_subject = yes" > index.txt.attr
 
 # This step creates the CA certificate.
 make ca.pem
@@ -58,6 +57,7 @@ make ca.pem
 # This step creates the DER format of the self-signed certificate, which is can be imported into Windows.
 make ca.der
 
+echo "unique_subject = yes" > index.txt.attr
 make server.pem
 make server.csr
 make client.pem
