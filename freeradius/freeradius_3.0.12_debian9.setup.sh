@@ -19,33 +19,33 @@ export SSL_localityName="Arcavacata"
 export SSL_default_days="3650"
 
 # server.cnf
-sed -i 's/countryName\t*\s*= .*/countryName = '"$SSL_countryName"'/' server.cnf
-sed -i 's/stateOrProvinceName\t*\s*= .*/stateOrProvinceName = '"$SSL_stateOrProvinceName"'/' server.cnf
-sed -i 's/organizationName\t*\s*= .*/organizationName = '"$SSL_organizationName"'/' server.cnf
-sed -i 's/emailAddress\t*\s*= .*/emailAddress = '"$SSL_emailAddress"'/' server.cnf
-sed -i 's/commonName\t*\s*= .*/commonName = '"$SSL_commonName"'/' server.cnf
-sed -i 's/subjectAltName\t*\s*= .*/subjectAltName = '"$SSL_subjectAltName"'/' server.cnf
-sed -i 's/localityName\t*\s*= .*/localityName = '"$SSL_localityName"'/' server.cnf
-sed -i 's/default_days\t*\s*= .*/default_days = '"$SSL_default_days"'/' server.cnf
+sed -i 's/countryName\t*\s*= .*/countryName = "'"$SSL_countryName"'"/' server.cnf
+sed -i 's/stateOrProvinceName\t*\s*= .*/stateOrProvinceName = "'"$SSL_stateOrProvinceName"'"/' server.cnf
+sed -i 's/organizationName\t*\s*= .*/organizationName = "'"$SSL_organizationName"'"/' server.cnf
+sed -i 's/emailAddress\t*\s*= .*/emailAddress = "'"$SSL_emailAddress"'"/' server.cnf
+sed -i 's/commonName\t*\s*= .*/commonName = "'"$SSL_commonName"'"/' server.cnf
+sed -i 's/subjectAltName\t*\s*= .*/subjectAltName = "'"$SSL_subjectAltName"'"/' server.cnf
+sed -i 's/localityName\t*\s*= .*/localityName = "'"$SSL_localityName"'"/' server.cnf
+sed -i 's/default_days\t*\s*= .*/default_days = "'"$SSL_default_days"'"/' server.cnf
 
 # ca.cnf
-sed -i 's/countryName\t*\s*=.*/countryName = '"$SSL_countryName"'/' ca.cnf
-sed -i 's/stateOrProvinceName\t*\s*= .*/stateOrProvinceName = '"$SSL_stateOrProvinceName"'/' ca.cnf
-sed -i 's/organizationName\t*\s*= .*/organizationName = '"$SSL_organizationName"'/' ca.cnf
-sed -i 's/emailAddress\t*\s*= .*/emailAddress = '"$SSL_emailAddress"'/' ca.cnf
-sed -i 's/commonName\t*\s*= .*/commonName = '"$SSL_commonName"'/' ca.cnf
-sed -i 's/subjectAltName\t*\s*= .*/subjectAltName = '"$SSL_subjectAltName"'/' ca.cnf
-sed -i 's/localityName\t*\s*= .*/localityName = '"$SSL_localityName"'/' ca.cnf
-sed -i 's/default_days\t*\s*= .*/default_days = '"$SSL_default_days"'/' ca.cnf
+sed -i 's/countryName\t*\s*=.*/countryName = "'"$SSL_countryName"'"/' ca.cnf
+sed -i 's/stateOrProvinceName\t*\s*= .*/stateOrProvinceName = "'"$SSL_stateOrProvinceName"'"/' ca.cnf
+sed -i 's/organizationName\t*\s*= .*/organizationName = "'"$SSL_organizationName"'"/' ca.cnf
+sed -i 's/emailAddress\t*\s*= .*/emailAddress = "'"$SSL_emailAddress"'"/' ca.cnf
+sed -i 's/commonName\t*\s*= .*/commonName = "'"$SSL_commonName"'"/' ca.cnf
+sed -i 's/subjectAltName\t*\s*= .*/subjectAltName = "'"$SSL_subjectAltName"'"/' ca.cnf
+sed -i 's/localityName\t*\s*= .*/localityName = "'"$SSL_localityName"'"/' ca.cnf
+sed -i 's/default_days\t*\s*= .*/default_days = "'"$SSL_default_days"'"/' ca.cnf
 # client.cnf
-sed -i 's/countryName\t*\s*=.*/countryName = '"$SSL_countryName"'/' client.cnf
-sed -i 's/stateOrProvinceName\t*\s*=.*/stateOrProvinceName = '"$SSL_stateOrProvinceName"'/' client.cnf
-sed -i 's/organizationName\t*\s*=.*/organizationName = '"$SSL_organizationName"'/' client.cnf
-sed -i 's/emailAddress\t*\s*=.*/emailAddress = '"$SSL_emailAddress"'/' client.cnf
-sed -i 's/commonName\t*\s*=.*/commonName = '"$SSL_commonName"'/' client.cnf
-sed -i 's/subjectAltName\t*\s*=.*/subjectAltName = '"$SSL_subjectAltName"'/' client.cnf
-sed -i 's/localityName\t*\s*= .*/localityName = '"$SSL_localityName"'/' client.cnf
-sed -i 's/default_days\t*\s*= .*/default_days = '"$SSL_default_days"'/' client.cnf
+sed -i 's/countryName\t*\s*=.*/countryName = "'"$SSL_countryName"'"/' client.cnf
+sed -i 's/stateOrProvinceName\t*\s*=.*/stateOrProvinceName = "'"$SSL_stateOrProvinceName"'"/' client.cnf
+sed -i 's/organizationName\t*\s*=.*/organizationName = "'"$SSL_organizationName"'"/' client.cnf
+sed -i 's/emailAddress\t*\s*=.*/emailAddress = "'"$SSL_emailAddress"'"/' client.cnf
+sed -i 's/commonName\t*\s*=.*/commonName = "'"$SSL_commonName"'"/' client.cnf
+sed -i 's/subjectAltName\t*\s*=.*/subjectAltName = "'"$SSL_subjectAltName"'"/' client.cnf
+sed -i 's/localityName\t*\s*= .*/localityName = "'"$SSL_localityName"'"/' client.cnf
+sed -i 's/default_days\t*\s*= .*/default_days = "'"$SSL_default_days"'"/' client.cnf
 
 
 # pulizia
