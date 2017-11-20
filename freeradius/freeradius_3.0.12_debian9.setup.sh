@@ -53,7 +53,7 @@ sed -i 's/countryName\t*\s*=.*/countryName = "'"$SSL_countryName"'"/' client.cnf
 sed -i 's/stateOrProvinceName\t*\s*=.*/stateOrProvinceName = "'"$SSL_stateOrProvinceName"'"/' client.cnf
 sed -i 's/organizationName\t*\s*=.*/organizationName = "'"$SSL_organizationName"'"/' client.cnf
 sed -i 's/emailAddress\t*\s*=.*/emailAddress = "'"$SSL_emailAddress"'"/' client.cnf
-sed -i 's/commonName\t*\s*=.*/commonName = "'"$SSL_commonName"'"/' client.cnf
+sed -i 's/commonName\t*\s*=.*/commonName = "'"$SSL_commonName"'-client"/' client.cnf
 sed -i 's/subjectAltName\t*\s*=.*/subjectAltName = "'"$SSL_subjectAltName"'"/' client.cnf
 sed -i 's/localityName\t*\s*= .*/localityName = "'"$SSL_localityName"'"/' client.cnf
 sed -i 's/default_days\t*\s*= .*/default_days = "'"$SSL_default_days"'"/' client.cnf
