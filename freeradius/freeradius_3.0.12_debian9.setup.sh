@@ -50,7 +50,7 @@ sed -i 's/default_days\t*\s*= .*/default_days = '"$SSL_default_days"'/' client.c
 
 # pulizia
 rm -f *.pem *.der *.csr *.crt *.key *.p12 serial* index.txt*
-touch index.txt.attr
+echo "unique_subject = yes" > index.txt.attr
 
 # This step creates the CA certificate.
 make ca.pem
