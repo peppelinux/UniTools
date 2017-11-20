@@ -116,7 +116,7 @@ sed -i 's|default_eap_type = md5|default_eap_type = peap|' $RADCONFD/mods-availa
 # it could be done also with this:
 # radiusconfig -setconfig auth yes
 # radiusconfig -setconfig auth_badpass yes
-sed -i 's|logdir = ${localstatedir}/log/radius|logdir = /var/log/radius|' $RADCONFD/radiusd.conf
+#sed -i 's|logdir = ${localstatedir}/log/radius|logdir = /var/log/radius|' $RADCONFD/radiusd.conf
 #sed -i 's|auth_badpass = no|auth_badpass = yes|g' $RADCONFD/radiusd.conf
 #sed -i 's|auth_goodpass = no|auth_goodpass = yes|g' $RADCONFD/radiusd.conf
 sed -i 's|auth = no|auth = yes|g' $RADCONFD/radiusd.conf
