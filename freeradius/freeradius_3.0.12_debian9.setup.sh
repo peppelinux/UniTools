@@ -3,7 +3,7 @@ export RADCONFD="/etc/freeradius/3.0/"
 # CHANGE IT !
 export RADIUS_PWD="pianor4dius"
 
-aptitude install freeradius-mysql
+aptitude install freeradius-mysql mysql-server
 service freeradius stop
 
 cd $RADCONFD
