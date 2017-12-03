@@ -40,5 +40,19 @@ dbpasswd '${DBPASSWD}'
 has_ldapinfo_dn_ru no
 subtree_cond "ldap_entries.dn LIKE CONCAT('%',?)"' > slapd.sql.conf
 
+# log levels are
+# 1	trace function calls
+# 2	debug packet handling
+# 4	heavy trace debugging
+# 8	connection management
+# 16	print out packets sent and received
+# 32	search filter processing
+# 64	configuration file processing
+# 128	access control list processing
+# 256	stats log connections/operations/results
+# 512	stats log entries sent
+# 1024	print communication with shell backends
+# 2048	entry parsing
+
 # start
 slapd -d 5 -h 'ldap:/// ldapi:///' -f /etc/openldap/slapd.conf &
