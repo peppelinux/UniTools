@@ -5,7 +5,7 @@ import ldap3
 
 
 def search(value):
-   for i in ldap3.protocol.rfc4512.Oids.items():
+   for i in ldap3.protocol.oid.Oids.items():
        if value.lower() in str(i).lower():
            print(i)
 
