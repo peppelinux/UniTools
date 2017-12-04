@@ -1,6 +1,7 @@
 # Tested on Debian9
 
 SYS_USER="peppe"
+MOUNT_POINT="/media/gdrive"
 
 sudo apt-get install opam ocaml make fuse camlp4-extra build-essential pkg-config
 sudo groupadd fuse
@@ -31,7 +32,10 @@ chmod 775 /usr/sbin/gdfuse
 
 # create mount point
 mkdir /media/gdrive
-chown -R $SYS_USER /media/gdrive
+chown -R $SYS_USER $MOUNT_POINT
+
+# mount it
+google-drive-ocamlfuse $MOUNT_POINT
 
 # put this definition in fstab, the UID value must be the $SYS_USER uid!
 gdfuse#default /media/gdrive fuse uid=1000,gid=1000,user 0 0
