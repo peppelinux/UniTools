@@ -22,23 +22,7 @@ read PASSWD
 HASHED_PASSWD=$(slappasswd -s "$PASSWD")
 
 # slapd configuration
-nano /etc/openldap/slapd.conf
-
-# replace with SQL database definition
-echo '
-#######################################################################
-# sql database definitions
-#######################################################################
-database sql
-suffix "dc=life,dc=com"
-# Only need if not using the ldbm/bdb stuff below
-rootdn "cn=manager,dc=life,dc=com"
-rootpw '${HASHED_PASSWD}'
-dbname '${DBNAME}'
-dbuser '${DBUSER}'
-dbpasswd '${DBPASSWD}'
-has_ldapinfo_dn_ru no
-subtree_cond "ldap_entries.dn LIKE CONCAT('%',?)"' > slapd.sql.conf
+# nano /etc/openldap/slapd.conf
 
 # log levels are
 # 1	trace function calls
