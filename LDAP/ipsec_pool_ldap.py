@@ -15,9 +15,9 @@ _ATTRIBUTES=['uid',
              #~ 'objectclass',
              ]
 
-def get_accounts(conn):
+def get_accounts(conn, uids):
     accounts = []
-    for i in processed_uid:
+    for i in uids:
         conn.search('ou=GROUP,ou=People,dc=DOMAIN,dc=it',
                     '(&(objectclass=person)(uid={}))'.format(i),
                     attributes=_ATTRIBUTES)
@@ -83,7 +83,7 @@ if __name__ == '__main__':
     #server.info
     #server.schema
     print('Currently logged as: "{}"'.format(conn.extend.standard.who_am_i()))
-    accounts = get_accounts(conn)
+    accounts = get_accounts(conn, processed_uid)
     data_dict = data_orig2dicts(data_orig)
     #print(accounts)
     #print(data_dict)
