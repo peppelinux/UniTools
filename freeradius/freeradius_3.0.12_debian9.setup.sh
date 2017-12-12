@@ -20,6 +20,7 @@ export SSL_default_days="3650"
 
 # these sed breaks policy_match rules
 # then you should replace them fromyour /etc/ssl/openssl.cnf
+# TODO, i know! :(
 
 #[ policy_match ]
 #countryName		= match
@@ -103,10 +104,10 @@ ln -s $RADCONFD/mods-available/sqlcounter $RADCONFD/mods-enabled/
 
 # auth
 # inner-tunnel
-sed -i 's|-sql|sql|' $RADCONFD/sites-enabled/inner-tunnel # authorize section
+#sed -i 's|-sql|sql|' $RADCONFD/sites-enabled/inner-tunnel # authorize section
 sed -i 's|session {|session {\nsql|' $RADCONFD/sites-enabled/inner-tunnel
 # default
-sed -i 's|-sql|sql|' $RADCONFD/sites-enabled/default # authorize section
+#sed -i 's|-sql|sql|' $RADCONFD/sites-enabled/default # authorize section
 sed -i 's|session {|session {\nsql|' $RADCONFD/sites-enabled/default
 sed -i 's|accounting {|accounting {\nsql|' $RADCONFD/sites-enabled/default
 
