@@ -28,7 +28,7 @@ def get_accounts(conn, uids):
 def data_orig2dicts(data_orig):
     l = []
     for i in data_orig[1:]:
-        data = [ e for e in i.split(' ') if len(e)>1]
+        data = [e for e in i.split(' ') if len(e)>1]
         #~ print(data)
         if data[2] == 'online':
             l.append({
@@ -60,19 +60,20 @@ def get_extended_row(data_dict_row, accounts):
             d['uid'] = a['uid'][0]
             d['cn'] = a['cn'][0]
     return d
-    
+
+def get_processed_uid(data_orig):
+    processed_uid = []
+    for d in data_orig[1:]:
+        uid = d.split(' ')[-1]
+        if uid not in processed_uid:
+            processed_uid.append(uid)
 
 if __name__ == '__main__':
     ipsec_pool_leases=check_output(['ipsec', 'pool', '--leases']).decode('ascii')
     
     data_orig = ipsec_pool_leases.splitlines()
-    data_head = [ i for i in data_orig[0].split(' ') if i]
-    
-    processed_uid = []
-    for i in data_orig[1:]:
-        uid = i.split(' ')[-1]
-        if uid not in processed_uid:
-            processed_uid.append(uid)
+    data_head = [i for i in data_orig[0].split(' ') if i]
+    processed_uids = get_processed_uids(data_orig)
     
     server = ldap3.Server('_SERVER_HOST', port = 636, use_ssl = True,
                       get_info=ldap3.ALL)  # define a secure LDAP server
