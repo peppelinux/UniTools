@@ -145,6 +145,10 @@ class ADdomainExportParser(object):
             elif len(spline)==1 and spline[0].startswith('Bad password time'):
                 account_dict['Bad password time'] = row.replace('Bad password time',
                                               '').strip()
+            else:
+                print('THIS IS IMPOSSIBLEHh!!!')
+                print(i)
+                print()
         # get subset
         acct_type, ancestors, hashes = self._extract_subvalues(account)
         
