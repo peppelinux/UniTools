@@ -17,8 +17,9 @@ import cuisine
 
 #il server A e il client B.
 #Se voglio collegarmi senza password da B ad A faccio su B:
-#ssh-keygen -t rsa
-#ssh-copy-id -i ~/.ssh/id_rsa.pub AHOSTNAME
+#ssh-keygen -t dsa
+#ssh-copy-id -i ~/.ssh/id_dsa.pub AHOSTNAME
+# EVITA RSA!
 
 # Fabric normally aborts the execution if it can't reach one of the hosts.
 env.skip_bad_hosts=True
