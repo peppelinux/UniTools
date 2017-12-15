@@ -1,4 +1,8 @@
-    # LETSENCRYPT SSL TLS HARDENING
+# this hardening produce a A profile from
+# https://www.ssllabs.com/ssltest/index.html
+# source: https://raymii.org/s/tutorials/Strong_SSL_Security_On_nginx.html
+
+ # LETSENCRYPT SSL TLS HARDENING
     ssl_session_cache shared:le_nginx_SSL:1m;
     #ssl_session_cache shared:SSL:10m;
 
