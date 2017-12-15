@@ -1,5 +1,6 @@
 # this hardening produce a A+ profile from
 # https://www.ssllabs.com/ssltest/index.html
+# source: https://raymii.org/s/tutorials/Strong_SSL_Security_On_nginx.html
 
 # commented options belongs to newer nginx versions
    
