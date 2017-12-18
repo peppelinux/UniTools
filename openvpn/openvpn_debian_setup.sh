@@ -12,6 +12,7 @@ cd easy-rsa
 
 # edito le variabili per customizzare i certificati
 nano vars
+mkdir keys
 touch keys/index.txt
 
 # faccio un source per operare in questo ambiente
