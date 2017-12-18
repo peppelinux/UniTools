@@ -14,8 +14,6 @@ persist-key
 verb 3
 #redirect-gateway def1
 
-remote-cert-tls server 
-
 route-nopull
 
 # noexec avoid next route statement...so nopull if good enough
