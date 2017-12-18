@@ -18,6 +18,8 @@ touch keys/index.txt
 # faccio un source per operare in questo ambiente
 . ./vars
 
+ln -s openssl-1.0.0.cnf openssl.cnf
+
 # pulisco cacche esemplificative
 ./clean-all
 
