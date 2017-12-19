@@ -18,7 +18,7 @@
 set -x
 # set -e
 
-export DEST_DIR="/etc/syslog-ng/ca.d"
+export DEST_DIR=/etc/syslog-ng/ca.d
 export TERENA_FNAME=TERENA_SSL_CA_3.pem
 export TERENA_CA_URL=https://www.terena.org/activities/tcs/repository-g3/$TERENA_FNAME
 export DIGICERT_FNAME=DigiCertAssuredIDRootCA.crt
@@ -46,7 +46,7 @@ do
 done
 
 TERENA_UID=`openssl x509 -noout -hash -in $TERENA_FNAME`
-ln -fs TERENA_SSL_CA_3.pem $TERENA_UID
+ln -fs TERENA_SSL_CA_3.pem $TERENA_UID.0
 
 # crt to pem conversion
 DIGICERT_CA_PEM=$(echo $DIGICERT_FNAME | sed 's|\.crt||g').pem
