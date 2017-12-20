@@ -31,6 +31,7 @@ apt install syslog-ng-core syslog-ng-mod-sql syslog-ng-mod-mongodb \
 syslog-ng-mod-json syslog-ng-mod-smtp syslog-ng-mod-amqp syslog-ng-mod-geoip \
 syslog-ng-mod-redis syslog-ng-mod-stomp
 
+rm -Rf $DEST_DIR
 mkdir -p $DEST_DIR
 cd $DEST_DIR
 
