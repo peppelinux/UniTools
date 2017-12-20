@@ -53,7 +53,7 @@ ln -fs $TERENA_FNAME $TERENA_UID.0
 DIGICERT_CA_PEM=$(echo $DIGICERT_FNAME | sed 's|\.crt||g').pem
 openssl x509 -in $DIGICERT_FNAME -inform der -outform pem -out $DIGICERT_CA_PEM
 DIGICERT_UID=`openssl x509 -noout -hash -in $DIGICERT_CA_PEM`
-ln -fs $DIGICERT_FNAME $DIGICERT_UID.0
+ln -fs $DIGICERT_CA_PEM $DIGICERT_UID.0
 
 # Successivamente bisogna modificare il file di configurazione syslog-ng.conf.
 echo 'source Unical_auth {file("/var/log/auth.log");};
