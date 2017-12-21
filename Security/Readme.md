@@ -10,8 +10,6 @@ ntpdc -n -c monlis serverip
 
 RESOURCES
 
-https://github.com/dmpayton/django-admin-honeypot
-
-https://github.com/enaqx/awesome-pentest
-
-https://github.com/paralax/awesome-honeypots
+- https://github.com/dmpayton/django-admin-honeypot
+- https://github.com/enaqx/awesome-pentest
+- https://github.com/paralax/awesome-honeypots
