@@ -1,4 +1,5 @@
-Is your server secure?
+Is your server Secure enough?
+=============================
 
 NTP
 Log onto your server via SSH as the root user and enter the following command replacing serverip with the IP of your server.
