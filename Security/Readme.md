@@ -4,7 +4,7 @@ Is your server Secure enough?
 TCP
 To disable TCP timestamps in GNU/Linux TCP/IPv4, that implement RFC1323.
 ````
-echo 'net.ipv4.tcp_timestamps=0' >> /etc/sysctl.conf. 
+echo 'net.ipv4.tcp_timestamps=0' >> /etc/sysctl.conf
 # to apply the settings at runtime.
 sysctl -p
 ````
