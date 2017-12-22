@@ -1,6 +1,15 @@
 Is your server Secure enough?
 =============================
 
+TCP
+To disable TCP timestamps on linux add the line 
+
+````
+echo 'net.ipv4.tcp_timestamps=0' >> /etc/sysctl.conf. 
+# to apply the settings at runtime.
+sysctl -p
+````
+
 NTP
 Log onto your server via SSH as the root user and enter the following command replacing serverip with the IP of your server.
 If the command returns a long list of IP addresses then your server is vulnerable!
