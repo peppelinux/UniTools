@@ -29,6 +29,13 @@ BUILD_CA_CERTS="0"
 BUILD_CA_CERTS="1"
 ````
 
+If you want to deploy strongswan with Let'sEncrypt certificates you should use the following pattern in /etc/ipsec.d/ folder:
+````
+cacerts/server-root-ca.pem -> /etc/letsencrypt/live/vpn.unical.it/chain.pem
+certs/vpn-server-cert.pem -> /etc/letsencrypt/live/vpn.unical.it/fullchain.pem
+private/vpn-server-key.pem -> /etc/letsencrypt/live/vpn.unical.it/privkey.pem
+````
+
 Then run ipsec.sh for strongswan setup and ipsec.fw.sh for firewall, NAT and kernel routing sysctl rules.
 
 Once strongwan beign started you can copy $SERVER_CA_CERT to your clients.
