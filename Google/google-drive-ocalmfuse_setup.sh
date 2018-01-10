@@ -1,4 +1,5 @@
 # Tested on Debian9
+# Taken from: https://github.com/astrada/google-drive-ocamlfuse/wiki/Installation
 
 SYS_USER="peppe"
 MOUNT_POINT="/media/gdrive"
@@ -26,8 +27,13 @@ google-drive-ocamlfuse -id  $VALUE.apps.googleusercontent.com  -secret  $YOUR_SE
 # create this specialized script:
 echo '
 #!/bin/bash
-su $USERNAME -l -c "google-drive-ocamlfuse -label $1 $*"
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+MOUNTPOINT="/media/gdrive"
+export SYS_USER="peppe"
+export LABEL="google-drive"
+su $SYS_USER -l -c "source /home/$SYS_USER/.opam/opam-init/init.sh && google-drive-ocamlfuse $MOUNTPOINT"
 exit 0' > /usr/sbin/gdfuse
+
 chmod 775 /usr/sbin/gdfuse
 
 # create mount point
