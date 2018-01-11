@@ -71,3 +71,6 @@ solution:
   just add leftsourceip= %config OR x.y.z.n in client ipsec.conf conn
 ````
 
+## Known Issues
+
+The built-in VPN client in Windows does not support IKEv2 fragmentation. On some networks, this can cause the connection to fail or have other issues. You may try <a href="clients.md#troubleshooting" target="_blank">this registry fix</a>, or connect using <a href="clients.md" target="_blank">IPsec/L2TP</a> or <a href="clients-xauth.md" target="_blank">IPsec/XAuth</a> mode instead.
