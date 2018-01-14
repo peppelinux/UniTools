@@ -1,2 +1,7 @@
-https://github.com/mozilla-releng/signtool
-
+- https://github.com/mozilla-releng/signtool
+- https://msdn.microsoft.com/en-us/library/8s9b9yaz(VS.80).aspx
+- http://penguindreams.org/blog/signature-verification-between-java-and-python/
+- https://gist.github.com/ezimuel/3cb601853db6ebc4ee49
+- https://stackoverflow.com/questions/10782826/digital-signature-for-a-file-using-openssl
+- https://www.zimuel.it/blog/sign-and-verify-a-file-using-openssl
+- 
