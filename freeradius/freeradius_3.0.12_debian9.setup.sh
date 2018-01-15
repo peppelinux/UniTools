@@ -112,6 +112,9 @@ sed -i 's|accounting {|accounting {\nsql|' $RADCONFD/sites-enabled/default
 
 # disable unused eap methods
 sed -i 's|default_eap_type = md5|default_eap_type = peap|' $RADCONFD/mods-available/eap
+# also enable in PEAP and TTLS for Eduroam IDP compliance, these are:
+#copy_request_to_tunnel = yes
+#use_tunneled_reply = yes
 
 # rememebr to disable md5 auth in eap module
         #
