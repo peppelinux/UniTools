@@ -1,7 +1,7 @@
 
 export RADCONFD="/etc/freeradius/3.0/"
 # CHANGE IT !
-export RADIUS_PWD="pianor4dius"
+export RADIUS_PWD="radiussecret"
 
 aptitude install freeradius-mysql mysql-server
 service freeradius stop
@@ -58,7 +58,6 @@ sed -i 's/commonName\t*\s*=.*/commonName = "'"$SSL_commonName"'-client"/' client
 sed -i 's/subjectAltName\t*\s*=.*/subjectAltName = "'"$SSL_subjectAltName"'"/' client.cnf
 sed -i 's/localityName\t*\s*= .*/localityName = "'"$SSL_localityName"'"/' client.cnf
 sed -i 's/default_days\t*\s*= .*/default_days = "'"$SSL_default_days"'"/' client.cnf
-
 
 # pulizia
 rm -f *.pem *.der *.csr *.crt *.key *.p12 serial* index.txt*
@@ -144,9 +143,13 @@ ln -s /var/log/freeradius/radwtmp /usr/local/var/log/radius/
 
 update-rc.d  freeradius enable 2
 
+# create user in radcheck table
+
 # test user with a Cleartext-Password
 # radtest {username} {password} {hostname} 0 {radius_secret}
-# radtest test@test.realm.it test localhost 0 testing123
+
+# use ALWAYS MSCHAP and not cleartext incapsulated in PAP (as default behaviour)!
+# radtest -t mschap test@test.realm.it test localhost 0 testing123
 
 # with eap
 # you have to compile eapol_test first :)
