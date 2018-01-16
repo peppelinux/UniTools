@@ -13,6 +13,7 @@ Il file p7m è un file di firma digitale nel formato CAdES (CMS Advanced Electro
 
 - Xades, si possono firmare solo file xml;
 
+NB: DER is binary format, its structure is called ASN.1. PEM format is Base64 encoded DER.
 
 ````
 # estrazione
@@ -43,6 +44,11 @@ java
 - https://www.linuxtrent.it/documentazione/pillole-e-annotazioni-tecniche/pillola-31-firmare-digitalmente-un-documento-pdf-trami
 - https://github.com/open-eid/SiVa
 - https://github.com/damianofalcioni/Websocket-Smart-Card-Signer
+
+js
+- https://github.com/web-eid/web-eid.js
+- http://kjur.github.io/jsrsasign/
+
 
 # Qualche appunto
 disordinato
