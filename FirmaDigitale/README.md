@@ -40,6 +40,8 @@ openssl pkcs7 -inform DER -in documento.pdf.p7m -print_certs -out cert.pem
 - http://qistoph.blogspot.it/2012/01/manual-verify-pkcs7-signed-data-with.html
 
 java
+- http://wiki.cacert.org/PdfSigning
+- https://github.com/kwart/jsignpdf (http://jsignpdf.sourceforge.net/)
 - http://j4sign.sourceforge.net/
 - https://www.linuxtrent.it/documentazione/pillole-e-annotazioni-tecniche/pillola-31-firmare-digitalmente-un-documento-pdf-trami
 - https://github.com/open-eid/SiVa
@@ -49,6 +51,8 @@ js
 - https://github.com/web-eid/web-eid.js
 - http://kjur.github.io/jsrsasign/
 
+normativa
+- http://www.agid.gov.it/agenda-digitale/infrastrutture-architetture/il-regolamento-ue-ndeg-9102014-eidas
 
 # Qualche appunto
 disordinato
