@@ -81,7 +81,7 @@ apt install opensc
 pkcs15-tool -c
 ````
 
-# Compilazione Popple su ubnt 16.04
+# Compilazione Poppler su ubnt 16.04
 ````
 apt install \
 cmake \
