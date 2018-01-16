@@ -1,6 +1,4 @@
 # Appunti
-
-#dall'ottimo: https://quoll.it/firma-digitale-p7m-come-estrarre-il-contenuto/
 Il file p7m è un file di firma digitale nel formato CAdES (CMS Advanced Electronic Signatures) che è un’estensione del Cryptographic Message Syntax (CMS) che è basato a sua volta su PKCS#7. Il file p7m non è altro che un contenitore che incapsula sia il documento originale (non criptato) che la firma digitale personale e quella della catena della CA che ha rilasciato il certificato. Andando per ordine nel file p7m troviamo:
 - nei primi byte  l’header PKCS#7
 - poi viene il nostro documento originale (non criptato)
@@ -11,9 +9,9 @@ Il file p7m è un file di firma digitale nel formato CAdES (CMS Advanced Electro
 # Tipi di firme
 - PAdES (PDF Advanced Electronic Signatures)  è una firma che può essere apposta solo su file  PDF: l’apposizione di una firma PAdES lascia immutata l’estensione del documento, che continuerà a chiamarsi “nomefile.pdf”;
 
-- La firma CAdES (CMS Advanced Electronic Signatures) è una firma digitale che può essere apposta su qualsiasi tipo di file. Tale modalità di firma genera una “busta crittografica” contenente il documento informatico originale e si caratterizza per il suffisso P7M che si aggiunge all’estensione del file (es. citazione.pdf.p7m). In altri termini, nella firma CAdES il documento oggetto di firma digitale viene incapsulato in un contenitore informatico “chiuso” con una firma digitale, che ne garantisce quindi l’autenticità e l’integrità (oltre che il “non ripudio”);
+- CAdES (CMS Advanced Electronic Signatures) è una firma digitale che può essere apposta su qualsiasi tipo di file. Tale modalità di firma genera una “busta crittografica” contenente il documento informatico originale e si caratterizza per il suffisso P7M che si aggiunge all’estensione del file (es. citazione.pdf.p7m). In altri termini, nella firma CAdES il documento oggetto di firma digitale viene incapsulato in un contenitore informatico “chiuso” con una firma digitale, che ne garantisce quindi l’autenticità e l’integrità (oltre che il “non ripudio”);
 
-- Xades con cui si possono firmare solo file xml;
+- Xades, si possono firmare solo file xml;
 
 
 ````
@@ -43,7 +41,8 @@ openssl pkcs7 -inform DER -in documento.pdf.p7m -print_certs -out cert.pem
 java
 - http://j4sign.sourceforge.net/
 - https://www.linuxtrent.it/documentazione/pillole-e-annotazioni-tecniche/pillola-31-firmare-digitalmente-un-documento-pdf-trami
-- 
+- https://github.com/open-eid/SiVa
+- https://github.com/damianofalcioni/Websocket-Smart-Card-Signer
 
 # Qualche appunto
 disordinato
