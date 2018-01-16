@@ -46,7 +46,8 @@ Playing pdfs
 
 # Qualche appunto
 
-Per Cades può andare bene
+Per Cades può andare bene il seguente:
+https://quoll.it/firma-digitale-p7m-come-estrarre-il-contenuto/
 ````
 # estrazione
 perl -ne 's/^.*%PDF/%PDF/; print if /%PDF/../%%EOF/' documento.pdf.p7m >documento.pdf
