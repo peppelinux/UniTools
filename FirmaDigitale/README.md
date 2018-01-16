@@ -27,6 +27,7 @@ NB: DER is binary format, its structure is called ASN.1. PEM format is Base64 en
 - http://qistoph.blogspot.it/2012/01/manual-verify-pkcs7-signed-data-with.html
 
 java
+- https://github.com/esig/
 - http://wiki.cacert.org/PdfSigning
 - https://github.com/kwart/jsignpdf (http://jsignpdf.sourceforge.net/)
 - http://j4sign.sourceforge.net/
