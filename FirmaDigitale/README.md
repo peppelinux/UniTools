@@ -44,10 +44,14 @@ normativa
 
 Playing pdfs
 - https://williamjturkel.net/2013/08/24/working-with-pdfs-using-command-line-tools-in-linux/
+- https://github.com/jesparza/peepdf
 
-# Qualche appunto
+# Qualche appunto per CAdES
+````
+pip2 install peepdf
+peepdf -C "search /SigFlags" Modello\ 05-Richiesta_Attivazione_Servizi-05_signable_MOD5_firmato.pdf
+````
 
-Per Cades può andare bene il seguente:
 https://quoll.it/firma-digitale-p7m-come-estrarre-il-contenuto/
 ````
 # estrazione
@@ -61,7 +65,7 @@ openssl pkcs7 -inform DER -in documento.pdf.p7m -print_certs -out cert.pem
 
 ````
 
-Binwalk, ti dice sempre la verità
+Binwalk, dice sempre la verità
 ````
 #https://github.com/ReFirmLabs/binwalk/wiki/Usage
 binwalk -B filename
