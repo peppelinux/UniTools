@@ -7,7 +7,7 @@ Il file p7m è un file di firma digitale nel formato CAdES (CMS Advanced Electro
 - ed infine il certificato della CA
 
 # Tipi di firme
-- PAdES (PDF Advanced Electronic Signatures)  è una firma che può essere apposta solo su file  PDF: l’apposizione di una firma PAdES lascia immutata l’estensione del documento, che continuerà a chiamarsi “nomefile.pdf”;
+- PAdES (PDF Advanced Electronic Signatures)  è una firma che può essere apposta solo su file  PDF: l’apposizione di una firma PAdES lascia immutata l’estensione del documento, che continuerà a chiamarsi “nomefile.pdf”. As defined in the upcoming PDF 2.0 specification: The PDF signatures using the Subfilter value ETSI.CAdES.detached are referred to as PAdES signatures and they follow one of two CMS profiles created to be compatible with the corresponding CAdES profiles defined in ETSI EN 319 122 (ISO 32000-2 FDIS section 12.8.3.4 - CAdES signatures as used in PDF).
 
 - CAdES (CMS Advanced Electronic Signatures) è una firma digitale che può essere apposta su qualsiasi tipo di file. Tale modalità di firma genera una “busta crittografica” contenente il documento informatico originale e si caratterizza per il suffisso P7M che si aggiunge all’estensione del file (es. citazione.pdf.p7m). In altri termini, nella firma CAdES il documento oggetto di firma digitale viene incapsulato in un contenitore informatico “chiuso” con una firma digitale, che ne garantisce quindi l’autenticità e l’integrità (oltre che il “non ripudio”);
 
