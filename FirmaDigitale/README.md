@@ -15,7 +15,6 @@ Il file p7m è un file di firma digitale nel formato CAdES (CMS Advanced Electro
 
 NB: DER is binary format, its structure is called ASN.1. PEM format is Base64 encoded DER.
 
-
 # Collegamenti e risorse esterne
 - https://github.com/mozilla-releng/signtool
 - https://github.com/wbond/asn1crypto
@@ -42,9 +41,11 @@ js
 normativa
 - http://www.agid.gov.it/agenda-digitale/infrastrutture-architetture/il-regolamento-ue-ndeg-9102014-eidas
 
-Playing pdfs
+Playing pdfs (CAdES)
 - https://williamjturkel.net/2013/08/24/working-with-pdfs-using-command-line-tools-in-linux/
 - https://github.com/jesparza/peepdf
+- https://stackoverflow.com/questions/28408047/message-digest-of-pdf-in-digital-signature/28429984#28429984
+- https://pythonhosted.org/PyPDF2/
 
 # Qualche appunto per CAdES
 ````
@@ -66,7 +67,6 @@ openssl smime -verify -noverify -in documento.pdf.p7m -inform DER -out documento
 
 # Per estrarre il certificato digitale personale di chi ha firmato basta usare openssl con il comando
 openssl pkcs7 -inform DER -in documento.pdf.p7m -print_certs -out cert.pem
-
 ````
 
 Binwalk, dice sempre la verità
