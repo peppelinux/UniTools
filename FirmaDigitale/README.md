@@ -81,4 +81,32 @@ apt install opensc
 pkcs15-tool -c
 ````
 
+# Compilazione Popple su ubnt 16.04
+````
+apt install \
+cmake \
+libfreetype6-dev \
+libfontconfig1-dev \
+libopenjpeg-dev \
+libopenjp2-7-dev \
+liblcms2-dev \
+libcairo2-dev \
+libqjdns-qt5-dev \
+libglibmm-2.4-dev \
+
+# MANCA ANCORA QUALCHE DIPENDENZA!
+
+
+mkdir build                         &&
+cd    build                         &&
+git clone git://git.freedesktop.org/git/poppler/test &&
+
+
+cmake  -DCMAKE_BUILD_TYPE=Release   \
+       -DCMAKE_INSTALL_PREFIX=/usr  \
+       -DTESTDATADIR=$PWD/test \
+       -DENABLE_XPDF_HEADERS=ON     \
+       ..                           &&
+make
+`````
 
