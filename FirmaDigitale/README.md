@@ -50,6 +50,10 @@ Playing pdfs
 ````
 pip2 install peepdf
 peepdf -C "search /SigFlags" Modello\ 05-Richiesta_Attivazione_Servizi-05_signable_MOD5_firmato.pdf
+
+# interactive mode 
+peepdf -i file.pdf
+>>> object 244
 ````
 
 https://quoll.it/firma-digitale-p7m-come-estrarre-il-contenuto/
