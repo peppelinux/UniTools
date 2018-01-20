@@ -22,3 +22,10 @@ export PVE_SERVER=192.168.3.250
 vboxmanage clonehd Windows10.vdi $FOUT --format RAW
 dd if=$FOUT | gzip -c | nc -w 30 -vvn $PVE_SERVER 3333
 ````
+
+Show ip on VM banner
+====================
+````
+# add to /etc/issue
+IP address: \4
+````
