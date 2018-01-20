@@ -19,6 +19,7 @@ ntpdc -n -c monlis serverip
 
 RESOURCES
 
+- https://www.cyberciti.biz/faq/linux-kernel-etcsysctl-conf-security-hardening/
 - https://github.com/dmpayton/django-admin-honeypot
 - https://github.com/enaqx/awesome-pentest
 - https://github.com/paralax/awesome-honeypots
