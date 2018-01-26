@@ -1,0 +1,5 @@
+apt install qemu-img pv
+
+qemu-img convert -f vdi -O raw OpenVAS.vdi OpenVAS.raw
+# create the VM in Proxmox and then write the content on it
+dd if=OpenVAS.raw | pv | dd of=/dev/pve/vm-220-disk-1 bs=64K conv=noerror,sync
