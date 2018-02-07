@@ -30,7 +30,7 @@ echo '
 #!/bin/bash
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 MOUNTPOINT="/media/gdrive"
-export SYS_USER="peppe"
+export SYS_USER=$SYS_USER
 export LABEL="google-drive"
 su $SYS_USER -l -c "source /home/$SYS_USER/.opam/opam-init/init.sh && google-drive-ocamlfuse $MOUNTPOINT"
 exit 0' > /usr/sbin/gdfuse
