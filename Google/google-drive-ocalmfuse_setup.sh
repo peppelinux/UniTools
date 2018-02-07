@@ -19,6 +19,7 @@ opam install google-drive-ocamlfuse
 
 # configure autorization
 # create an oauth2 IDclient and secret
+# https://console.developers.google.com/apis/credentials
 google-drive-ocamlfuse -id  $VALUE.apps.googleusercontent.com  -secret  $YOUR_SECRET  -headless
 # auth with the returning url, give the autorizations to the app and then copy the verification code to the ocalm prompt, then
 # Access token retrieved correctly.
