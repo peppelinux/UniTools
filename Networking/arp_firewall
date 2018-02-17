@@ -1,0 +1,12 @@
+#!/bin/bash
+# Strong policy, just talk with the gateway, mitm prevention
+
+export GATEWAY_IP="192.168.1.1"
+export GATEWAY_MAC="00:1D:0F:A9:F0:45"
+
+# ARP firewall
+arptables -P INPUT DROP
+arptables -P OUTPUT DROP
+arptables -A INPUT -s $GATEWAY_IP --source-mac $GATEWAY_MAC -j ACCEPT
+arptables -A OUTPUT -d $GATEWAY_IP --destination-mac $GATEWAY_MAC -j ACCEPT
+arp -s $GATEWAY_IP GATEWAY_MAC
