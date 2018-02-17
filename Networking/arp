@@ -1,7 +1,0 @@
-# from https://www.tldp.org/LDP/nag/node78.html
-The proper invocation to provide proxy ARP for fnord is given below; of course, the Ethernet address given must be that of gate.
-arp -s fnord 00:00:c0:a1:42:e0 pub
- 
-The proxy ARP entry may be removed again by invoking:
-arp -d fnord
-
