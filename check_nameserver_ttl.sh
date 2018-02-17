@@ -1,4 +1,4 @@
-DNS_SERVER="160.97.7.13"
+DNS_SERVER="10.7.7.13"
 # MUL_FACTOR is sized on hours ((x / minutes /) hours)
 MUL_FACTOR=0.0002777777777777778
 echo "Usage: this_command.sh host.domain.to.check"
