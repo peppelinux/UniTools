@@ -1,1 +1,25 @@
 https://hackerstribe.com/2016/domotica-e-internet-of-things-tramite-sensori-a-433mhz/
+
+RM1101-USB-232 modulo wireless, comunicazione wireless, circuito integrato ad alte prestazioni CC1101 di TI, una interfaccia USB, dati seriale modulo radio, progettato specificamente per il computer host dispositivo applicazioni di trasmissione dati senza fili, generale wokds RM1100-232 TTL modulo di trasmissione digitale per dati wireless uso, utilizzato principalmente in macchina inferiore (MCU) con l'host
+computer (PC computer fine), anche possiamo usare due RM1101-USB-232 modulo, la comunicazione wireless tra due PC. modulo di interfaccia esterna per USB, interno porta seriale virtuale, lo sviluppo e l' applicazione è più facile rispetto USB2.0.
+confrontare CC1101 e CC1100:
+migliorare la risposta randagio;
+il rumore di fase più da vicino meglio migliorare adiacente word power (ACP) prestazioni;
+livello di saturazione di ingresso superiore;
+maggiore efficienza di potenza
+l'espansione della banda di frequenza continua,
+CC1100: 400-464 MHz e 800-928 MHz
+CC1101: 387-464 MHz e 779-928 MHz
+specifiche tecniche:
+modulo a bassa potenza, più grande velocità di trasmissione: 10 mW.
+lavorare In 433 MHz, BANDA ISM gratuito, uso senza licenza.
+alta capacità anti-interferenza e basso tasso di errore di bit, basato sul metodo di modulazione FSK, migliorare la capacità di Dati casuale anti-interferenza e scoppiò abilità anti-interferenza
+supporto trasmissione di dati trasparente e DL/645 statuto. fornire interfaccia dati trasparente, può adattarsi a qualsiasi standard o lo standard condizioni d'uso. filtraggio automatico fuori aria dai dati falsi (Ricevitore è Trasmettitore);
+supporto software di comunicazione metro sistema di lettura wireless statuto DL/645.
+più grande canale programmabile: 256 (20 M banda di frequenza). C' è almeno 256 canali in conformità con la 200 KHz intervallo frequenza;
+grandi buffer di dati. interfaccia baud rate è uguale al tasso aria baud efficace, fornire 3 tipi di utente può scegliere baud rate: 4800, 9600, 19200 BPS (interfaccia può essere impostato per il più alto tasso di 19200 BPS); formato dei dati per 8 N1/8 E1/8 O1 definite dall'utente, ma di trasmissione per il più lungo 30 byte di frame di dati, programmabile dall'utente più flessibile.
+intelligenza di controllo dei dati, gli utenti non hanno bisogno di preparare le procedure supplementari. anche se è comunicazione half duplex, gli utenti, inoltre, non devono preparare extra programma, finché il/i dati dall'interfaccia possono essere, e altri come l'aria carica/capelli di conversione, operazione di controllo, RM-1101 232 modulo automaticamente.
+il modello con l'alta qualità d'argento antenna primavera, competitivo. anche può essere equipaggiato con una varietà di altri guadagno antenna in gomma, antenne chuck, soddisfare le esigenze pratiche.
+modulo Wireless distanza massima di comunicazione nominale si riferisce alla distanza nella comunicazione tra il microcontrollore e il microcontrollore per realizzare un fine o sia quando è collegato al PC, a causa della la radiazione del calcolatore di RF interferenze elettromagnetiche, distanza sarà notevolmente shortencommunication, come ad esempio tra il modulo microcontrollore RF1100 200 metri collegato al PC quando generalmente solo raggiungere circa 100 metri.
+il pacchetto Ha Incluso:
+1x433 Mhz CC1101 USB Wireless RF Transceiver Module 10 mW UART USB MAX232 RS232
