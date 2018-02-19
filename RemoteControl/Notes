@@ -1,6 +1,18 @@
+https://osmocom.org/projects/sdr/wiki/rtl-sdr
+
+https://www.surviveuk.com/wp-content/uploads/2016/07/The-Hobbyists-Guide-To-RTL-SDR-Carl-Laufer.pdf
+
 https://hackerstribe.com/2016/domotica-e-internet-of-things-tramite-sensori-a-433mhz/
 
 http://www.ebay.nl/itm/433M-Arduino-and-PC-Data-Transfer-DTU-RF-Wireless-Module-UART-RS232-MCU-PIC-8051-/281037456478
+
+https://www.sp3ctr3.me/hello-world/
+
+VSTARCAM RF 433 dorr open hack con rtl_sdr e baudline
+rtl_sdr -f 433905000 -s 1000000 - | ./baudline -reset -samplerate 1000000 -channels 2 -format u8 -quadrature -stdin
+
+
+
 
 RM1101-USB-232 modulo wireless, comunicazione wireless, circuito integrato ad alte prestazioni CC1101 di TI, una interfaccia USB, dati seriale modulo radio, progettato specificamente per il computer host dispositivo applicazioni di trasmissione dati senza fili, generale wokds RM1100-232 TTL modulo di trasmissione digitale per dati wireless uso, utilizzato principalmente in macchina inferiore (MCU) con l'host
 computer (PC computer fine), anche possiamo usare due RM1101-USB-232 modulo, la comunicazione wireless tra due PC. modulo di interfaccia esterna per USB, interno porta seriale virtuale, lo sviluppo e l' applicazione è più facile rispetto USB2.0.
