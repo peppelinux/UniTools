@@ -46,4 +46,4 @@ def calcola_secondi_lavorati(timbr):
 
 # in ore
 calcola_secondi_lavorati(timbrature_giorno_int) / 60. / 60
-# datetime.timedelta(0, 9, 316667) -> 9 ore e 32 secondi
+# datetime.timedelta(0, 9, 316667) -> 9 ore e 32 minuti
