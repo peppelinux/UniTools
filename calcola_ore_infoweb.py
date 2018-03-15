@@ -1,5 +1,5 @@
-# Questo codice esemplifica un calcolo di monte di progetti straordinari codice 21
-# la immissione di serie orarie in formato stringa, corrispondenti agli ingressi e alle uscite
+# Questo codice esemplifica un calcolo di monte ore su progetti straordinari codice 21
+# la immissione di serie orarie avviene in formato stringa
 
 timeList_dicembre = ['00:29', '01:13', '03:00', '01:23', '00:17', '01:27', '01:24', '00:49', '06:00', '02:29', '01:00', '00:38', '02:03' ]
 timeList_gennaio =  [ '00:02', '00:34', '00:27', '01:13', '01:00', '00:19', '00:43', '00:02' ]
@@ -43,3 +43,7 @@ def calcola_secondi_lavorati(timbr):
     datetime.timedelta(hours=timbr[3][0], minutes=timbr[3][1]) - \
     datetime.timedelta(hours=timbr[2][0], minutes=timbr[2][1])
     return dt
+
+# in ore
+calcola_secondi_lavorati(timbrature_giorno_int) / 60. / 60
+# datetime.timedelta(0, 9, 316667) -> 9 ore e 32 secondi
