@@ -1,5 +1,12 @@
 Telecomandi Rolling Code o “codice dinamico”
 --------------------------------------------
+
+Sono immuni ad attacchi eavesdrop
+https://en.wikipedia.org/wiki/Rolling_code
+https://www.solidremote.com/blog/identify-rf-remote-control/
+
+https://electronics.stackexchange.com/questions/85657/rolling-code-explanation?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+
 I trasmettitori che utilizzano il sistema di codifica rolling code gestisce in totale sicurezza i comandi e impedisce 
 qualsiasi tipo di violazione esterna. Questo significa che a ogni pressione di un tasto del trasmettitore viene inviato 
 alla centrale di comando un codice sempre diverso, identificabile solo dalla ricevente.
