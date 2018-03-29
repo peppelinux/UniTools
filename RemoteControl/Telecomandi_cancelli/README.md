@@ -33,6 +33,14 @@ In realtà questo quarto tipo di programmazioni è un’estensione del terzo cas
 Falsi miti da sfatare: 
 https://caravelli.wordpress.com/2018/02/24/duplicare-un-telecomando-miti-e-leggende-da-sfatare/
 
+Attacchi sui Rolling code
+-------------------------
+
+https://crypto.stackexchange.com/questions/18311/how-does-a-rolling-code-work
+http://spencerwhyte.blogspot.it/2014/03/delay-attack-jam-intercept-and-replay.html
+https://hackaday.com/2016/03/06/rf-hacking-how-to-bypass-rolling-codes/#more-193905
+https://andrewmohawk.com/2016/02/05/bypassing-rolling-code-systems/
+
 Telecomandi Levette o Codice Fisso
 ----------------------------------
 Il dip switch (in Italiano levette) è un componente impiegato nei circuiti elettronici ed è formato da un gruppo di 
@@ -41,6 +49,8 @@ su un lato (il termine inglese ON significa “attivo/acceso”).
 Tutte le levette impostate verso il segno ON determinano il codice segreto che attiverà solo la 
 vostra automazione ed è sempre lo stesso (se non viene modificato manualmente nella ricevente e nei telecomandi). 
 Ecco perché un telecomando a levette viene anche chiamato a codice fisso.
+
+http://stewartjpark.com/2015/09/13/cracking-gate-opener-remotes.html
 
 
 Telecomando quarzato
