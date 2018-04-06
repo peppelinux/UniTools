@@ -18,7 +18,7 @@ TOKEN="NNNN:XXXXXXXXXXXXXXXXXXXXXXY"
 # invita il bot nel gruppo e per ottenere la chat_id del gruppo scrivi
 # /tuousername @username_bot
 # https://api.telegram.org/bot<YourBOTToken>/getUpdates
-CHAT_ID="-302071441"
+CHAT_ID="NNNNNNNNNNNN"
 
 updater = Updater(token=TOKEN)
 dispatcher = updater.dispatcher
