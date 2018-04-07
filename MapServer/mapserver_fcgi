@@ -1,0 +1,65 @@
+#! /bin/sh
+#
+# description: Mapserver Service Manager
+# processname: lt-mapserv
+# pidfile: /var/run/mapserv.pid
+# Source function library.
+#. /etc/init.d/functions
+# Check that networking is up.
+#. /etc/sysconfig/network
+if [ "$NETWORKING" = "no" ]
+then
+        exit 0
+fi
+PREFIX=/usr
+NAME=mapserv
+PID=/var/run/mapserv.pid
+DAEMON=$PREFIX/bin/spawn-fcgi
+USER="www-data"
+PORT="9999"
+DAEMON_OPTS=" -a 127.0.0.1 -p $PORT -F 4 -u $USER -U $USER -P $PID $PREFIX/lib/cgi-bin/mapserv"
+start () {
+    echo -n "Starting $NAME \n"
+        exec $DAEMON $DAEMON_OPTS >> /dev/null
+        daemon --pidfile $PID
+        RETVAL=$?
+        echo
+    [ $RETVAL -eq 0 ]
+}
+stop () {
+    echo -n "Stopping $NAME "
+        #kill -TERM $PID
+        #make sure all mapservers are closed
+        pkill -f mapserv
+        RETVAL=$?
+        echo
+    if [ $RETVAL -eq 0 ] ; then
+                rm -f $PID
+        fi
+}
+restart () {
+    stop
+    start
+}
+# See how we were called.
+case "$1" in
+  start)
+        start
+    ;;
+  stop)
+        stop
+    ;;
+  status)
+    status lt-mapserv
+        RETVAL=$?
+        ;;
+  restart)
+    restart
+        ;;
+  *)
+        echo $"Usage: $0 {start|stop|status|restart}"
+        RETVAL=2
+        ;;
+esac
+exit $RETVAL
+
