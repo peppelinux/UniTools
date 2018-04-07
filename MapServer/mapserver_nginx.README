@@ -1,0 +1,31 @@
+sudo apt-get install nginx
+sudo apt-get install spawn-fcgi
+
+# add this location to your preferred nginx site
+
+    location /wms {
+                fastcgi_pass   127.0.0.1:9999;
+                fastcgi_index  mapserv?*;
+                fastcgi_param  SCRIPT_FILENAME  /usr/lib/cgi-bin/mapserv$fastcgi_script_name;
+                include fastcgi_params;
+	}
+    
+
+# copy mapserver_fcgi in /etc/init.d/
+
+cp mapserver_fcgi /etc/init.d
+chmod 744 /etc/init.d/mapserver_fcgi
+
+# enable it in init
+update-rc.d  mapserver_fcgi enable 2
+
+# run it
+/etc/init.d/mapserver_fcgi start
+
+# then store Calabria_UTM33 in your preferred path
+# and query it using a web browser
+http://localhost/wms/mapserv?map=/your/absolute/path/mapfile_calabria_base_small.map&mode=map&layer=Calabria_UTM33
+
+# or using QGIS
+http://localhost/wms/mapserv?map=/your/absolute/path/mapfile_calabria_base_small.map
+

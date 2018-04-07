@@ -1,0 +1,117 @@
+MAP
+  NAME "WMS"
+  # Map image size
+  SIZE 256 256
+  UNITS meters
+
+  EXTENT  300000 4072000 854000 4568000
+  FONTSET './font/font.txt'
+  SYMBOLSET './symbol/symbol.txt'
+  PROJECTION
+    'proj=utm'
+    'zone=33'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'units=m'
+    'no_defs'
+  END
+  
+  # aggiunto per WMSGetFeatureInfo :)
+  QUERYMAP
+   STATUS OFF # the map is queryable by default
+  END
+
+  # Background color for the map canvas -- change as desired
+  IMAGECOLOR 255 255 255
+  IMAGEQUALITY 100
+  IMAGETYPE png
+
+  OUTPUTFORMAT
+    NAME png
+    DRIVER 'AGG/PNG'
+    MIMETYPE 'image/png'
+    IMAGEMODE RGBA
+    EXTENSION 'png'
+	TRANSPARENT on
+  END
+  # Legend
+  LEGEND
+      IMAGECOLOR 255 255 255
+    STATUS ON
+    KEYSIZE 18 12
+    LABEL
+      TYPE BITMAP
+      SIZE MEDIUM
+      COLOR 0 0 0
+	  #MAXLENGTH 0
+	  #WRAP "\n"
+      #BUFFER 20
+      #OFFSET 0 33
+    END
+  END
+
+  # Web interface definition. Only the template parameter
+  # is required to display a map. See MapServer documentation
+  WEB
+    # Set IMAGEPATH to the path where MapServer should
+    # write its output.
+    IMAGEPATH '/tmp/'
+
+    # Set IMAGEURL to the url that points to IMAGEPATH
+    # as defined in your web server configuration
+    IMAGEURL '/tmp/'
+
+    # WMS server settings
+    METADATA
+      'ows_title'           'MAP'
+      #'ows_onlineresource'  'http://localhost/wms/mapserv?map=/path/to/mapfile_calabria.map'
+      'ows_srs'             'EPSG:32633'
+      'ows_enable_request'  '*' 
+       
+      # aggiunto peppelinux per WMSGetFeatureInfo :)
+      'wms_feature_info_mime_type' "text/html"
+      "wms_srs"             'EPSG:32633'
+      
+    END
+    
+      # aggiunto peppelinux per WMSGetFeatureInfo :)
+      HEADER "html_templates/header.html"
+      FOOTER "html_templates/footer.html"
+      EMPTY "html_templates/blank.html"
+      
+    #Scale range at which web interface will operate
+    # Template and header/footer settings
+    # Only the template parameter is required to display a map. See MapServer documentation
+    #TEMPLATE 'fooOnlyForWMSGetFeatureInfo'
+  END
+
+# inizio LAYERS
+  
+  LAYER
+    NAME 'Calabria_UTM33'
+    TYPE RASTER
+    
+    DATA './raster/Calabria_UTM33_small.tiff'
+    OFFSITE 61 81 102
+    METADATA
+        "wms_srs"             "EPSG:32633"
+        "wms_name"            "calabria"
+        "wms_server_version"  "1.1.1"
+        "wms_format"          "image/png"
+    END 
+    
+    STATUS OFF
+	#TRANSPARENCY 70
+    PROJECTION
+    'proj=utm'
+    'zone=33'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'units=m'
+    'no_defs'
+    END
+
+  END
+  # fine calabria_utm
+  
+END
