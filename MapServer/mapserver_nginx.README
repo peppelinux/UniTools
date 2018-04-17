@@ -1,5 +1,6 @@
 sudo apt-get install nginx
 sudo apt-get install spawn-fcgi
+sudo apt install cgi-mapserver mapserver-bin
 
 # add this location to your preferred nginx site
 
@@ -17,7 +18,9 @@ cp mapserver_fcgi /etc/init.d
 chmod 744 /etc/init.d/mapserver_fcgi
 
 # enable it in init
+systemctl enable mapserver_fcgi
 update-rc.d  mapserver_fcgi enable 2
+
 
 # run it
 /etc/init.d/mapserver_fcgi start
