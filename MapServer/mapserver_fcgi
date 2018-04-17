@@ -1,11 +1,13 @@
 #! /bin/sh
+### BEGIN INIT INFO
 # Provides:          Mapserver Service Manager
 # Required-Start:    $all
 # Required-Stop:
 # Default-Start:     2 3 4 5
 # Default-Stop:
 # Short-Description: Mapserver Service Manager
-##
+### END INIT INFO
+
 # processname: lt-mapserv
 # pidfile: /var/run/mapserv.pid
 # Source function library.
