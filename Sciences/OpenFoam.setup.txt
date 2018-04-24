@@ -10,3 +10,5 @@ sudo apt-get update
 sudo apt-get -y install openfoam5
 sudo apt-get install --only-upgrade openfoam5
 
+# abilitare l'environment Foam di default sul tuo utente
+echo ". /opt/openfoam5/etc/bashrc" >> ~/.bashrc
