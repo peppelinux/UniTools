@@ -1,4 +1,4 @@
-# OpenFoam 16.04 LTS
+# OpenFoam5 on Ubuntu 16.04 LTS
 # install: 
 # http://cdimage.ubuntu.com/ubuntu-mate/releases/16.04.4/release/ubuntu-mate-16.04.4-desktop-amd64.iso
 
