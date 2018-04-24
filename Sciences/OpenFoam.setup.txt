@@ -1,0 +1,12 @@
+# OpenFoam 16.04 LTS
+# install: 
+# http://cdimage.ubuntu.com/ubuntu-mate/releases/16.04.4/release/ubuntu-mate-16.04.4-desktop-amd64.iso
+
+sudo add-apt-repository http://dl.openfoam.org/ubuntu
+sudo sh -c "wget -O - http://dl.openfoam.org/gpg.key | apt-key add -"
+
+sudo apt-get update
+
+sudo apt-get -y install openfoam5
+sudo apt-get install --only-upgrade openfoam5
+
