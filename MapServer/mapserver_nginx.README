@@ -15,7 +15,7 @@ sudo apt install cgi-mapserver mapserver-bin
 # copy mapserver_fcgi in /etc/init.d/
 
 cp mapserver_fcgi /etc/init.d
-chmod 744 /etc/init.d/mapserver_fcgi
+chmod 644 /etc/init.d/mapserver_fcgi
 
 # enable it in init
 systemctl enable mapserver_fcgi
