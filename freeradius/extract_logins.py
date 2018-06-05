@@ -17,6 +17,7 @@ STRPTIME_FORMAT = '%a %b %d %H:%M:%S %Y'
 
 # it's global... I needed it in a hurry
 distinct_logins = []
+failed_logins = []
 
 def extract(fpath, parse_datetime=False, debug=False):
     lista_logins = []
@@ -40,6 +41,7 @@ def extract(fpath, parse_datetime=False, debug=False):
                 }
         except Exception as e:
             print('Error {} on: "{}"\n'.format(e, line))
+            failed_logins.append(line)
             continue
         if parse_datetime and d['datetime']:
             d['datetime'] = datetime.datetime.strptime(d['datetime'], STRPTIME_FORMAT)
