@@ -15,6 +15,7 @@ _regexp_macaddr = r'([0-9a-z]{2}[-:]*[0-9a-z]{2}[-:]*[0-9a-z]{2}[-:]*[0-9a-z]{2}
 
 STRPTIME_FORMAT = '%a %b %d %H:%M:%S %Y'
 
+# it's global... I needed it in a hurry
 distinct_logins = []
 
 def extract(fpath, parse_datetime=False, debug=False):
