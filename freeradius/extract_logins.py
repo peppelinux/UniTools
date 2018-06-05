@@ -30,21 +30,21 @@ def extract(fpath, parse_datetime=False, debug=False):
     while 1:
         line = f.readline()
         if not line: break
-        # try:
-        d = {
-            'datetime': re.findall(_dt, line),
-            'login': re.findall(_login, line),
-            'client': re.findall(_client, line),
-            'macaddr': re.findall(_macaddr, line),
-            }
-        # except Exception as e:
-            # print('Error {} on: "{}"\n'.format(e, line))
-            # continue
+        try:
+            d = {
+                'datetime': re.findall(_dt, line)[0],
+                'login': re.findall(_login, line)[0],
+                'client': re.findall(_client, line)[0],
+                'macaddr': re.findall(_macaddr, line)[0],
+                }
+        except Exception as e:
+            print('Error {} on: "{}"\n'.format(e, line))
+            continue
         if parse_datetime and d['datetime']:
-            d['datetime'] = datetime.datetime.strptime(d['datetime'][0], STRPTIME_FORMAT)
+            d['datetime'] = datetime.datetime.strptime(d['datetime'], STRPTIME_FORMAT)
         lista_logins.append(d)
-        if d['login'][0] not in distinct_logins:
-            distinct_logins.append(d['login'][0])
+        if d['login'] not in distinct_logins:
+            distinct_logins.append(d['login'])
         if debug > 0:
             cnt += 1
             print(cnt)
@@ -55,4 +55,6 @@ def extract(fpath, parse_datetime=False, debug=False):
     return lista_logins
 
 
-result = extract(fpath='radius.logins.unified.log', parse_datetime=True)
+result = extract(fpath='radius.logins.unified.log',
+                 parse_datetime=True,
+                 debug=1)
