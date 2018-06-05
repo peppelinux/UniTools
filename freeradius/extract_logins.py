@@ -26,6 +26,7 @@ def extract(fpath, parse_datetime=False, debug=False):
     _login = re.compile(_regexp_login, re.I)
     _client = re.compile(_regexp_client, re.I)
     _macaddr = re.compile(_regexp_macaddr, re.I)
+    
     if debug > 0: cnt = 1
     while 1:
         line = f.readline()
@@ -50,10 +51,8 @@ def extract(fpath, parse_datetime=False, debug=False):
             print(cnt)
         if debug > 1:
             print(d)
-        
     f.close()
     return lista_logins
-
 
 result = extract(fpath='radius.logins.unified.log',
                  parse_datetime=True,
