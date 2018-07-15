@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# example
+# bash dns_check.sh unical.it ccuws1.unical.it
+# get soa 
+# host -t soa unical.it
+
 # MUL_FACTOR is sized on hours ((x / minutes /) hours)
 MUL_FACTOR=0.0002777777777777778
 
