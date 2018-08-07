@@ -1,3 +1,4 @@
+
 #!/bin/bash
 
 # https://blog.khophi.co/django-management-commands-via-cron/
@@ -14,18 +15,16 @@ FNAME="peo.$(date +"%Y-%m-%d_%H:%M:%S")"
 
 # JSON dump, encrypt and compress
 ./manage.py dumpdata --exclude auth.permission --exclude contenttypes --exclude csa --indent 2 | \
-openssl enc -aes-256-cbc -pass pass:$PASSWORD | \
-gzip > $BACKUP_DIR_JSON/$FNAME.json.aes.gz
+gzip | \
+openssl enc -aes-256-cbc -pass pass:$PASSWORD > $BACKUP_DIR_JSON/$FNAME.json.gz.aes
 
 # JSON decrypt json example
-# gzip -d $BACKUP_DIR/$FNAME.json.aes.gz
-# openssl enc -in $BACKUP_DIR_JSON/$FNAME.json.aes -d -aes-256-cbc -pass pass:$PASSWORD
+# openssl enc -in $BACKUP_DIR_JSON/$FNAME.json.gz.aes -d -aes-256-cbc -pass pass:$PASSWORD | gzip -d -
 
 # SQL dump, encrypt and compress
 mysqldump -u $USERNAME --password=$PASSWORD $DB | \
-openssl enc -aes-256-cbc -pass pass:$PASSWORD | \
-gzip > $BACKUP_DIR_SQL/$FNAME.sql.aes.gz
+gzip | \
+openssl enc -aes-256-cbc -pass pass:$PASSWORD > $BACKUP_DIR_SQL/$FNAME.sql.gz.aes
 
 # to decompress ont of them
-# first decompress with gzip, then:
-# openssl enc -in $FILENAME -d -aes-256-cbc -pass pass:$PASSWORD
+# openssl enc -in $FILENAME -d -aes-256-cbc -pass pass:$PASSWORD | gzip -d -
