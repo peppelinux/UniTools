@@ -1,0 +1,7 @@
+````
+cp /lib/systemd/system/php7.0-fpm.service /etc/systemd/system/
+vi /etc/systemd/system/php7.0-fpm.service
+Add: UMask=0002 in [Service] section.
+systemctl daemon-reload
+systemctl restart php7.0-fpm
+````
