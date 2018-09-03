@@ -1,9 +1,4 @@
 #!/usr/bin/env python3
-
-"""
-
-"""
-
 __version__ = "1.0"
 __author__ = "Giuseppe De Marco (giuseppe.demarco@unical.it)"
 __copyright__ = "(C) 2018 Giuseppe De Marco. GNU GPL 2."
