@@ -1,0 +1,14 @@
+# http://ximunix.blogspot.com/2013/08/hp-toolsfirmware-for-proliantdebian.html 
+
+# this will not works
+# wget http://downloads.linux.hpe.com/SDR/add_repo.sh
+# chmod +x add_repo.sh
+#./add_repo.sh mcp -d stretch
+# wget http://downloads.linux.hpe.com/SDR/repo/mcp/GPG-KEY-mcp -O - | apt-key add -
+
+wget -qO - https://deb.opera.com/archive.key | sudo apt-key add -
+
+echo "deb http://downloads.linux.hpe.com/SDR/repo/mcp/Debian stretch/current non-free" >> /etc/apt/sources.list
+
+apt update
+
