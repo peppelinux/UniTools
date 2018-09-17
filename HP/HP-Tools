@@ -12,3 +12,5 @@ echo "deb http://downloads.linux.hpe.com/SDR/repo/mcp/Debian stretch/current non
 
 apt update
 
+# ilo mngmt shell
+apt install hponcfg
