@@ -1,6 +1,6 @@
 ````
 # check nginx have geoip support
-nginx -v | grep nginx
+nginx -v | grep geoip
 
 # this should be scheduled once per week:
 wget -O - http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz | gunzip -c > /opt/GeoIPdb/GeoIP.dat
