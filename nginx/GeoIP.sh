@@ -23,4 +23,4 @@ wget -O - http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoI
 
 # then reload service
 /etc/init.d/nginx reload
-
+````
