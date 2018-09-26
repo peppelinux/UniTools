@@ -10,8 +10,8 @@ wget -O - http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoI
 cat << EOF > /etc/nginx/conf.d/geoip.conf
     # geoip filter
     geoip_country /opt/GeoIPdb/GeoIP.dat;
-    map $geoip_country_code $allowed_country {
-        #default no;
+    map \$geoip_country_code \$allowed_country {
+        default no;
         IT yes;
     }
 EOF
