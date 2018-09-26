@@ -7,14 +7,16 @@ wget -O - http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoI
 # otherwise per City: http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz
 
 
-# then add this to your nginx configuration (default or site)
+cat << EOF > /etc/nginx/conf.d/geoip.conf
     # geoip filter
     geoip_country /opt/GeoIPdb/GeoIP.dat;
     map $geoip_country_code $allowed_country {
         #default no;
         IT yes;
     }
+EOF
 
+# then add this to your site configuration
     if ($allowed_country = no) {
         return 444;
     }
