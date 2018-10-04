@@ -1,6 +1,9 @@
 Some usefull notes about hashing function with openssl (and more)
 ----------------------------------------------------------------------
 
+Usefull resources:
+ - https://wiki.openssl.org/index.php/Command_Line_Utilities
+
 Note: append `awk -F'= ' {'print $2'}` in a trailing pipe to filter out the hash without line header.
 
 MD5
