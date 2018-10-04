@@ -32,6 +32,19 @@ Xpath command local test: example here.
 </document>
 
 /document/linkList[@name = 'A']/document
+
+
+# by element name
+<document>
+  <item_0001>Erstes Element</item_0001>
+  <item_0002>Zweites Element</item_0002>
+  <item_0003>Drittes Element</item_0003>
+  <item_0004>Viertes Element</item_0004>
+  <other_0001>Erstes Element</other_0001>
+  <other_0002>Zweites Element</other_0002>
+</document>
+
+document/*[starts-with(local-name(), 'item')]
 ````
 
 ### Merging character strings
