@@ -6,6 +6,8 @@ Resources:
 
 Todo:
  - following-sibling::product -> Da studiare in contesto globale
+ - following-sibling::product[@category = 1] -> "
+ - 
 
 Xpath command local test: example here.
 
@@ -87,6 +89,68 @@ persons/person[string-length(@firstName) <= 5]
 sum(numbers/number[round(.) = 34])
 ````
 
-### ...
+### Attribute selection with namespaces
+````
+<document xmlns:xlink="http://www.w3.org/1999/xlink">
+  <reference xlink:href="http://www.google.de/" />
+</document>
 
+# having x as prefix for the XPath-expression for "http://www.google.de/" value
+/document/reference/@x:href
 
+# selecting all the links
+<document id="1">
+  <content>
+    <html xmlns="http://www.w3.org/1999/xhtml">
+      <head>
+      </head>
+      <body>
+        <div>
+          <ul>
+            <li><a href="http://www.google.de/">http://www.google.de/">Google</a>
+              <ul>
+                  <li><a href="http://earth.google.de/">Google Earth</a></li>
+                  <li><a href="http://picasa.google.de/intl/de/">Picasa</a></li>
+              </ul>
+            </li> 
+            <li><a href="http://www.heise.de/">http://www.heise.de/">Heise</a></li> 
+            <li><a href="http://www.yahoo.de/">http://www.yahoo.de/">Yahoo</a></li> 
+          </ul>
+        </div>
+        <div>
+        <ul>
+            <li><a href="http://www.google.de/">http://www.google.de/Google</a>
+              <ul>
+                <li><a href="http://earth.google.de/">Google Earth</a></li>
+                <li><a href="http://picasa.google.de/intl/de/">Picasa</a></li>
+              </ul>
+            </li> 
+            <li><a href="http://www.heise.de/">Heise</a></li> 
+            <li><a href="http://www.yahoo.de/">Yahoo</a></li> 
+          </ul>
+        </div>
+      </body>
+    </html>
+  </content>
+  <teaser>
+    <html xmlns="http://www.w3.org/1999/xhtml">
+      <head>
+      </head>
+      <body>
+        <div>
+          <ul>
+            <li><a href="http://www.google.de/">http://www.google.de/">Google</a></li>
+          </ul>
+        </div>
+      </body>
+    </html> 
+  </teaser>
+</document>
+
+/document/content//x:a
+
+# filter only with this filter
+/document/content//x:a[contains(@href, 'google')]
+````
+
+### 
