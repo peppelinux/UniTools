@@ -29,11 +29,14 @@ Xpath command local test: example here.
 /document/linkList[@name = 'A']/document
 ````
 
-### Attribute selection
+### Merging character strings
 ````
-<document name="getit Übungsaufgaben" />
+<person>
+  <lastName>Peter</lastName>
+  <firstName>Hans</firstName>
+</person>
 
-/document/@name
+concat(person/lastName, ', ', person/firstName)
 ````
 
 ### Attribute selection
