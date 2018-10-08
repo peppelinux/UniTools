@@ -50,5 +50,15 @@ echo -n 'secretword' | openssl des-ecb -K 73756b61 | base64
 
 # des-cbc with IV
 echo -n 'secretword' | openssl des-cbc -K 73756b61 -iv 6475 | base64 
+
+# Triple-des
+echo -n 'secretword' | openssl des3 -K 73756b61 -iv 6475 | base64 
+````
+
+AES
+---
+See also [here](https://github.com/peppelinux/UniTools/blob/master/OpenSSL/AES-CBC-encrypt_file.sh)
+````
+echo -n 'secretword' | openssl aes-256-cbc -K 73756b61 -iv 6475 | base64 
 ````
 
