@@ -33,3 +33,16 @@ example:
 openssl sha1 filename
 echo -n 'secretword' | openssl sha1
 ````
+
+DES
+---
+
+What's this.
+How it works.
+
+example:
+````
+openssl des -in Scaricati/README.md -out Scaricati/README.md.des
+echo -n 'secretword' | openssl des | base64 
+````
+
