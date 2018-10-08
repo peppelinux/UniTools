@@ -34,6 +34,13 @@ openssl sha1 filename
 echo -n 'secretword' | openssl sha1
 ````
 
+RC4
+---
+
+````
+echo -n 'secretword' | openssl rc4 -K 73756b61  | base64 
+````
+
 DES
 ---
 
