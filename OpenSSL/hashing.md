@@ -44,5 +44,11 @@ example:
 ````
 openssl des -in Scaricati/README.md -out Scaricati/README.md.des
 echo -n 'secretword' | openssl des | base64 
+
+# des-ecb with inline Key (iv not needed)
+echo -n 'secretword' | openssl des-ecb -K 73756b61 | base64
+
+# des-cbc with IV
+echo -n 'secretword' | openssl des-cbc -K 73756b61 -iv 6475 | base64 
 ````
 
