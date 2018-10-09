@@ -6,7 +6,7 @@ Usable only with JPEG files.
 sudo apt install steghide
 
 # use a secret here
-steghide embed -cf tesla.jpg -ef text_to_include.txt 
+steghide embed -cf tesla.jpg -ef text_to_include.txt -sf outimg.jpg
 
 # then use the same secret
 steghide extract -sf tesla.jpg
