@@ -1,5 +1,6 @@
 Steghide example
 ----------------
+Usable only with JPEG files.
 
 ````
 sudo apt install steghide
