@@ -25,8 +25,14 @@ qemu-img info --backing-chain disk
 # rebase a qcow image
 qemu-img rebase -f qcow2 -u -b ./backing disk
 
+# testing it as it come
+qemu-system-x86_64 -hda disk.img -boot d  -m 1024 -cdrom /path/to/boot-media.iso
+
 # mount con qemu-nbd
 qemu-nbd --connect=/dev/nbd0 disk
+
+# disconnect
+qemu-nbd -d /dev/nbd0
 
 #####################################
 # attach Vbox image as physical disk
