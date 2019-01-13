@@ -5,6 +5,7 @@ Test your browser
 - https://browserprint.info/
 - http://useragentstring.com/
 - https://amiunique.org/fp
+- https://headers.cloxy.net/request.php
 
 Additional resources
 --------------------
