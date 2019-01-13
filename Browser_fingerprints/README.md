@@ -50,6 +50,10 @@ Javascript blocker:
 - ScriptSafe addon
 - NoScript addon
 
+HTTP headers modifier:
+- ModHeader addon: https://addons.mozilla.org/en-US/firefox/addon/modheader-firefox/?src=search
+- privoxy proxy server
+
 Hack tools
 ----------
 Python script that generates user_agents profiles. Good code to push random user agents profiles through privoxy.
