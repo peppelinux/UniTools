@@ -38,7 +38,11 @@ Random browser useragent:
   Source code: https://github.com/tarampampam/random-user-agent
 
 Browser Proxy profiles manager/switcher:
-- FoxyProxy
+- FoxyProxy addon
+
+Javascript blocker:
+- ScriptSafe addon
+- NoScript addon
 
 Hack tools
 ----------
@@ -63,4 +67,3 @@ headers = {'User-Agent': str(ua.random)}
 response = requests.get(url, headers=headers)
 print(response.content)
 ````
-
