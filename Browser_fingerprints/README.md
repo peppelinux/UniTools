@@ -32,6 +32,10 @@ Countermeasures
 Canvas:
 - Canvas defender addon with 1 minut noise autogeneration (see coniguration)
 
+Random browser useragent:
+- https://chrome.google.com/webstore/detail/random-user-agent/einpaelgookohagofgnnkcfjbkkgepnp
+  Source code: https://github.com/tarampampam/random-user-agent
+
 Hack tools
 ----------
 Python script that generates user_agents profiles. Good code to push random user agents profiles through privoxy.
