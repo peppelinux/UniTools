@@ -18,6 +18,7 @@ https://www.fastly.com/blog/understanding-vary-header-browser
 
 UserAgents collections:
 - https://developers.whatismybrowser.com/useragents/explore/
+- https://techblog.willshouse.com/2012/01/03/most-common-user-agents/
 
 Canvas focused
 -------------
