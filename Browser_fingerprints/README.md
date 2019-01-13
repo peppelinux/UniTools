@@ -5,7 +5,7 @@ Test your browser
 - https://browserprint.info/
 - http://useragentstring.com/
 - https://amiunique.org/fp
-- http://uniquemachine.org/
+- http://uniquemachine.org/ (GPU fingerprint test)
 - https://headers.cloxy.net/request.php
 
 Additional resources
