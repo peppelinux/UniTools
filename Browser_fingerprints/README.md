@@ -32,10 +32,14 @@ echo 0 > /proc/sys/net/ipv4/tcp_timestamps
 Countermeasures
 ---------------
 
+Tor Browser: 
+Eludes X-Forward-For via TOR NAT, enable NoScript and HTTPS Everywhere.
+- https://www.torproject.org/projects/torbrowser.html#downloads
+
 Canvas:
 - Canvas defender addon with 1 minut noise autogeneration (see coniguration)
 
-Random browser useragent:
+Random browser useragent (Tor browser compatible):
 - https://chrome.google.com/webstore/detail/random-user-agent/einpaelgookohagofgnnkcfjbkkgepnp
   Source code: https://github.com/tarampampam/random-user-agent
 
