@@ -7,6 +7,7 @@ Test your browser
 - https://amiunique.org/fp
 - http://uniquemachine.org/ (GPU fingerprint test)
 - https://headers.cloxy.net/request.php
+- http://gs.statcounter.com/detect (screen size debug)
 
 Additional resources
 --------------------
