@@ -15,6 +15,9 @@ https://amiunique.org/tools
 https://medium.com/@ravielakshmanan/web-browser-uniqueness-and-fingerprinting-7eac3c381805
 https://www.fastly.com/blog/understanding-vary-header-browser
 
+UserAgents collections:
+- https://developers.whatismybrowser.com/useragents/explore/
+
 Canvas focused
 -------------
 https://multilogin.com/how-canvas-fingerprint-blockers-make-you-easily-trackable/
