@@ -37,6 +37,9 @@ Random browser useragent:
 - https://chrome.google.com/webstore/detail/random-user-agent/einpaelgookohagofgnnkcfjbkkgepnp
   Source code: https://github.com/tarampampam/random-user-agent
 
+Browser Proxy profiles manager/switcher:
+- FoxyProxy
+
 Hack tools
 ----------
 Python script that generates user_agents profiles. Good code to push random user agents profiles through privoxy.
