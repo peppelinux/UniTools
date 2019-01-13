@@ -4,6 +4,7 @@ Test your browser
 - https://panopticlick.eff.org
 - https://browserprint.info/
 - http://useragentstring.com/
+- https://amiunique.org/fp
 
 Additional resources
 --------------------
