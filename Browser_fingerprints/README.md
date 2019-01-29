@@ -11,12 +11,12 @@ Test your browser
 
 Additional resources
 --------------------
-https://pixelprivacy.com/resources/browser-fingerprinting/
-https://amiunique.org/tools
-https://medium.com/@ravielakshmanan/web-browser-uniqueness-and-fingerprinting-7eac3c381805
-https://www.fastly.com/blog/understanding-vary-header-browser
-https://github.com/brave/browser-laptop/wiki/Fingerprinting-Protection-Mode (important)
-https://restoreprivacy.com/browser-fingerprinting/
+- https://pixelprivacy.com/resources/browser-fingerprinting/
+- https://amiunique.org/tools
+- https://medium.com/@ravielakshmanan/web-browser-uniqueness-and-fingerprinting-7eac3c381805
+- https://www.fastly.com/blog/understanding-vary-header-browser
+- https://github.com/brave/browser-laptop/wiki/Fingerprinting-Protection-Mode (important)
+- https://restoreprivacy.com/browser-fingerprinting/
 
 UserAgents collections:
 - https://developers.whatismybrowser.com/useragents/explore/
@@ -24,7 +24,7 @@ UserAgents collections:
 
 Canvas focused
 -------------
-https://multilogin.com/how-canvas-fingerprint-blockers-make-you-easily-trackable/
+- https://multilogin.com/how-canvas-fingerprint-blockers-make-you-easily-trackable/
 
 
 Made Linux act as Windows
