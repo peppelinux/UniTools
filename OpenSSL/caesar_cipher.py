@@ -44,7 +44,7 @@ def get_shifted(offset, char_map=ord_map(), reverse=False):
     return shifted_ord_chars
 
 
-def cript(text, secret):
+def crypt(text, secret):
     enc_map = get_shifted(secret)
     l = [ord_map(reverse=1)[p] for p in [enc_map[i] for i in text_to_enc]]
     return ''.join(l)
@@ -60,7 +60,7 @@ if __name__ == '__main__':
     text = "Frasi sconcie ma che facciano ridere, tipo 'vulva'."
     secret = -5
 
-    enc_text = cript(text, secret)
+    enc_text = crypt(text, secret)
     print(enc_text)
 
     dec_text = decrypt(enc_text, secret)
