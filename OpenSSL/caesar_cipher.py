@@ -1,12 +1,28 @@
 import string
 
+
 def reverse_dict(d):
     r = {}
     for k,v in d.items():
         r[v] = k
     return r
 
-def ord_map(letters = string.printable, reverse=False):
+
+def simplify_n(number, max_n):
+    """
+    this should simply or adapt secret numbers
+    """
+    n = abs(number)
+    while max_n % n:
+        if n - max_n < 0:
+            return n
+        n -= max_n
+    if number < 0:
+        return -n
+    return n
+
+
+def ord_map(letters=string.printable, reverse=False):
     """letters is upper and lower case ascii by default"""
     ord_chars = dict()
     for char in letters:
@@ -16,20 +32,16 @@ def ord_map(letters = string.printable, reverse=False):
     return ord_chars
 
 
-def get_shifted(offset, chars, reverse=False):
+def get_shifted(offset, chars=string.printable, reverse=False):
     """
     offset can be negative or positive integer
-    char_map is ascii mapped to numbers by default
+    char_map is the char table
     """
     assert isinstance(offset, int)
     char_map = ord_map(chars)
     len_char_map = len(char_map)
     char_n_list = sorted(list(char_map.values()))
-
-    bound = int(len_char_map)
-    if abs(offset) > bound:
-        # raise ValueError('offset must be lower than {}'.format(bound))
-        offset = offset - int(len_char_map)
+    offset = simplify_n(offset, len(chars))
     shifted_ord_chars = dict()
     for char,number in char_map.items():
         shifted_pos = char_n_list.index(number) + offset
@@ -46,7 +58,7 @@ def get_shifted(offset, chars, reverse=False):
     return shifted_ord_chars
 
 
-def crypt(text, secret, chars):
+def crypt(text, secret, chars=string.printable):
     enc_map = get_shifted(secret, ord_map(chars))
     try:
         l = [ord_map(chars, reverse=1)[p] for p in [enc_map[i] for i in text]]
@@ -56,7 +68,7 @@ def crypt(text, secret, chars):
     return ''.join(l)
 
 
-def decrypt(text, secret, chars):
+def decrypt(text, secret, chars=string.printable):
     enc_map = get_shifted(secret, chars, reverse=1)
     l = [enc_map[ord(i)] for i in text]
     return ''.join(l)
