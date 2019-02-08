@@ -46,7 +46,7 @@ def get_shifted(offset, char_map=ord_map(), reverse=False):
 
 def crypt(text, secret):
     enc_map = get_shifted(secret)
-    l = [ord_map(reverse=1)[p] for p in [enc_map[i] for i in text_to_enc]]
+    l = [ord_map(reverse=1)[p] for p in [enc_map[i] for i in text]]
     return ''.join(l)
 
 
