@@ -1,12 +1,10 @@
 import string
 
-
 def reverse_dict(d):
     r = {}
     for k,v in d.items():
         r[v] = k
     return r
-
 
 def simplify_n(number, max_n):
     """
@@ -21,7 +19,6 @@ def simplify_n(number, max_n):
         return -n
     return n
 
-
 def ord_map(letters=string.printable, reverse=False):
     """letters is upper and lower case ascii by default"""
     ord_chars = dict()
@@ -30,7 +27,6 @@ def ord_map(letters=string.printable, reverse=False):
     if reverse:
         return reverse_dict(ord_chars)
     return ord_chars
-
 
 def get_shifted(offset, chars=string.printable, reverse=False):
     """
@@ -57,7 +53,6 @@ def get_shifted(offset, chars=string.printable, reverse=False):
         return reverse_dict(shifted_ord_chars)
     return shifted_ord_chars
 
-
 def crypt(text, secret, chars=string.printable):
     enc_map = get_shifted(secret, ord_map(chars))
     try:
@@ -66,7 +61,6 @@ def crypt(text, secret, chars=string.printable):
         print(e)
         raise ValueError('element not available in char map')
     return ''.join(l)
-
 
 def decrypt(text, secret, chars=string.printable):
     enc_map = get_shifted(secret, chars, reverse=1)
