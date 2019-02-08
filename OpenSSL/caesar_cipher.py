@@ -1,10 +1,7 @@
 import string
 
 def reverse_dict(d):
-    r = {}
-    for k,v in d.items():
-        r[v] = k
-    return r
+    return {v:k for k,v in d.items()}
 
 def simplify_n(number, max_n):
     """
