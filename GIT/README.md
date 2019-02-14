@@ -54,6 +54,31 @@ git branch -D master
 git branch -m master
 git push -f origin master
 ````
+
+#### rebase
+````
+git log
+git rebase -i  cd18ce4a1c4a464382a7e16f4c0d138e6ac17db8
+# pick in the high lines, squash of fixup in the lower with an editor like nano/vi or whatever
+
+git status
+
+# fix some definitions
+git rebase --edit-todo
+
+# c'mon
+git commit --amend
+
+git push
+
+# put squash or fixup inot desidered lines
+# git checkout master
+# git push
+
+# if something goes wrong and you want to reset all
+rm -fr .git/rebase-merge
+````
+
 #### change repository origin
 This is usefull if you want to change your remote repository from one to another
 ````
