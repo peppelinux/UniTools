@@ -37,6 +37,7 @@ java
 js
 - https://github.com/web-eid/web-eid.js
 - http://kjur.github.io/jsrsasign/
+- https://github.com/hwcrypto/hwcrypto.js
 
 normativa
 - http://www.agid.gov.it/agenda-digitale/infrastrutture-architetture/il-regolamento-ue-ndeg-9102014-eidas
