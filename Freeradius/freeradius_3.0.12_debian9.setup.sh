@@ -79,6 +79,9 @@ make server.pem
 make server.csr
 make client.pem
 
+# check
+ openssl x509 -in ca.pem -text -noout
+
 cd $RADCONFD
 echo "restore mysql schema from"
 find . -type f | grep schema.sql  | grep mysql | grep main | grep -v extras
