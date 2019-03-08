@@ -89,6 +89,10 @@ openssl x509 -in ca.pem -text -noout
 chmod g+r /etc/freeradius/3.0/certs/server.key
 chmod g+r /etc/freeradius/3.0/certs/server.pem
 
+# if letsencrypt...
+# private_key_file = ${certdir}/letsencrypt/privkey.pem
+# certificate_file = ${certdir}/letsencrypt/fullchain.pem
+
 cd $RADCONFD
 echo "restore mysql schema from"
 find . -type f | grep schema.sql  | grep mysql | grep main | grep -v extras
