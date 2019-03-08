@@ -80,7 +80,14 @@ make server.csr
 make client.pem
 
 # check
- openssl x509 -in ca.pem -text -noout
+openssl x509 -in ca.pem -text -noout
+
+# configure them to /etc/freeradius/3.0/mods-enabled/eap
+# private_key_password = pass_configured_in_server.cnf
+# private_key_file = ${certdir}/server.key
+# certificate_file = ${certdir}/server.pem
+chmod g+r /etc/freeradius/3.0/certs/server.key
+chmod g+r /etc/freeradius/3.0/certs/server.pem
 
 cd $RADCONFD
 echo "restore mysql schema from"
