@@ -90,6 +90,23 @@ git config master.remote origin
 git config master.merge refs/heads/master
 git push --set-upstream origin master
 ````
+
+#### create a branch, pushing it, destroy locally and remotely
+````
+# do uncommited changments, then move them to a separate branch called dev
+git checkout -b dev
+# push changes into remote branch
+git push origin dev
+# returns to master
+git checkout master
+
+# destroy local branch
+git branch -d dev
+
+# destroy remote branch
+git push origin --delete dev
+````
+
 #### store credentials
 It happens to write too much your login/password for a push.
 This could help us to write some less digits... sometimes!
