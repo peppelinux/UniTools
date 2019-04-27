@@ -111,3 +111,13 @@ cmake  -DCMAKE_BUILD_TYPE=Release   \
 make
 `````
 
+Risorse PaaS
+------------
+
+- https://smallpdf.com
+- https://esignatures.io/
+- https://onlinesignature.com/it/
+- https://www.4identity.eu/home.php
+- https://developers.docusign.com/esign-rest-api/code-examples/quickstart-request-signature-embedded
+- http://blog.signnow.com/category/technology/
+- https://oneflow.com/product/e-sign/
