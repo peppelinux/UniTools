@@ -1,0 +1,5 @@
+- https://github.com/JungDev/django-telegrambot
+- https://github.com/jlmadurga/django-telegram-bot
+- https://medium.com/@khannashrey07/how-i-made-the-pizza-order-bot-for-telegram-4e8a8b6b3922
+- https://stackoverflow.com/questions/51125356/proper-way-to-build-menus-with-python-telegram-bot
+- https://github.com/python-telegram-bot/python-telegram-bot/wiki/Code-snippets#send-a-chat-action
