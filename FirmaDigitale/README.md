@@ -111,6 +111,23 @@ cmake  -DCMAKE_BUILD_TYPE=Release   \
 make
 `````
 
+Altrimenti `apt install poppler-utils`.
+
+ * pdfdetach -- elenca o estrae file inclusi (allegati),
+ * pdffonts -- analizzatore di tipi di carattere,
+ * pdfimages -- estrattore di immagini,
+ * pdfinfo -- informazioni su documenti,
+ * pdfseparate -- strumento di estrazione di pagine,
+ * pdfsig -- verifica firme digitali,
+ * pdftocairo -- convertitore da PDF a PNG/JPEG/PDF/PS/EPS/SVG che usa
+   Cairo,
+ * pdftohtml -- convertitore da PDF a HTML,
+ * pdftoppm -- convertitore di PDF in immagini PPM/PNG/JPEG,
+ * pdftops -- convertitore da PDF a PostScript (PS),
+ * pdftotext -- estrattore di testo,
+ * pdfunite -- strumento di unione di documenti.
+
+
 Risorse PaaS
 ------------
 
