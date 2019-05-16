@@ -24,6 +24,7 @@ NB: DER is binary format, its structure is called ASN.1. PEM format is Base64 en
 - https://stackoverflow.com/questions/10782826/digital-signature-for-a-file-using-openssl
 - https://www.zimuel.it/blog/sign-and-verify-a-file-using-openssl
 - http://qistoph.blogspot.it/2012/01/manual-verify-pkcs7-signed-data-with.html
+- https://quoll.it/firma-digitale-p7m-come-estrarre-il-contenuto/
 
 bash
 - https://github.com/eniocarboni/p7m.git
