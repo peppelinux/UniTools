@@ -25,6 +25,9 @@ NB: DER is binary format, its structure is called ASN.1. PEM format is Base64 en
 - https://www.zimuel.it/blog/sign-and-verify-a-file-using-openssl
 - http://qistoph.blogspot.it/2012/01/manual-verify-pkcs7-signed-data-with.html
 
+bash
+- https://github.com/eniocarboni/p7m.git
+
 java
 - https://github.com/esig/
 - http://wiki.cacert.org/PdfSigning
@@ -68,6 +71,9 @@ openssl smime -verify -noverify -in documento.pdf.p7m -inform DER -out documento
 
 # Per estrarre il certificato digitale personale di chi ha firmato basta usare openssl con il comando
 openssl pkcs7 -inform DER -in documento.pdf.p7m -print_certs -out cert.pem
+
+# print
+openssl pkcs7 -inform DER -in DelegaDeMarcoIdem.pdf.p7m  -print_certs
 ````
 
 Binwalk, dice sempre la verità
