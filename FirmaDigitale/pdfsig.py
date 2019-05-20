@@ -1,7 +1,11 @@
+#!/usr/bin/env python3
+
+import io
 import json
 import re
 import os
 import subprocess
+import tempfile
 
 from collections import OrderedDict
 
@@ -73,6 +77,25 @@ def get_p7m_signatures(fname, only_valids=False):
     return [d]
 
 
+def get_signatures(fname, type='pdf', only_valids=False):
+    if type == 'pdf':
+        func_name = get_pdf_signatures
+    elif type == 'p7m':
+        func_name = get_p7m_signatures
+    else:
+        raise Exception('File format {} not supported'.format(args.t))
+
+    tfile = fname
+    # check if the file is a string (path to it) or a buffered io objects (with or open())
+    if isinstance(fname, io.BufferedReader):
+        temp_file = tempfile.NamedTemporaryFile()
+        temp_file.write(fname.read())
+        temp_file.flush()
+        tfile = temp_file.name
+
+    return func_name(tfile, only_valids)
+
+
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser()
@@ -84,11 +107,6 @@ if __name__ == '__main__':
                         help="file format: pdf or p7m")
     args = parser.parse_args()
 
-    if args.t == 'pdf':
-        func_name = get_pdf_signatures
-    elif args.t == 'p7m':
-        func_name = get_p7m_signatures
-    else:
-        raise Exception('File format {} not supported'.format(args.t))
-
-    print(json.dumps(func_name(args.f, args.v), indent=2))
+    print(json.dumps(get_signatures(args.f,
+                                    type=args.t,
+                                    only_valids=args.v), indent=2))
