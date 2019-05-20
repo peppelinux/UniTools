@@ -75,6 +75,14 @@ openssl pkcs7 -inform DER -in documento.pdf.p7m -print_certs -out cert.pem
 
 # print
 openssl pkcs7 -inform DER -in DelegaDeMarcoIdem.pdf.p7m  -print_certs
+
+# analizy asn1 fields
+openssl asn1parse -in Scrivania/DelegaDeMarcoIdem.pdf.p7m -inform DER [-i]
+
+# get only signer and issuer
+openssl pkcs7 -inform DER -in Scrivania/DelegaDeMarcoIdem.pdf.p7m -print_certs -noout
+
+
 ````
 
 Binwalk, dice sempre la verità
