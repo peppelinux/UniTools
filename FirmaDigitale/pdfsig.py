@@ -1,5 +1,3 @@
-#/usr/bin/env python3
-
 import json
 import re
 import os
@@ -7,12 +5,10 @@ import subprocess
 
 from collections import OrderedDict
 
-
 if os.system('pdfsig -v') != 0:
     raise Exception(('pdfsig is not installed.'
                      'Please install poppler or poppler-utils'))
 
-_FNAME = "/home/wert/Scrivania/Modello 04-Richiesta_Registrazione_DNS04_v2_signable.pdf"
 _ATTRIBUTES = ['Signature Type',
                'Signature Validation',
                'Signer Certificate Common Name',
@@ -20,8 +16,7 @@ _ATTRIBUTES = ['Signature Type',
                'Signing Hash Algorithm',
                'Signing Time']
 
-
-def get_signatures(fname, only_valids=False):
+def get_pdf_signatures(fname, only_valids=False):
     raw_result = subprocess.check_output(['pdfsig', fname]).decode('utf-8')
     result = re.split('Signature #[0-9]+:\n', raw_result)
 
@@ -50,13 +45,50 @@ def get_signatures(fname, only_valids=False):
     return cleaned_signatures
 
 
+def get_p7m_signatures(fname, only_valids=False):
+    """
+    """
+    d = OrderedDict()
+    verification_cmd = "openssl smime -verify -noverify -in {} -inform DER -out /dev/null 2>&1"
+    verification_result = subprocess.check_output(verification_cmd.format(fname).split(' '),
+                                                  stderr=subprocess.STDOUT).decode('utf-8')
+    pkcs7_cmd = 'openssl pkcs7 -print -text -inform der -in {}'
+
+    check_validity = 'successful' in verification_result
+    if check_validity:
+        d['Signature Validation'] = 'Signature is Valid.'
+    elif only_valids and not check_validity:
+        d['Signature Validation'] = 'Signature has not yet been verified'
+        return [d]
+
+    pkcs_result = subprocess.check_output(pkcs7_cmd.format(fname).split(' '),
+                                          stderr=subprocess.STDOUT).decode('utf-8')
+    pkcs_subject, pkcs_date = (re.search('subject:[\s]*(?P<subject>.*)', pkcs_result),
+                               re.search('UTCTIME:(?P<date_signed>.*)', pkcs_result))
+    if pkcs_subject:
+        d["Signer full Distinguished Name"] = pkcs_subject.groupdict()['subject']
+    if pkcs_date:
+        d["Signing Time"] = pkcs_date.groupdict()['date_signed']
+
+    return [d]
+
+
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser()
     parser.add_argument('-v', required=False, action='store_true',
                         help="returns onvly valids signs")
     parser.add_argument('-f', required=True,
-                        help="pdf filename to inspect")
+                        help="filename to inspect")
+    parser.add_argument('-t', required=False, default='pdf',
+                        help="file format: pdf or p7m")
     args = parser.parse_args()
 
-    print(json.dumps(get_signatures(args.f, args.v), indent=2))
+    if args.t == 'pdf':
+        func_name = get_pdf_signatures
+    elif args.t == 'p7m':
+        func_name = get_p7m_signatures
+    else:
+        raise Exception('File format {} not supported'.format(args.t))
+
+    print(json.dumps(func_name(args.f, args.v), indent=2))
