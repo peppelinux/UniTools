@@ -70,6 +70,9 @@ perl -ne 's/^.*%PDF/%PDF/; print if /%PDF/../%%EOF/' documento.pdf.p7m >document
 # verifica della firma senza estrazione del file
 openssl smime -verify -noverify -in documento.pdf.p7m -inform DER -out documento.pdf
 
+# verifica la firma e anche la validità del certificato (bisogna scaricare prima la chain of trust)
+openssl smime -verify -CAfile /home/user/.config/p7m/ca.pem  -in DelegaDeMarcoIdem.pdf.p7m -inform DER -out /dev/null 2>&1
+
 # Per estrarre il certificato digitale personale di chi ha firmato basta usare openssl con il comando
 openssl pkcs7 -inform DER -in documento.pdf.p7m -print_certs -out cert.pem
 
