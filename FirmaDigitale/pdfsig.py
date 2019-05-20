@@ -13,6 +13,10 @@ if os.system('pdfsig -v') != 0:
     raise Exception(('pdfsig is not installed.'
                      'Please install poppler or poppler-utils'))
 
+if os.system('openssl -v') != 0:
+    raise Exception(('openssl is not installed.'
+                     'Please install it'))
+
 _ATTRIBUTES = ['Signature Type',
                'Signature Validation',
                'Signer Certificate Common Name',
