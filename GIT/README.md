@@ -114,3 +114,17 @@ This could help us to write some less digits... sometimes!
 # for two hours
 git config --global credential.helper 'cache --timeout 7200'
 ````
+
+#### Adding ssh key
+````
+ssh-keygen -t rsa
+
+# copy this to atlassian/github pub ssh keys
+cat ~/.ssh/id_rsa.pub
+
+# propagate key
+ssh -T git@bitbucket.org
+
+# clone using ssh clone url
+git clone git@bitbucket.org:teamname/reponame.git
+````
