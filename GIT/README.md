@@ -129,7 +129,7 @@ ssh -T git@bitbucket.org
 git clone git@bitbucket.org:teamname/reponame.git
 ````
 
-## pull a fork into a separate branch and then merge it
+#### pull a fork into a separate branch and then merge it
 ````
 git checkout -b italia-master master
 git pull https://github.com/italia/spid-testenv2.git master
