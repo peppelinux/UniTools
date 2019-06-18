@@ -133,7 +133,6 @@ git clone git@bitbucket.org:teamname/reponame.git
 ````
 git checkout -b italia-master master
 git pull https://github.com/italia/spid-testenv2.git master
-Step 2: Merge the changes and update on GitHub.
 
 git checkout master
 git merge --no-ff italia-master
