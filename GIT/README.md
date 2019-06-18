@@ -128,3 +128,14 @@ ssh -T git@bitbucket.org
 # clone using ssh clone url
 git clone git@bitbucket.org:teamname/reponame.git
 ````
+
+## pull a fork into a separate branch and then merge it
+````
+git checkout -b italia-master master
+git pull https://github.com/italia/spid-testenv2.git master
+Step 2: Merge the changes and update on GitHub.
+
+git checkout master
+git merge --no-ff italia-master
+git push origin master
+````
