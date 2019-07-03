@@ -1,6 +1,47 @@
-tools
+dotazione iniziale
 -----
-`apt install htop iotop atop hdparm ioping iozone`
+````
+apt update && apt upgrade
+apt install htop iotop atop hdparm ioping iozone
+
+apt install build-essential python3-dev ipython python3-pip libssl-dev htop sudo nmap tcpdump nftables adduser net-tools
+pip3 install virtualenv
+
+nano /etc/hostname
+nano /etc/sshd
+nano /etc/hosts
+
+USER=
+adduser $USER
+
+addgroup $USER sudo
+
+deluser operatore
+
+apt clean
+
+# also sysctl tweak: depending by server usage.
+
+
+# if netinst breaks the balls with locales...
+LOCALE="it_IT.UTF-8"
+
+cat <<EOF > /etc/default/locale
+LANGUAGE=$LOCALE,
+LC_ALL=$LOCALE,
+LC_ADDRESS=$LOCALE,
+LC_NAME=$LOCALE,
+LC_MONETARY=$LOCALE,
+LC_PAPER=$LOCALE,
+LC_IDENTIFICATION=$LOCALE,
+LC_TELEPHONE=$LOCALE,
+LC_MEASUREMENT=$LOCALE,
+LC_TIME=$LOCALE,
+LC_NUMERIC=$LOCALE,
+LANG=$LOCALE
+EOF
+
+````
 
 analisi prestazioni dischi
 --------------------------
