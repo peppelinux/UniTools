@@ -4,8 +4,8 @@ dotazione iniziale
 apt update && apt upgrade
 apt install htop iotop atop hdparm ioping iozone
 
-apt install build-essential python3-dev ipython python3-pip libssl-dev htop sudo nmap tcpdump nftables adduser net-tools
-pip3 install virtualenv
+apt install build-essential python3-dev ipython python3-pip libssl-dev htop sudo nmap tcpdump nftables adduser net-tools git
+pip3 install virtualenv uwsgi
 
 nano /etc/hostname
 nano /etc/sshd
