@@ -1,3 +1,5 @@
+cp -Rp  /usr/share/easy-rsa /etc/openvpn
+
 easyrsa init-pki
 easyrsa build-ca
 easyrsa gen-dh
