@@ -143,7 +143,13 @@ net.ipv4.tcp_slow_start_after_idle=0
 Becnhmarks
 ----------
 
-Httpd, 100 connessioni permanenti con keep-alive di 60 secondi.
+Httpd, 1000 connessioni concorrenti con keep-alive di 60 secondi.
 ````
 ab -kc 1000 -t 60 https://thathost.unical.it/idp/shibboleth
 ````
+
+Httpd, 1000 connessioni permanenti con 5000 requests per connessione.
+````
+ab -n 5000 -c 1000  https://proxy.auth.unical.it/spidSaml2/metadata
+````
+
