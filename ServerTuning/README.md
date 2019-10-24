@@ -136,6 +136,9 @@ net.core.default_qdisc=fq_codel
 # disables RFC 2861 behavior and time out the congestion window without an idle period
 net.ipv4.tcp_slow_start_after_idle=0
 
+# SACK ping of death patch
+net.ipv4.tcp_sack=0
+
 # then
 # sysctl -p
 ````
