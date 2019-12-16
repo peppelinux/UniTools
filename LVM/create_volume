@@ -1,0 +1,25 @@
+# create an (8e Linux LVM) partition type
+cfdisk /dev/sdb 
+
+apt install lvm2
+service lvm2 start
+
+
+# create a 
+# PV : Physical Volumes. This means the hard disk, hard disk partitions, RAID or LUNs from a SAN which form "Physical Volumes" (or PVs). 
+pvcreate /dev/sdb1
+
+# see
+pvdisplay
+
+# create a Volume Groups
+vgcreate my_volume_group /dev/sdb1
+
+# see
+vgdisplay
+
+# create Logical Volumes (LV)
+lvcreate -n my_volume_volume -L 99.9g my_volume_group
+
+# create a fs
+mkfs.ext4 /dev/my_volume_group/my_volume_volume
