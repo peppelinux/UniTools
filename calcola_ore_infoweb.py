@@ -47,3 +47,32 @@ def calcola_secondi_lavorati(timbr):
 # in ore
 calcola_secondi_lavorati(timbrature_giorno_int) / 60. / 60
 # datetime.timedelta(0, 9, 316667) -> 9 ore e 32 minuti
+
+
+####################################
+# Altro approccio
+####################################
+
+import datetime
+
+# ore lavorate a dicembre
+ore_lavorate = '8.23,6.01,8.00,4.00,5.34,8.48,5.00,5.59,4.08,8.00,9.00,6.00,9.02,8.30,4.09,4.31'
+straordinario = ',0.1,1.58,1.34,2.08,0.02,2.3'
+ore_lavorate += straordinario
+
+def totale_ore_lavorate(h_str_seq):
+    """
+    h_str_seq string: '8.23,6.01,8.00,4.00,5.34,8.48,5.00'
+    """
+    sum = datetime.timedelta()
+    for i in a.split(','):
+        h,m = [int(e) for e in i.split('.')]
+        t = datetime.time(h,m)
+        print('Sommo {} + {}'.format(sum, t), end=',')
+        sum += datetime.timedelta(hours=t.hour, minutes=t.minute)
+        print(' = {}'.format(sum))
+    tot_ore = datetime.timedelta(seconds=sum.total_seconds())
+    print('Totale ore = {}'.format(tot_ore))
+    return tot_ore
+
+totale_ore_lavorate(ore_lavorate)
