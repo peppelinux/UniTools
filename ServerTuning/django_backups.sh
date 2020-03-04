@@ -3,7 +3,7 @@
 PROJ_NAME=adas
 PROJ_PATH=/opt/adas
 ENV_PATH=/opt/adas.env
-DJANGO_SETTINGS_MODULE="adas.settings"
+export DJANGO_SETTINGS_MODULE="adas.settings"
 
 cd $PROJ_PATH
 
