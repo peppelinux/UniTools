@@ -29,6 +29,7 @@ Exec on start
 ````
 systemctl daemon-reload
 systemctl start rclone-gdrive.service
+systemctl enable rclone-gdrive.service
 ````
 
 ````
