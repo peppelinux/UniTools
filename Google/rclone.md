@@ -6,7 +6,7 @@ apt install rclone
 rclone config
 ````
 
-Create a mount service in systemd
+Create a mount service in systemd called `rclone-gdrive.service`
 ````
 [Unit]
 Description=RClone Service
@@ -28,7 +28,7 @@ WantedBy=default.target
 Exec on start
 ````
 systemctl daemon-reload
-systemctl start media-gdrive.mount 
+systemctl start rclone-gdrive.service
 ````
 
 ````
