@@ -4,10 +4,18 @@ apt install rclone
 # create an OAuth2 client_id and client_secret
 # create google drive called gdrive
 rclone config
-mkdir -p /media/gdrive
+
+````
+Create mount point and systemd mount unit file
+````
+DEST_PATH=/media/gdrive 
+sudo mkdir -p $DEST_PATH
+sudo chwon -r $DEST_PATH
+UNIT_NAME=$(sudo systemd-escape -p --suffix=mount $DEST_PATH)
+nano /etc/systemd/system/$UNIT_NAME
 ````
 
-Create in `/etc/systemd/system/rclone-automount.mount`
+Create in `/etc/systemd/system/media-gdrive.mount` (/etc/systemd/system/$UNIT_NAME):
 ````
 [Unit]
 Description=rclone mount gdrive: /media/gdrive
