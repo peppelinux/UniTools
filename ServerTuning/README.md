@@ -2,7 +2,9 @@ dotazione iniziale
 -----
 ````
 apt update && apt upgrade
-apt install htop iotop atop hdparm ioping iozone unattended-upgrades apt-listchanges
+apt install htop iotop atop hdparm ioping iozone
+
+apt install unattended-upgrades apt-listchanges logrotate ntp
 
 apt install build-essential python3-dev ipython python3-pip libssl-dev htop sudo nmap tcpdump nftables adduser net-tools git
 pip3 install virtualenv uwsgi
