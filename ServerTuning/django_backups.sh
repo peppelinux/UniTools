@@ -15,7 +15,7 @@ BACKUP_DIR="/opt/dumps_adas"
 BACKUP_DIR_JSON=$BACKUP_DIR"/json"
 BACKUP_DIR_SQL=$BACKUP_DIR"/sql"
 BACKUP_DIR_MEDIA=$BACKUP_DIR"/media"
-FNAME="peo.$(date +"%Y-%m-%d_%H%M%S")"
+FNAME="$PROJ_NAME.$(date +"%Y-%m-%d_%H%M%S")"
 
 # sudo apt install p7zip-full
 
