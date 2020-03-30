@@ -1,0 +1,25 @@
+# pip install captcha
+
+# modificare questo
+# https://github.com/lepture/captcha/blob/master/captcha/image.py
+
+import random
+import string
+
+from captcha.audio import AudioCaptcha
+from captcha.image import ImageCaptcha
+
+CAPTCHA_FONTS = ['/usr/share/fonts/truetype/ttf-bitstream-vera/Vera.ttf',
+                 '/usr/share/fonts/truetype/liberation/LiberationMono-Italic.ttf']
+
+#audio = AudioCaptcha(voicedir='/path/to/voices')
+image = ImageCaptcha(fonts=CAPTCHA_FONTS)
+
+#data = audio.generate('1234')
+#audio.write('1234', 'out.wav')
+
+text = [random.choice(string.ascii_letters) for i in range(5)]
+data = image.generate(text)
+
+#data.read()
+image.write(text, 'out.png')
