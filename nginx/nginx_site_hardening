@@ -1,3 +1,28 @@
+NginX Hardening
+---------------
+
+Disable TACE e DELETE to prevent Cross site cookie steal
+````
+if ($request_method !~ ^(GET|HEAD|POST)$ )
+{
+       return 405;
+}
+````
+
+Prevent a clickjacking attack.
+````
+add_header X-Frame-Options "SAMEORIGIN";
+
+# or better DENY
+````
+
+Inject HTTP Header with X-XSS protection to mitigate Cross-Site scripting attack.
+````
+add_header X-XSS-Protection "1; mode=block";
+````
+
+Adopt SSL and Harden it
+````
 # this hardening produces a A+ profile from
 # https://www.ssllabs.com/ssltest/index.html
 # source: https://raymii.org/s/tutorials/Strong_SSL_Security_On_nginx.html
@@ -24,3 +49,4 @@
     add_header X-XSS-Protection "1; mode=block";
     add_header X-Robots-Tag none;
     # FINE SSL HARDENING
+````
