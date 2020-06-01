@@ -14,11 +14,10 @@ nano /etc/ssh/sshd_config
 nano /etc/hosts
 
 USER=
-adduser $USER
+/usr/sbin/adduser $USER
 
-addgroup $USER sudo
-
-deluser operatore
+/usr/sbin/addgroup $USER sudo
+/usr/sbin/deluser operatore
 
 apt clean
 
