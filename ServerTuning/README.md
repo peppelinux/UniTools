@@ -1,7 +1,7 @@
 dotazione iniziale
 -----
 ````
-apt update && apt upgrade
+apt update && apt upgrade -y
 apt install htop iotop atop hdparm ioping iozone
 
 apt install unattended-upgrades apt-listchanges logrotate ntp
