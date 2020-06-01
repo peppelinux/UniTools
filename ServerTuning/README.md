@@ -6,8 +6,8 @@ apt install htop iotop atop hdparm ioping iozone
 
 apt install unattended-upgrades apt-listchanges logrotate ntp
 
-apt install build-essential python3-dev ipython python3-pip libssl-dev htop sudo nmap tcpdump nftables adduser net-tools git iptables-persistent
-pip3 install virtualenv uwsgi
+apt install build-essential python3-dev python3-pip libssl-dev htop sudo nmap tcpdump nftables adduser net-tools git iptables-persistent
+pip3 install virtualenv uwsgi ipython
 
 nano /etc/hostname
 nano /etc/sshd
