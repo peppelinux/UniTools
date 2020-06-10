@@ -8,7 +8,7 @@ In /etc/rsyslog.d/log.unical.it.conf provides UDP syslog reception
 
 ````
 # CA crt
-$DefaultNetstreamDriverCAFile /etc/ssl/certs/ca-certificates.crt
+$DefaultNetstreamDriverCAFile /etc/rsyslog.d/ca.d/ca-certificates.crt
 #$DefaultNetstreamDriverCertFile /etc/ssl/rsyslog/CLIENT-cert.pem
 #$DefaultNetstreamDriverKeyFile /etc/ssl/rsyslog/CLIENT-key.pem
 
@@ -29,4 +29,9 @@ $ActionQueueMaxDiskSpace 1g
 $ActionQueueSaveOnShutdown on
 $ActionQueueType LinkedList
 $ActionResumeRetryCount -1
+````
+
+Test that the built CA chain is valid
+````
+openssl s_client -connect log.unical.it:6516 -showcerts -CAfile /etc/rsyslog.d/ca.d/ca.crt 
 ````
