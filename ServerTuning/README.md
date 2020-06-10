@@ -13,6 +13,13 @@ nano /etc/hostname
 nano /etc/ssh/sshd_config
 nano /etc/hosts
 
+nano /etc/ntp.conf
+# inserire
+pool ntp.unical.it iburst
+interface ignore wildcard
+interface listen 127.0.0.1
+
+
 USER=
 /usr/sbin/adduser $USER
 
