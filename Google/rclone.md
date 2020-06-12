@@ -59,3 +59,5 @@ fusermount -u /media/gdrive
 rclone copy /opt/dumps_adas/ gdrive:/ICT_backups/adas.unical.it
 ````
 
+## Errors on start
+if ``--allow-other`` flag is set remember to add/enable ``user_allow_other`` in in /etc/fuse.conf file.
