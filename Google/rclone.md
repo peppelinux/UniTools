@@ -10,6 +10,11 @@ apt install rclone
 # create google drive called gdrive
 rclone config
 ````
+
+Resource name: gdrive
+Type: 12 (Google Drive)
+
+
 ## Main configuration
 Create a proper mount service to be recognized by system (eg.: `/etc/systemd/system/rclone-gdrive.service`) and ensure related `rclone` attributes are properly defined (eg.: the name of the remote, `gdrive:`; the local mount point, `/media/gdrive`; the main `rclone` configuration file, `/home/wert/.config/rclone/rclone.conf`)
 
