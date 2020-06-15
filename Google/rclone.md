@@ -1,4 +1,8 @@
 ## Initial setup
+
+Create a Token in:
+https://console.developers.google.com/
+
 ````
 apt install rclone
 
