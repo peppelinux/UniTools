@@ -26,11 +26,7 @@ Wants=network-online.target
 
 [Service]
 Type=notify
-ExecStart=/usr/bin/rclone mount gdrive: /media/gdrive \
-   --config /home/wert/.config/rclone/rclone.conf 
-   --allow-other \
-   --vfs-read-chunk-size 16M \
-   --buffer-size 2G 
+ExecStart=/usr/bin/rclone mount --config /home/wert/.config/rclone/rclone.conf --allow-other --vfs-read-chunk-size 16M --buffer-size 2G gdrive: /media/gdrive
 ExecStop=/bin/fusermount -uz /media/gdrive
 Restart=on-abort
 User=
