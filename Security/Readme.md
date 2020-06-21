@@ -1,6 +1,13 @@
 Is your server Secure enough?
 =============================
 
+Self assessment
+---------------
+
+Install and use Lynis!
+https://github.com/CISOfy/lynis
+
+
 TCP
 To disable TCP timestamps in GNU/Linux TCP/IPv4, that implement RFC1323.
 ````
