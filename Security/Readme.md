@@ -7,6 +7,9 @@ Self assessment
 Install and use Lynis!
 https://github.com/CISOfy/lynis
 
+OWASP
+-------------
+https://owasp.org/www-project-web-security-testing-guide/v41/
 
 TCP
 To disable TCP timestamps in GNU/Linux TCP/IPv4, that implement RFC1323.
