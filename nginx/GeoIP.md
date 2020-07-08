@@ -2,10 +2,13 @@
 # check nginx have geoip support
 nginx -v | grep geoip
 
+# OLD
 # this should be scheduled once per week:
-wget -O - http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz | gunzip -c > /opt/GeoIPdb/GeoIP.dat
+# wget -O - http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz | gunzip -c > /opt/GeoIPdb/GeoIP.dat
 # otherwise per City: http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz
 
+# NEW
+wget -O - https://dl.miyuru.lk/geoip/maxmind/country/maxmind4.dat.gz | gunzip -c > /opt/GeoIPdb/GeoIP.dat
 
 cat << EOF > /etc/nginx/conf.d/geoip.conf
     # geoip filter
