@@ -16,11 +16,12 @@ nano /etc/hostname
 nano /etc/ssh/sshd_config
 nano /etc/hosts
 
-nano /etc/ntp.conf
+# NON FARE: piuttosto una regola di firewall che restringa la porta ai soli server ntp
+# nano /etc/ntp.conf
 # inserire
-pool ntp.unical.it iburst
-interface ignore wildcard
-interface listen 127.0.0.1
+# pool ntp.unical.it iburst
+# interface ignore wildcard
+# interface listen 127.0.0.1
 
 
 USER=
