@@ -1,3 +1,5 @@
+# https://www.linuxsysadmins.com/create-thinly-provisioned-logical-volume/
+
 # Create a Physical Volume (PV) without confirmation and 250K metadatasize.
 pvcreate --metadatasize 250k -y -ff /dev/sdc2
 
