@@ -3,7 +3,7 @@
 # Create a Physical Volume (PV) without confirmation and 250K metadatasize.
 pvcreate --metadatasize 250k -y -ff /dev/sdc2
 
-# Create a volume group named “vmdata” on /dev/sdb1
+# Create a volume group named “vmdata” on /dev/sdc2
 vgcreate blustor /dev/sdc2
 
 # see volume groups
