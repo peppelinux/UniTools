@@ -1,0 +1,31 @@
+sudo su
+
+# create a block device from a file
+dd if=/dev/zero of=1000mb.img bs=1M count=1024
+losetup /dev/loop5 1000mb.img
+
+# lvm2
+apt install lvm2 thin-provisioning-tools
+# define a physical volume
+pvcreate /dev/loop5
+# see the available physical volumes
+pvs && pvscan && pvdisplay
+# create a volume group
+vgcreate lxc /dev/loop5
+# views available volume groups
+vgs && vgscan && vgdisplay
+
+# create a thin logical volume pool
+lvcreate -L 1000M --type thin-pool --thinpool lxc-thin lxc
+lvs && lvscan && lvdisplay
+
+# create a thin volume in the pool of the desidered size
+# lvcreate -V1000MB -T thins/1gb -n thinvolume
+
+# create an lxc image on lxc-thin pool
+lxc-create  -t download -n deb10_lvm -B lvm --thinpool lxc-thin --fssize=500MB -- -d debian -r buster -a amd64
+
+# arbitrary snapshot
+lvcreate -s --name deb10_lxc_snap0 lxc/deb10_lvm
+
+# see also lxc-snapshot
