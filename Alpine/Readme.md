@@ -1,3 +1,7 @@
+
+Docker
+------
+````
 docker pull alpine
 docker run -it alpine /bin/sh
 
@@ -12,3 +16,25 @@ exit
 docker container ls -al
 # this saves changes in rootfs
 docker commit $container_id
+````
+
+netdiscover compilation
+-----------------------
+
+````
+# add community
+vi /etc/apk/repositories
+
+apk update
+apk add nmap nano git 
+
+git clone https://github.com/alexxy/netdiscover.git
+cd netdiscover
+sh update-oui-database.sh
+
+apk add libpcap libcap-dev cmake build-base gcc abuild binutils gcc 
+
+cmake .
+make
+make install
+````
