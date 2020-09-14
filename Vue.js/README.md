@@ -4,6 +4,11 @@ Basics
 
 Protected resources
 - https://www.digitalocean.com/community/tutorials/how-to-set-up-vue-js-authentication-and-route-handling-using-vue-router
+- https://simpleisbetterthancomplex.com/tutorial/2018/12/19/how-to-use-jwt-authentication-with-django-rest-framework.html
+- 
+
+Gallery
+- https://madewithvuejs.com/
 
 
 #### todo
