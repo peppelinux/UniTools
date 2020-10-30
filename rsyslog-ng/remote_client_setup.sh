@@ -65,7 +65,7 @@ filter f_Unical {
 
 destination Unical_tls_destination {
 syslog("'$UNICAL_SERVER'" 
-port(6517) 
+port(6519) 
 transport("tls")
 tls( ca-dir("'$DEST_DIR'")) 
    );
