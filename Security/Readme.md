@@ -12,7 +12,7 @@ Some commads
 
 common web attackers ip from nginx|apache access log
 ````
-grep -E "php|\.pl|select|sql|\.env|\\x00|@|<|>|console|config|admin|shell|cmd|eval|\*" /var/log/nginx/*.access.log  | awk -F' ' {'print $1'} | uniq -c | sort -nr | uniq
+grep -E "select|sql|\.env|\\x00|@|<|>|console|config|admin|shell|cmd|eval|\*" /var/log/nginx/*.access.log  | awk -F' ' {'print $1'} | uniq -c | sort -nr | uniq
 ````
 
 OWASP
