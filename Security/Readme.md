@@ -15,6 +15,21 @@ common web attackers ip from nginx|apache access log
 grep -Ei "select|sql|\.env|\\x00|@|<|>|console|config|admin|shell|cmd|eval|\*|\.cgi" /var/log/nginx/*.access.log  | awk -F' ' {'print $1'} | uniq -c | sort -nr | uniq
 ````
 
+how many connection from any single ip
+````
+netstat -ntu|awk '{print $5}'|cut -d: -f1 -s|sort|uniq -c|sort -nk1 -r
+````
+
+IPs from the same /16 (xxx.xxx.0.0) subnet
+````
+netstat -ntu|awk '{print $5}'|cut -d: -f1 -s |cut -f1,2 -d'.'|sed 's/$/.0.0/'|sort|uniq -c|sort -nk1 -r
+
+# how many from /24
+netstat -ntu|awk '{print $5}'|cut -d: -f1 -s |cut -f1,2,3 -d'.'|sed 's/$/.0/'|sort|uniq -c|sort -nk1 -r
+````
+
+
+
 OWASP
 -------------
 https://owasp.org/www-project-web-security-testing-guide/v41/
