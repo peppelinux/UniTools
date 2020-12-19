@@ -32,7 +32,7 @@ git clone https://github.com/alexxy/netdiscover.git
 cd netdiscover
 sh update-oui-database.sh
 
-apk add libpcap libcap-dev cmake build-base gcc abuild binutils gcc 
+apk add libpcap libcap-dev cmake build-base gcc abuild binutils gcc libnet
 
 cmake .
 make
