@@ -42,11 +42,20 @@ make install
 motioneye
 ---------
 Enable testing repository and `apk upgrade`
+Enable vlan support `apk add vlan`
 
 ```
-apk add python2-dev curl libressl-dev curl-dev libcurl libjpeg-turbo-dev ca-certificates
+apk add python2-dev curl libressl-dev curl-dev libcurl libjpeg-turbo-dev ca-certificates motion ffmpeg v4l-utils
+
+# install pip
 apk add py2-setuptools
 easy_install-2.7 pip
+# or
+curl https://bootstrap.pypa.io/get-pip.py --output get-pip.py
+sudo python2 get-pip.py
+
+# check python version
+pip --version
 
 pip install git+https://github.com/ccrisan/motioneye.git
 
