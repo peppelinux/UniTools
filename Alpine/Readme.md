@@ -44,6 +44,11 @@ motioneye
 Enable testing repository and `apk upgrade`
 
 ```
-apk add py-pip python2-dev curl py-setuptools libressl-dev curl-dev libcurl libjpeg-turbo-dev ca-certificates
+apk add python2-dev curl libressl-dev curl-dev libcurl libjpeg-turbo-dev ca-certificates
+apk add py2-setuptools
+easy_install-2.7 pip
+
+pip install git+https://github.com/ccrisan/motioneye.git
+
 
 ```
