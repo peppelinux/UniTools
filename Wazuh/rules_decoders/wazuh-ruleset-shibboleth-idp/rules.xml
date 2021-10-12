@@ -1,0 +1,45 @@
+<!--
+-  Shibboleth IdP ruleset
+-  Created by Giuseppe De Marco <giuseppe.demarco@unical.it>.
+-  Copyright (C) 2015-2020, Wazuh Inc.
+-  This program is a free software; you can redistribute it and/or modify it under the terms of GPLv2.
+-->
+<!--
+- It's needed to install and configure django-audit
+- It's needed to put it in the /var/ossec/etc/rules/local_rules.xml
+- It's needed to paste the following in /var/ossec/etc/ossec.conf or agent.conf to work properly:
+<localfile>
+	<location>/opt/shibboleth-idp/logs/idp-process.log</location>
+	<log_format>syslog</log_format>
+</localfile>
+ -->
+
+<!-- Shibboleth IdP ruleset -->
+<!-- ID: 100093 - 100096 -->
+<group name="shibboleth-idp,">
+  <rule id="100093" level="0">
+    <decoded_as>shibboleth-idp-login</decoded_as>
+    <description>Shibboleth IdP messages grouped.</description>
+  </rule>
+
+  <rule id="100094" level="6">
+    <if_sid>100093</if_sid>
+    <match>failed$</match>
+    <description>Shibboleth IdP Authentication failed.</description>
+    <group>authentication_failed,pci_dss_10.2.4,pci_dss_10.2.5,gdpr_IV_35.7.d,gdpr_IV_32.2,hipaa_164.312.b,nist_800_53_AU.14,nist_800_53_AC.7,</group>
+  </rule>
+
+  <rule id="100095" level="6">
+    <if_sid>100093</if_sid>
+    <match>succeeded$</match>
+    <description>Shibboleth IdP Authentication succeeded.</description>
+    <group>authentication_success,pci_dss_10.2.4,pci_dss_10.2.5,gdpr_IV_35.7.d,gdpr_IV_32.2,hipaa_164.312.b,nist_800_53_AU.14,nist_800_53_AC.7,</group>
+  </rule>
+
+  <rule id="100096" level="10" frequency="8" timeframe="120">
+    <if_matched_sid>100094</if_matched_sid>
+    <description>Shibboleth IdP Brute Force (multiple failed logins).</description>
+    <group>authentication_failures,pci_dss_10.2.4,pci_dss_10.2.5,pci_dss_11.4,gdpr_IV_35.7.d,gdpr_IV_32.2,hipaa_164.312.b,nist_800_53_AU.14,nist_800_53_AC.7,nist_800_53_SI.4,</group>
+  </rule>
+</group>
+<!-- END Shibboleth IdP ruleset -->

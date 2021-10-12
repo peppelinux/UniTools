@@ -1,0 +1,80 @@
+<!--
+  -  Fortigate rules
+  -  Author: Tom Hancock <t.m.h.a.ncoc.k+wazuh@gmail.com>
+  -  Updated by Wazuh, Inc.
+  -  Copyright (C) 2015-2019, Wazuh Inc.
+  -  This program is a free software; you can redistribute it and/or modify it under the terms of GPLv2.
+-->
+
+<!--
+ID: 81641 - 
+-->
+
+<group name="fortigate,syslog,">
+    <rule id="81641" level="0">
+        <decoded_as>fortigate-firewall-v6</decoded_as>
+        <description>Fortigate v6 messages grouped.</description>
+    </rule>
+
+    <rule id="81642" level="0">
+    	<if_group>fortigate</if_group>
+        <match>type="utm"</match>
+        <description>UTM</description>
+    </rule>
+<!--
+IPS Alert
+-->
+    <rule id="81643" level="1">
+    	<if_sid>81642</if_sid>
+        <match>subtype="ips"</match>
+        <description>IPS</description>
+    </rule>
+
+    <rule id="81644" level="7">
+    	<if_sid>81643</if_sid>
+        <match>level="alert"</match>
+        <description>IPS Alert</description>
+    </rule>
+<!--
+APP_CRTL Warning
+-->
+    <rule id="81650" level="1">
+    	<if_sid>81642</if_sid>
+        <match>subtype="app-ctrl"</match>
+        <description>IPS</description>
+    </rule>
+
+    <rule id="81651" level="3">
+    	<if_sid>81650</if_sid>
+        <match>level="warning"</match>
+        <description>APP-CTRL Warning</description>
+    </rule>
+<!--
+VIRUS
+-->
+    <rule id="81660" level="1">
+    	<if_sid>81642</if_sid>
+        <match>subtype="virus"</match>
+        <description>Virus</description>
+    </rule>
+
+    <rule id="81661" level="5">
+    	<if_sid>81660</if_sid>
+        <match>eventtype="infected"</match>
+        <description>File infection warning</description>
+    </rule>
+<!--
+WAF
+-->
+    <rule id="81670" level="1">
+    	<if_sid>81642</if_sid>
+        <match>subtype="waf"</match>
+        <description>WAF</description>
+    </rule>
+
+    <rule id="81671" level="3">
+    	<if_sid>81670</if_sid>
+        <match>action="blocked"</match>
+        <description>WAF Blocked</description>
+    </rule>
+</group>

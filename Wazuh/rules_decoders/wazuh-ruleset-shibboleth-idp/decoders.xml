@@ -1,0 +1,14 @@
+<!-- /var/ossec/etc/decoders/local_decoder.xml -->
+
+<!-- examples
+2020-04-22 14:48:45,534 - 176.32.30.38 - INFO [net.shibboleth.idp.authn.impl.ValidateUsernamePasswordAgainstLDAP:152] - Profile Action ValidateUsernamePasswordAgainstLDAP: Login by 'user_name' succeeded
+2020-04-22 14:49:50,161 - 130.193.230.154 - INFO [net.shibboleth.idp.authn.impl.ValidateUsernamePasswordAgainstLDAP:166] - Profile Action ValidateUsernamePasswordAgainstLDAP: Login by 'usern_name' failed
+
+test
+echo $value | ./ossec-regex "^(\d+-\d+-\d+ \d+:\d+:\d+,\d+) - (\d+.\d+.\d+.\d+) - \w+ [.|\w+\w+:\d+] - Profile Action (\w+): Login by '(\w+)' (succeeded)|(failed)"
+-->
+<decoder name="shibboleth-idp-login">
+        <prematch>net.shibboleth.idp</prematch>
+        <regex>^(\d+-\d+-\d+ \d+:\d+:\d+,\d+) - (\d+.\d+.\d+.\d+) - \w+ [\w+] - Profile Action (\w+): Login by '(\w+)' failed|succeded</regex>
+        <order>datetime, srcip, profile, username</order>
+</decoder>
