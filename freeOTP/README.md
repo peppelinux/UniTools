@@ -22,7 +22,6 @@ with open('tokens') as a:
     b = a.read()
     
     start, end = b.index('<map>'), b.index('</map>')
-    breakpoint()
     for i in b[start:end].splitlines()[1:]:
         res = re.findall(r'(:?<.*>)(.*)(:?<.*>)', i)
         if res and len(res[0]) > 1:
